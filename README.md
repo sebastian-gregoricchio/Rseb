@@ -12,7 +12,7 @@ BiocManager::install()
 ```
 
 The possibile required packages are: `Biostrings`, `biomaRt`, `GO.db`, `rtracklayer`.
-To install them directly you need to have previously installed BiocManager and then:
+To install them directly you need to have previously installed `BiocManager` and then:
 
 ```r
 BiocManager::install(c("Biostrings", "biomaRt", "GO.db", "rtracklayer"))
