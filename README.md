@@ -8,7 +8,7 @@ install.packages("devtools")
 
 # Or the development version from GitHub:
 # install.packages("devtools")
-devtools::install_github("sebastian-gregoricchio/Rseb")}
+devtools::install_github("sebastian-gregoricchio/Rseb")
 ```
 
 ## Licence
