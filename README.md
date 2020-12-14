@@ -8,7 +8,10 @@ An R-package for daily tasks necessary to handle biological data as well as avoi
 install.packages("devtools")
 
 # Or the development version from GitHub:
-# install.packages("devtools")
+## install.packages("devtools")
+## devtools::install_github("r-lib/devtools")
+
+# Install the Rseb package
 devtools::install_github("sebastian-gregoricchio/Rseb")
 ```
 
