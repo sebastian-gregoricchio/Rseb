@@ -28,9 +28,10 @@ GSEA.to.GOnumber = function(input_terms,
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
-if (!require("GO.db",character.only = TRUE)) {
-  BiocManager::install("GO.db", version = "3.8") #https://www.biostars.org/p/50564/
-  if(!require("GO.db",character.only = TRUE)) stop("Package not found")}
+  pkg = "GO.db"
+  if (!require(pkg, character.only = TRUE)) {
+    BiocManager::install(pkg)
+    if(!require(pkg, character.only = TRUE)) stop(paste(pkg,"package not found."))}
 
 if (!require("dplyr",character.only = TRUE)) {
   install.packages("dplyr", dependencies = TRUE)

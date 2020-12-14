@@ -46,6 +46,12 @@ IGVsnap = function(loci_vector,
                    exit = FALSE,
                    help = FALSE) {
 
+  # Install packages from bioconductor
+  pkg = "biomaRt"
+  if (!require(pkg, character.only = TRUE)) {
+    BiocManager::install(pkg)
+    if(!require(pkg, character.only = TRUE)) stop(paste(pkg,"package not found."))}
+
   # check parameters
     help_message = c(
     "Help for 'IGVsnap' function from 'Rseb' package: \n", "\n",

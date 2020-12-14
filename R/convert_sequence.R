@@ -21,6 +21,13 @@ convert_sequence = function(sequence = NULL,
                             mode = "not specified",
                             nucleic.acid = "DNA") {
 
+  ###### Install required packages  ######
+  pkg = "Biostrings"
+  if (!require(pkg, character.only = TRUE)) {
+    BiocManager::install(pkg)
+    if(!require(pkg, character.only = TRUE)) stop(paste(pkg,"package not found."))}
+
+
   ###### Parameters check ######
   if (class(sequence) != "character" | is.null(sequence)) {
     return(warning("The sequence must be a string of class <character>"))

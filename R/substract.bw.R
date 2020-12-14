@@ -24,7 +24,12 @@ substract.bw = function(bw1,
 
   # Loading libraries
   #require(sf) # due to a bug load this before
-  require(rtracklayer)
+  pkg = "rtracklayer"
+  if (!require(pkg, character.only = TRUE)) {
+    BiocManager::install(pkg)
+    if(!require(pkg, character.only = TRUE)) stop(paste(pkg,"package not found."))}
+
+  require("rtracklayer")
 
   # Import/read the BigWigs
   bws = list(bw1, bw2)
