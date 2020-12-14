@@ -9,9 +9,8 @@ License: Artistic-2.0
 Depends:
 	R
 biocViews:
-        BiocManager, Biostrings, biomaRt, GO.db, rtracklayer
 Imports:
-	cowplot, data.table, dplyr, ggplot2, ggrepel, matrixStats, plyr, purrr, robustbase, stringr, tidyr, tools
+	cowplot, data.table, dplyr, ggplot2, ggrepel, matrixStats, plyr, purrr, robustbase, stringr, tidyr, tools, BiocManager, Biostrings, biomaRt, GO.db, rtracklayer
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
