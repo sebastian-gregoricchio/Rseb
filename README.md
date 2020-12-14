@@ -16,7 +16,7 @@ devtools::install_github("sebastian-gregoricchio/Rseb")
 ```
 
 ## Dependencies
-Some functions of this package require `bioConductor` libraries. this functions should install automatically the package. Anyway, install `bioConductor` repository is reccomended. 
+Some functions of this package require `Bioconductor` libraries. this functions should install automatically the package. Anyway, install `Bioconductor` repository is reccomended. 
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE))
