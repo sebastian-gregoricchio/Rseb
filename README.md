@@ -15,6 +15,22 @@ install.packages("devtools")
 devtools::install_github("sebastian-gregoricchio/Rseb")
 ```
 
+## Dependencies
+Some functions of this package require `bioConductor` libraries. this functions should install automatically the package. Anyway, install `bioConductor` repository is reccomended. 
+
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install()
+```
+
+The possibile required packages are: `Biostrings`, `biomaRt`, `GO.db`, `rtracklayer`.
+To install them directly you need to have previously installed BiocManager and then:
+
+```r
+BiocManager::install(c("Biostrings", "biomaRt", "GO.db", "rtracklayer"))
+```
+
 ## Manual
 The manual can be found here: https://github.com/sebastian-gregoricchio/Rseb/blob/main/Rseb_0.1.0_manual.pdf
 
