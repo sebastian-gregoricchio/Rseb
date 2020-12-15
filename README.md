@@ -31,8 +31,8 @@ install.packages("devtools")
 devtools::install_github("sebastian-gregoricchio/Rseb")
 ```
 
-## Manual
-The manual can be found here: https://github.com/sebastian-gregoricchio/Rseb/blob/main/Rseb_0.1.0_manual.pdf
+## Manual and documentation
+With the package there is available a [manual](https://github.com/sebastian-gregoricchio/Rseb/blob/main/Rseb_0.1.0_manual.pdf) in pdf version.
 
 ## Licence
 This package is under an `Artistic-2.0` licence.
