@@ -112,7 +112,7 @@ volcano = function(log2FC_data,
   # Generate a table containing the data and their status
   table = data.frame(FC = log2FC_data,
                      padj = padj_data,
-                     DE_status = factor(Rseb::DE_status(log2FC = log2FC_data,
+                     DE_status = factor(Rseb::DE.status(log2FC = log2FC_data,
                                                         padj = padj_data,
                                                         FC_threshold = FC_t,
                                                         FC_NoResp_left = FC_unresponsive_left,
