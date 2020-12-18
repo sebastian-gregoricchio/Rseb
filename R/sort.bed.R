@@ -49,8 +49,8 @@ sort.bed = function(bed,
   # Sort bed for chromosomes 10-10+
   bed.10_more =
     bed %>%
-    filter(!grepl(pattern = "chr[0-9]$|chr[A-z]",
-                  x = bed[,1]))
+    filter(grepl(pattern = "chr[0-9][0-9]$",
+                x = bed[,1]))
   bed.10_more =
     bed.10_more %>%
     arrange(bed.10_more[,1], bed.10_more[,2], bed.10_more[,3])
@@ -59,7 +59,7 @@ sort.bed = function(bed,
   # Sort bed for non numeric chromosomes
   bed.others =
     bed %>%
-    filter(!grepl(pattern = "chr[0-9]",
+    filter(!grepl(pattern = "chr[0-9]$|chr[0-9][0-9]$",
                   x = bed[,1]))
   bed.others =
     bed.others %>%
