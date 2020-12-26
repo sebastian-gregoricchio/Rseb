@@ -3,7 +3,7 @@
 An R-package for daily tasks necessary to handle biological data as well as avoid re-coding of small functions for quick but necessary data managing.
 
 ## Dependencies/Requirements
-Some functions of this package require `Bioconductor` libraries. this functions should install automatically the package. Anyway, install `Bioconductor` repository is recommended. 
+Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package. Anyway, install `Bioconductor` repository is recommended. 
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE))
