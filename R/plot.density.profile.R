@@ -381,8 +381,6 @@ plot.density.profile = function(
           text_size = text.size,
           variance = plot.error,
           print_plot = F,
-          method = method,
-          reference_point = reference.point,
           line_width = line.width,
           variance_opacity = error.transparency)
 
@@ -453,8 +451,6 @@ plot.density.profile = function(
           text_size = text.size,
           variance = plot.error,
           print_plot = F,
-          method = method,
-          reference_point = reference.point,
           line_width = line.width,
           variance_opacity = error.transparency)
 
