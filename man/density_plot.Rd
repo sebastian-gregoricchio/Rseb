@@ -45,7 +45,7 @@ density_plot(
 
 \item{x_intercept}{A vector indicating the X intercepts for the vertical lines. By default 0.}
 
-\item{colors}{Vector to define the colors of the lines. If only one value is provided or the number of values are less then the required ones only the first value will be used. All standard R.colors values are accepted. By default \code{c("blue", "red", "purple", "orange", "green")}.}
+\item{colors}{Vector to define the line and error area colors. If only one value is provided or the number of values is lower than the required ones only the first value will be used. All standard R.colors values are accepted. By default \code{c("blue", "red", "purple", "orange", "green")}.}
 
 \item{title}{A string containing the label for the X-axis. By default "Density profile".}
 
