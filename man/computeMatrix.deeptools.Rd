@@ -48,8 +48,8 @@ computeMatrix.deeptools(
 }
 \arguments{
 \item{mode}{The type of matrix computation. Allowed values are "reference-point" or "scale-region". No default. \itemize{
- \item \code{reference-point} Reference-point refers to a position within a BED region (e.g., the starting point). In this mode, only those genomicpositions before (upstream) and/or after (downstream) of the reference point will be plotted;
- \item \code{scale-region} In the scale-regions mode, all regions in the BED file are stretched or shrunken to the length (in bases) indicated by the user.
+ \item \code{reference-point}: \cr Reference-point refers to a position within a BED region (e.g., the starting point). In this mode, only those genomicpositions before (upstream) and/or after (downstream) of the reference point will be plotted;
+ \item \code{scale-region}: \cr In the scale-regions mode, all regions in the BED file are stretched or shrunken to the length (in bases) indicated by the user.
 }}
 
 \item{scoreFileName}{String vector with the full paths to bigWig file(s) containing the scores to be plotted.}
@@ -147,7 +147,7 @@ computeMatrix.deeptools(
    outFileName = "path_to/output_matrix.gz",
    computeMatrix.deeptools.command = "/home/user/anaconda3/bin/computeMatrix",
    referencePoint = "peakMax")
-   
+
 computeMatrix.deeptools(
    mode = "scale-regions",
    scoreFileName = c("path_to/signal_file1.bw", "path_to/signal_file2.bw"),
