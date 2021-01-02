@@ -318,8 +318,17 @@ plot.density.profile = function(
     }
   
   
+  ###########
   ### Generate a plot by group (each plot is a group, each signal/line is a sample)
   if (plot.by.group == T) {
+    
+    # Define the colors for the samples
+    if ((length(colors) > 1 & length(colors) < length(unique(sample_names))) | length(colors) == 0) {
+      all_colors = colors()[!grepl(pattern = "gr(e|a)y", x = colors())] # grays are removed
+      set.seed(runif(1, 1,100))
+      colors = all_colors[round(runif(n = length(unique(sample_names)), min = 1, max = length(all_colors)), 0)]
+    }
+    
     for (i in 1:length(group_names)) {
       
       # Check if plot the center line
@@ -337,13 +346,6 @@ plot.density.profile = function(
       x.lim = check.parameter.length(parameter = x.lim, parameter.name = "'x.lim'", plots.number = length(group_names))
       y.lim = check.parameter.length(parameter = y.lim, parameter.name = "'y.lim'", plots.number = length(group_names))
       title = check.parameter.length(parameter = title, parameter.name = "'title'", plots.number = length(group_names))
-      
-      # Define the colors
-      if (length(colors) > 1 & length(colors) < length(unique(current.table$sample))) {
-        all_colors = colors()[!grepl(pattern = "gr(e|a)y", x = colors())] # grays are removed
-        set.seed(runif(1, 1,100))
-        colors = all_colors[round(runif(n = length(unique(current.table$sample)), min = 1, max = length(all_colors)), 0)]
-      }
       
       # Select only current group subtable
       current.table = full.stat.table %>% filter(group == group_names[i])
@@ -395,8 +397,17 @@ plot.density.profile = function(
       names(plot.list)[i] = group_names[i]
     } # for loop end
     
+    ########
     ### Generate a plot by sample (each plot is a sample, each signal/line is a group)
   } else { # if end
+    
+    # Define the colors for each group
+    if ((length(colors) > 1 & length(colors) < length(unique(group_names))) | length(colors) == 0) {
+      all_colors = colors()[!grepl(pattern = "gr(e|a)y", x = colors())] # grays are removed
+      set.seed(runif(1, 1,100))
+      colors = all_colors[round(runif(n = length(unique(group_names)), min = 1, max = length(all_colors)), 0)]
+    }
+    
     for (i in 1:length(sample_names)) {
       
       # Check if plot the center line
@@ -414,13 +425,6 @@ plot.density.profile = function(
       x.lim = check.parameter.length(parameter = x.lim, parameter.name = "'x.lim'", plots.number = length(sample_names))
       y.lim = check.parameter.length(parameter = y.lim, parameter.name = "'y.lim'", plots.number = length(sample_names))
       title = check.parameter.length(parameter = title, parameter.name = "'title'", plots.number = length(sample_names))
-      
-      # Define the colors
-      if (length(colors) > 1 & length(colors) < length(unique(current.table$group))) {
-        all_colors = colors()[!grepl(pattern = "gr(e|a)y", x = colors())] # grays are removed
-        set.seed(runif(1, 1,100))
-        colors = all_colors[round(runif(n = length(unique(current.table$group)), min = 1, max = length(all_colors)), 0)]
-      }
       
       # Select only current group subtable
       current.table = full.stat.table %>% filter(sample == sample_names[i])
