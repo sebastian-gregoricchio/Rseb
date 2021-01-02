@@ -339,7 +339,7 @@ plot.density.profile = function(
       
       # Repeat the value of x.lim, y.lim, title parameters if their length is 1
       if (!is.null(x.lim) & length(x.lim) == 1) {x.lim = lapply(1:length(group_names), function(j) x.lim[[1]])}
-      if (!is.null(y.lim) & length(x.lim) == 1) {y.lim = lapply(1:length(group_names), function(j) y.lim[[1]])}
+      if (!is.null(y.lim) & length(y.lim) == 1) {y.lim = lapply(1:length(group_names), function(j) y.lim[[1]])}
       if (!is.null(title) & length(title) == 1) {title = rep(title, length(group_names))}
       
       # Check the length of the x.lim, y.lim, title parameters
@@ -418,7 +418,7 @@ plot.density.profile = function(
       
       # Repeat the value of x.lim, y.lim, title parameters if their length is 1
       if (!is.null(x.lim) & length(x.lim) == 1) {x.lim = lapply(1:length(sample_names), function(j) x.lim[[1]])}
-      if (!is.null(y.lim) & length(x.lim) == 1) {y.lim = lapply(1:length(sample_names), function(j) y.lim[[1]])}
+      if (!is.null(y.lim) & length(y.lim) == 1) {y.lim = lapply(1:length(sample_names), function(j) y.lim[[1]])}
       if (!is.null(title) & length(title) == 1) {title = rep(title, length(sample_names))}
       
       # Check the length of the x.lim, y.lim, title parameters
