@@ -1,4 +1,4 @@
-# Rseb <img src="Rseb_logo.svg" align="right" height = 150/>
+# Rseb <img src="https://raw.githubusercontent.com/sebastian-gregoricchio/Rseb/78f72d424f2bc817a33534101247d043e8255a57/Rseb_logo.svg" align="right" height = 150/>
 
 An R-package for daily tasks required to handle biological data as well as avoid re-coding of small functions for quick but necessary data managing.
 
