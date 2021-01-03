@@ -31,7 +31,7 @@ devtools::install_github("sebastian-gregoricchio/Rseb")
 With the package a [PDF manual](https://github.com/sebastian-gregoricchio/Rseb/blob/main/Rseb_0.1.0_manual.pdf) is available.
 
 # Contact
-For any suggestion, bug fixing, commentary please contact [Sebastian Gregoricchio](mailto:sebastian.gregoricchio@gmail.com).
+For any suggestion, bug fixing, commentary please contact Sebastian Gregoricchio at [sebastian.gregoricchio@gmail.com](mailto:sebastian.gregoricchio@gmail.com).
 
 # License
 This package is under a [GNU General Public License (version 3)](https://github.com/sebastian-gregoricchio/Rseb/blob/main/LICENSE.md/LICENSE.md).
