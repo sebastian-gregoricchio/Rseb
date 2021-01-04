@@ -17,7 +17,7 @@ BiocManager::install(c("Biostrings", "biomaRt", "GO.db", "rtracklayer"))
 ## DeepTools
 Certain functions of this package require that `deeptools` is installed on your system. For more information see the [deepTools](https://deeptools.readthedocs.io/en/develop/content/installation.html) installation page.
 
-### `Conda installation`
+### Installation via `conda`
 ```
 conda install -c bioconda deeptools
 ```
