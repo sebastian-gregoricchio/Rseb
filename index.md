@@ -14,6 +14,7 @@ To install them directly you need to have previously installed `BiocManager` and
 BiocManager::install(c("Biostrings", "biomaRt", "GO.db", "rtracklayer"))
 ```
 
+<br></br>
 # Installation
 ```r
 # Install devtools from CRAN
@@ -27,11 +28,14 @@ install.packages("devtools")
 devtools::install_github("sebastian-gregoricchio/Rseb")
 ```
 
+<br></br>
 # Documentation
 With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_0.1.0_manual.pdf) is available.
 
+<br></br>
 # Contact
 For any suggestion, bug fixing, commentary please contact Sebastian Gregoricchio at [sebastian.gregoricchio@gmail.com](mailto:sebastian.gregoricchio@gmail.com).
 
+<br></br>
 # License
 This package is under a [GNU General Public License (version 3)](https://github.com/sebastian-gregoricchio/Rseb/blob/main/LICENSE.md/LICENSE.md).
