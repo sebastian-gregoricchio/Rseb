@@ -28,10 +28,10 @@ Certain functions of this package require that `deeptools` is installed on your 
 Certain functions of this package require that `bedtools` is installed on your system. For more information see the [bedTools](https://bedtools.readthedocs.io/en/latest/content/installation.html) installation page.
 * **Installation via `conda`**: `conda install -c bioconda bedtools`
 * **Command line installation**:
-    + Fedora/Centos: `yum install BEDTools`
-    + Debian/Ubuntu: `apt-get install bedtools`
-    + Homebrew (MacOS): `brew tap homebrew/science; brew install bedtools`
-    + MacPorts: `port install bedtools`
+    - Fedora/Centos: `yum install BEDTools`
+    - Debian/Ubuntu: `apt-get install bedtools`
+    - Homebrew (MacOS): `brew tap homebrew/science; brew install bedtools`
+    - MacPorts: `port install bedtools`
 
 
 ## Installation
