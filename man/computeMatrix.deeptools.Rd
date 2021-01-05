@@ -132,7 +132,7 @@ computeMatrix.deeptools(
 The function generates the files indicated by the output parameters.
 }
 \description{
-This functions runs a command line that uses \code{deeptools} to calculate scores per genome regions and to prepare an intermediate file that can be used with \link{plot.density.profile}. Typically, the genome regions are genes, but any other regions defined in a BED file can be used. computeMatrix accepts multiple score files (bigWig format) and multiple regions files (BED format). This tool can also be used to filter and sort regions according to their score.
+This function runs a command line that uses \code{deeptools} to calculate scores per genome regions and to prepare an intermediate file that can be used with \link{plot.density.profile}. Typically, the genome regions are genes, but any other regions defined in a BED file can be used. computeMatrix accepts multiple score files (bigWig format) and multiple regions files (BED format). This tool can also be used to filter and sort regions according to their score.
 }
 \details{
 To know more about the deeptools's \code{computeMatrix} function see the package manual at the following link: \cr \url{https://deeptools.readthedocs.io/en/develop/content/tools/computeMatrix.html}.
