@@ -18,7 +18,7 @@ To install them directly you need to have previously installed `BiocManager` and
 BiocManager::install(c("Biostrings", "biomaRt", "GO.db", "rtracklayer"))
 ```
 
-### DeepTools
+### deepTools
 Certain functions of this package require that `deeptools` is installed on your system. For more information see the [deepTools](https://deeptools.readthedocs.io/en/develop/content/installation.html) installation page.
 
 **Installation via `conda`**
@@ -35,6 +35,23 @@ pip install deeptools
 ```
 All python requirements should be automatically installed.
 
+
+### bedTools
+Certain functions of this package require that `bedtools` is installed on your system. For more information see the [bedTools](https://bedtools.readthedocs.io/en/latest/content/installation.html) installation page.
+
+**Installation via `conda`**
+```bash
+conda install -c bioconda bedtools
+```
+
+
+**Command line installation 
+
+Install deepTools using the following command:
+* Fedora/Centos: `yum install BEDTools`
+* Debian/Ubuntu: `apt-get install bedtools`
+* Homebrew (MacOS): `brew tap homebrew/science; brew install bedtools`
+* MacPorts: `port install bedtools`
 
 
 ## Installation
