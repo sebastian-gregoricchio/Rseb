@@ -26,7 +26,9 @@ Certain functions of this package require that `deeptools` is installed on your 
 conda install -c bioconda deeptools
 ```
 
+
 **Command line installation using `pip`**
+
 Install deepTools using the following command:
 ```python
 pip install deeptools
