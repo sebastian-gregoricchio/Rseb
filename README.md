@@ -46,8 +46,6 @@ conda install -c bioconda bedtools
 
 
 **Command line installation**
-
-Install deepTools using the following command:
 * Fedora/Centos: `yum install BEDTools`
 * Debian/Ubuntu: `apt-get install bedtools`
 * Homebrew (MacOS): `brew tap homebrew/science; brew install bedtools`
