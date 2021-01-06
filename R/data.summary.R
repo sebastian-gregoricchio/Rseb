@@ -13,14 +13,12 @@
 #'
 #' @export data.summary
 #'
-#' @import plyr
+#' @import plyr ddply
 
 
 data.summary = function(data,
                         variable,
                         group.names){
-
-  require(plyr)
 
   summary_func = function(x, col){
     c(mean = mean(x[[col]], na.rm=TRUE),
@@ -29,10 +27,10 @@ data.summary = function(data,
       median = median(x[[col]], na.rm=TRUE))
   }
 
-  data_sum = ddply(data,
-                   group.names,
-                   .fun=summary_func,
-                   variable)
+  data_sum = plyr::ddply(data,
+                         group.names,
+                         .fun=summary_func,
+                         variable)
   #data_sum = rename(data_sum, c("mean" = variable))
   return(data_sum)
 }

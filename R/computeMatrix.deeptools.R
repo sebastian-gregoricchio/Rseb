@@ -58,7 +58,7 @@
 #'
 #'
 #'
-#' @return The function generates the files indicated by the output parameters.
+#' @return The function generates the files indicated by the output parameters. The matrix.gz output file can be read by the function \link{read.computeMatrix.file}.
 #'
 #'
 #'

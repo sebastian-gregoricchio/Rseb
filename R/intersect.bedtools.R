@@ -61,7 +61,7 @@
 #'
 #' @export intersect.bedtools
 #'
-#' @import data.table
+#' @import data.table fread
 
 
 

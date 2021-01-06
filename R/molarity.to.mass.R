@@ -34,7 +34,7 @@ molarity.to.mass = function(final_concentration,
   }
 
 
-  # convertion final volume to liters
+  # conversion final volume to liters
   V_unit = final_volume_unit
   V = final_volume
 
