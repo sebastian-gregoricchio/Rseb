@@ -60,13 +60,13 @@
 #' @import tidyr
 #' @import dplyr
 #' @import ggplot2
-#' @import data.table fread
-#' @import stringr str_split
-#' @import robustbase colMedians
-#' @import matrixStats colSds
-#' @import purrr reduce
-#' @import cowplot plot_grid
-#' @import tools toTitleCase
+#' @importFrom data.table fread
+#' @importFrom stringr str_split
+#' @importFrom robustbase colMedians
+#' @importFrom matrixStats colSds
+#' @importFrom purrr reduce
+#' @importFrom cowplot plot_grid
+#' @importFrom tools toTitleCase
 
 plot.density.profile = function(
   matrix.file,
