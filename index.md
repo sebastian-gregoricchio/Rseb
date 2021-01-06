@@ -30,7 +30,7 @@ Certain functions of this package require that `bedtools` is installed on your s
     - MacPorts: `port install bedtools`
 
 
-## **Installation**
+## Installation
 ```r
 # Install devtools from CRAN
 install.packages("devtools")
@@ -43,11 +43,11 @@ install.packages("devtools")
 devtools::install_github("sebastian-gregoricchio/Rseb")
 ```
 
-## **Documentation**
+## Documentation
 With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_0.1.1_manual.pdf) is available.
 
 
-## **Package history and releases**
+## Package history and releases
 The changeLog could be found [here](https://github.com/sebastian-gregoricchio/Rseb/blob/main/NEWS.md).
 
 **Old releases**
@@ -56,8 +56,8 @@ The changeLog could be found [here](https://github.com/sebastian-gregoricchio/Rs
 
 
 -----------------
-## **Contact**
+## Contact
 For any suggestion, bug fixing, commentary please contact Sebastian Gregoricchio at [sebastian.gregoricchio@gmail.com](mailto:sebastian.gregoricchio@gmail.com).
 
-## **License**
+## License
 This package is under a [GNU General Public License (version 3)](https://github.com/sebastian-gregoricchio/Rseb/blob/main/LICENSE.md/LICENSE.md).
