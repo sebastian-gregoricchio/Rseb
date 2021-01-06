@@ -129,7 +129,7 @@ computeMatrix.deeptools(
 \item{verbose}{Logic value to define if to be VERY verbose in the status messages. --quiet will disable this. By default \code{FALSE}.}
 }
 \value{
-The function generates the files indicated by the output parameters.
+The function generates the files indicated by the output parameters. The matrix.gz output file can be read by the function \link{read.computeMatrix.file}.
 }
 \description{
 This function runs a command line that uses \code{deeptools} to calculate scores per genome regions and to prepare an intermediate file that can be used with \link{plot.density.profile}. Typically, the genome regions are genes, but any other regions defined in a BED file can be used. computeMatrix accepts multiple score files (bigWig format) and multiple regions files (BED format). This tool can also be used to filter and sort regions according to their score.
