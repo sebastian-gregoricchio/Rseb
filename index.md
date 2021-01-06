@@ -48,7 +48,7 @@ With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rs
 
 
 ## Package history and releases
-The changeLog could be found [here](https://github.com/sebastian-gregoricchio/Rseb/blob/main/NEWS.md)
+The changeLog could be found [here](https://github.com/sebastian-gregoricchio/Rseb/blob/main/NEWS.md).
 
 **Old releases**
 * [Rseb v0.1.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.0)
