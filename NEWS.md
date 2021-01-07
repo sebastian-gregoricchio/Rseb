@@ -1,4 +1,4 @@
-# **Rseb** <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
+# Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
 
 ## v0.1.0 - January 5th 2021
 First release.
@@ -7,3 +7,8 @@ First release.
 * Some bug-fixing;
 * Added the function `read.computeMatrix.file`;
 * Optimized function `plot.density.profile` to be compatibile with outputs from `read.computeMatrix.file`.
+
+## v0.1.2 - January 7th 2021
+* Optimization of `IGVsnap` function;
+* Added the function `pkg.check`.
+

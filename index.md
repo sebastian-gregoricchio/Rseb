@@ -44,7 +44,7 @@ devtools::install_github("sebastian-gregoricchio/Rseb")
 ```
 
 ## Documentation
-With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_0.1.1_manual.pdf) is available.
+With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_0.1.2_manual.pdf) is available.
 
 
 ## Package history and releases
@@ -52,6 +52,7 @@ The changeLog could be found [here](https://github.com/sebastian-gregoricchio/Rs
 
 **Old releases**
 * [Rseb v0.1.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.0)
+* [Rseb v0.1.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.1)
 
 
 
