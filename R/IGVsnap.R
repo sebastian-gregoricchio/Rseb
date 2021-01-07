@@ -1,6 +1,6 @@
 #' @title Script generator for Integrative Genomics Viewer (IGV) batch tasks.
 #'
-#' @description Helps to the generation of a script file that can be run on IGV to generate multiple screenshots at specific genomic regions.
+#' @description The function builds a script file that can be run on IGV to generate multiple screenshots at specific genomic regions.
 #'
 #' @param loci_vector Either a gene name vector (e.g. \code{c("Gapdh", "Spi1", ...)}) or a regions vector (eg. \code{c('chr1:253000-256503', ...)}. All IGV formats are allowed.
 #' @param input_type Define the input type. Allowed values are \code{genes} and \code{regions}.
@@ -16,11 +16,10 @@
 #' @param maxPanelHeight Numeric value to define the height in pixel of the IGV pannel that will be captured on IGV.
 #' @param session [optional] FULL path to an IGV session file (session.xml) to use for the images. By default \code{NULL}.
 #' @param exit Logical value to indicate whether exit IGV after image capture ended. By default \code{FALSE}.
-#' @param help Logical value to indicate whether display the help. By default \code{FALSE}.
 #'
 #' @return Exports a .txt file ready-to-use on IGV.
 #'
-#' @details For more info on how batch tasks work on IGV see: \cr \url{https://software.broadinstitute.org/software/igv/PortCommands}.
+#' @details To run the script on IGV: Tools > Run Batch Script... > choose the .txt output file from this function. \cr For more info on how batch tasks work on IGV see: \cr \url{https://software.broadinstitute.org/software/igv/PortCommands}.
 #'
 #' @export IGVsnap
 #'
@@ -43,14 +42,7 @@ IGVsnap = function(loci_vector,
                    snap_directory = getwd(),
                    maxPanelHeight = 1000,
                    session = NULL,
-                   exit = FALSE,
-                   help = FALSE) {
-
-  # Install packages from bioconductor
-  pkg = "biomaRt"
-  if (!require(pkg, character.only = TRUE)) {
-    BiocManager::install(pkg)
-    if(!require(pkg, character.only = TRUE)) stop(paste(pkg,"package not found."))}
+                   exit = FALSE) {
 
   # check parameters
     help_message = c(
@@ -72,12 +64,18 @@ IGVsnap = function(loci_vector,
     "             help   logical to indicate whether display the help, FALSE by default. \n",
     "\n", "More info at https://software.broadinstitute.org/software/igv/PortCommands")
 
-  if (exists("input_type") == F | exists("loci_vector") == F | help == T | (!(input_type %in% c("genes", "regions")))) {return(message(help_message))}
+  if (exists("input_type") == F | exists("loci_vector") == F | (!(input_type %in% c("genes", "regions")))) {return(message(help_message))}
 
   # Retrieves regions
   if (input_type == "genes") {
     loci_vector = sort(unique(loci_vector))
 
+    # Install packages from bioconductor
+    pkg = "biomaRt"
+    if (!require(pkg, character.only = TRUE)) {
+      BiocManager::install(pkg)
+      if(!require(pkg, character.only = TRUE)) stop(paste(pkg,"package not found."))}
+    
     require(biomaRt)
     # to list all the datasets availables
     # listDatasets(useMart("ensembl"))
@@ -173,4 +171,4 @@ IGVsnap = function(loci_vector,
           "The final snapshoot will be generated in the following folder: \n",
           snap_directory)
 
-} # END funtion
+} # END function
