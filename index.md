@@ -52,7 +52,7 @@ The changeLog could be found [here](https://github.com/sebastian-gregoricchio/Rs
 
 **Old releases**
 * [Rseb v0.1.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.0)
-* [Rseb v0.1.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.1)
+* [Rseb v0.1.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.1)
 
 
 
