@@ -18,8 +18,7 @@ IGVsnap(
   snap_directory = getwd(),
   maxPanelHeight = 1000,
   session = NULL,
-  exit = FALSE,
-  help = FALSE
+  exit = FALSE
 )
 }
 \arguments{
@@ -50,15 +49,13 @@ IGVsnap(
 \item{session}{[optional] FULL path to an IGV session file (session.xml) to use for the images. By default \code{NULL}.}
 
 \item{exit}{Logical value to indicate whether exit IGV after image capture ended. By default \code{FALSE}.}
-
-\item{help}{Logical value to indicate whether display the help. By default \code{FALSE}.}
 }
 \value{
 Exports a .txt file ready-to-use on IGV.
 }
 \description{
-Helps to the generation of a script file that can be run on IGV to generate multiple screenshots at specific genomic regions.
+The function builds a script file that can be run on IGV to generate multiple screenshots at specific genomic regions.
 }
 \details{
-For more info on how batch tasks work on IGV see: \cr \url{https://software.broadinstitute.org/software/igv/PortCommands}.
+To run the script on IGV: Tools > Run Batch Script... > choose the .txt output file from this function. \cr For more info on how batch tasks work on IGV see: \cr \url{https://software.broadinstitute.org/software/igv/PortCommands}.
 }
