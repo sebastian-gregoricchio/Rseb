@@ -14,10 +14,10 @@
 #'  }
 #'  This list can be passed as it is to the function \link{plot.density.profile}.
 #'
-#' @import dplyr
-#' @importFrom data.table fread
-#' @importFrom stringr str_split
-#' @importFrom tidyr separate
+# @import dplyr
+# @importFrom data.table fread
+# @importFrom stringr str_split
+# @importFrom tidyr separate
 
 
 read.computeMatrix.file = function(matrix.file) {

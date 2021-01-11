@@ -57,16 +57,16 @@
 #'
 #' @export plot.density.profile
 #'
-#' @import tidyr
-#' @import dplyr
-#' @import ggplot2
-#' @importFrom data.table fread
-#' @importFrom stringr str_split
-#' @importFrom robustbase colMedians
-#' @importFrom matrixStats colSds
-#' @importFrom purrr reduce
-#' @importFrom cowplot plot_grid
-#' @importFrom tools toTitleCase
+# @import tidyr
+# @import dplyr
+# @import ggplot2
+# @importFrom data.table fread
+# @importFrom stringr str_split
+# @importFrom robustbase colMedians
+# @importFrom matrixStats colSds
+# @importFrom purrr reduce
+# @importFrom cowplot plot_grid
+# @importFrom tools toTitleCase
 
 plot.density.profile = function(
   matrix.file,

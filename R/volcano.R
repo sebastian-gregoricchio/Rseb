@@ -36,13 +36,14 @@
 #' @param threshold_line_color String to define the color of the threshold lines. By default \code{"gray70"}
 #' @param threshold_line_type String or numeric value to define the threshold lines type. Both numeric and string standard R codes are accepted. By default \code{"dotted"}, equivalent to \code{2}.
 #' @param font_family String to define the font family to use in the plot writings. By default \code{"Helvetica"}.
+#' @param font_size Numeric value to define the font size. By default 12.
 #'
 #' @return A plot in ggplot2 format.
 #'
 #' @export volcano
 #'
-#' @import ggplot2
-#' @import ggrepel
+# @import ggplot2
+# @import ggrepel
 
 volcano = function(log2FC_data,
                         padj_data,
@@ -102,11 +103,13 @@ volcano = function(log2FC_data,
                         add_threshold_lines = T,
                         threshold_line_color = "gray70",
                         threshold_line_type = "dotted",
-                        font_family = "Helvetica", ...) {
+
+                        # font parameters
+                        font_family = "Helvetica",
+                        font_size = 12) {
 
   if (length(log2FC_data) != length(padj_data)) {
-    warning("ERROR: length(log2FC_data) is different from length(padj_data)")
-    return(NULL)
+    return(warning("ERROR: length(log2FC_data) is different from length(padj_data)."))
   }
 
   # Generate a table containing the data and their status
@@ -143,7 +146,14 @@ volcano = function(log2FC_data,
     xlab(x_label) +
     ylab(y_label) +
     theme_classic() +
-    theme(text = element_text(family = font_family))
+    theme(text = element_text(family = font_family, size = font_size),
+          axis.text = element_text(color = "#000000"),
+          axis.title = element_text(color = "#000000"),
+          axis.line = element_line(color = "#000000"),
+          axis.ticks = element_line(color = "#000000"),
+          title = element_text(color = "#000000"),
+          legend.title = element_text(color = "#000000"),
+          legend.text = element_text(color = "#000000"))
 
 
   # remove legend if necessary

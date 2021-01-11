@@ -227,11 +227,11 @@ computeMatrix.deeptools =
 
 
     ###### Add common optional parameters
-    if (!is.null(sortUsingSamples)) {command = paste(command, paste(sortUsingSamples, collapse = " "))}
-    if (!is.null(minThreshold)) {command = paste(command, paste(minThreshold, collapse = " "))}
-    if (!is.null(maxThreshold)) {command = paste(command, paste(maxThreshold, collapse = " "))}
-    if (!is.null(blackListFileName)) {command = paste(command, add.quotes(blackListFileName))}
-    if (!is.null(samplesLabel)) {command = paste(command, paste(add.quotes(samplesLabel), collapse = " "))}
+    if (!is.null(sortUsingSamples)) {command = paste(command, "--sortUsingSamples", paste(sortUsingSamples, collapse = " "))}
+    if (!is.null(minThreshold)) {command = paste(command, "--minThreshold", paste(minThreshold, collapse = " "))}
+    if (!is.null(maxThreshold)) {command = paste(command, "--maxThreshold", paste(maxThreshold, collapse = " "))}
+    if (!is.null(blackListFileName)) {command = paste(command, "--blackListFileName", add.quotes(blackListFileName))}
+    if (!is.null(samplesLabel)) {command = paste(command, "--samplesLabel", paste(add.quotes(samplesLabel), collapse = " "))}
 
     if (missingDataAsZero == T) {command = paste(command, "--missingDataAsZero")}
     if (skipZeros == T) {command = paste(command, "--skipZeros")}

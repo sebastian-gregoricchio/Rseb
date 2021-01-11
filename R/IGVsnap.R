@@ -23,8 +23,8 @@
 #'
 #' @export IGVsnap
 #'
-#' @import biomaRt
-#' @import dplyr
+# @import biomaRt
+# @import dplyr
 
 ######################
 ## IGVsnap function ##
@@ -75,7 +75,7 @@ IGVsnap = function(loci_vector,
     if (!require(pkg, character.only = TRUE)) {
       BiocManager::install(pkg)
       if(!require(pkg, character.only = TRUE)) stop(paste(pkg,"package not found."))}
-    
+
     require(biomaRt)
     # to list all the datasets availables
     # listDatasets(useMart("ensembl"))

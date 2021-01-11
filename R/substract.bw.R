@@ -12,7 +12,7 @@
 #'
 #' @export substract.bw
 #'
-#' @import rtracklayer
+# @import rtracklayer
 
 
 substract.bw = function(bw1,

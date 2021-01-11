@@ -4,7 +4,7 @@
 \alias{intersect.bedtools}
 \title{Intersect two or more bed files (by \code{bedtools intersect} function).}
 \usage{
-\method{intersect}{bedtools}(
+intersect.bedtools(
   a,
   b,
   outputFileName = paste(getwd(), "intersected.bed", sep = "/"),

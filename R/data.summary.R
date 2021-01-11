@@ -13,7 +13,7 @@
 #'
 #' @export data.summary
 #'
-#' @importFrom plyr ddply
+# @importFrom plyr ddply
 
 
 data.summary = function(data,

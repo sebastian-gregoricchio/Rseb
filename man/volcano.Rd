@@ -39,7 +39,7 @@ volcano(
   threshold_line_color = "gray70",
   threshold_line_type = "dotted",
   font_family = "Helvetica",
-  ...
+  font_size = 12
 )
 }
 \arguments{
@@ -110,6 +110,8 @@ volcano(
 \item{threshold_line_type}{String or numeric value to define the threshold lines type. Both numeric and string standard R codes are accepted. By default \code{"dotted"}, equivalent to \code{2}.}
 
 \item{font_family}{String to define the font family to use in the plot writings. By default \code{"Helvetica"}.}
+
+\item{font_size}{Numeric value to define the font size. By default 12.}
 }
 \value{
 A plot in ggplot2 format.

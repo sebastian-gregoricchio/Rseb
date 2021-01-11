@@ -4,7 +4,7 @@
 \alias{sort.bed}
 \title{Sorter function for .bed files.}
 \usage{
-sort.bed(
+\method{sort}{bed}(
   bed,
   bed.header = F,
   sep = "\\t",

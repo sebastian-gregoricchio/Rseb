@@ -4,7 +4,7 @@
 \alias{plot.density.profile}
 \title{Plot of NGS density signal at specific regions from deepTools matrices.}
 \usage{
-plot.density.profile(
+\method{plot}{density.profile}(
   matrix.file,
   plot.by.group = T,
   missing.data.as.zero = NULL,

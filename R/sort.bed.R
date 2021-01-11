@@ -16,7 +16,7 @@
 #'
 #' @export sort.bed
 #'
-#' @import dplyr
+# @import dplyr
 
 
 sort.bed = function(bed,

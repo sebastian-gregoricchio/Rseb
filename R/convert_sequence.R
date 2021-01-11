@@ -15,7 +15,7 @@
 #'
 #' @export convert_sequence
 #'
-#' @import Biostrings
+# @import Biostrings
 
 convert_sequence = function(sequence = NULL,
                             mode = "not specified",

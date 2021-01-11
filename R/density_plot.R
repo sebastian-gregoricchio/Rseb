@@ -24,7 +24,7 @@
 #'
 #' @export density_plot
 #'
-#' @import ggplot2
+# @import ggplot2
 
 
 density_plot = function(
@@ -53,13 +53,13 @@ density_plot = function(
                position = positions,
                score = scores,
                variance = variance_scores)
-  
+
   # assigns 0 to the alpha of the ribbon if variance == F
   if (variance == T) (variance_value = variance_opacity) else (variance_value = 0)
-  
+
   # scaling size of parameters
   n_samples = length(unique(matrix$sample))
-  
+
   # scaling number of colors/line.type to be equal to number samples
   scaling = function(x, n_samples) {
     if (length(x) < n_samples &
@@ -72,12 +72,12 @@ density_plot = function(
     } else (v = as.vector(x))
     return(v)
   }
-  
+
   line_type = scaling(line_type, n_samples)
   colors = scaling(colors, n_samples)
-  
+
   require(ggplot2)
-  
+
   # building the plot
   plot =
     ggplot(data = matrix,
@@ -110,14 +110,14 @@ density_plot = function(
           title = element_text(color = "#000000"),
           legend.title = element_text(color = "#000000"),
           legend.text = element_text(color = "#000000"))
-  
-  
+
+
   if (!(is.null(y_lim))) plot = plot + ylim(y_lim)
   if (!(is.null(x_lim))) plot = plot + xlim(x_lim)
-  
+
   if (print_plot == T) {
     (print(plot))}
-  
+
   return(plot)
-  
+
 } # END

@@ -14,8 +14,8 @@
 #'
 #' @export GSEA.to.GOnumber
 #'
-#' @import GO.db
-#' @import dplyr
+# @import GO.db
+# @import dplyr
 
 
 GSEA.to.GOnumber = function(input_terms,

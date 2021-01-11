@@ -12,3 +12,8 @@ First release.
 * Optimization of `IGVsnap` function;
 * Added the function `pkg.check`.
 
+## v0.1.3 - January 11th 2021
+* Optimization of `volcano` function: parameter 'font_size' added;
+* Bugs fixed in `computeMatrix.deeptools`
+* Added function `build.bed`.
+* Added R version dependence (set to R >= 3.2.0) to be compatible with `dplyr`. 
