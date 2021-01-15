@@ -16,4 +16,11 @@ First release.
 * Optimization of `volcano` function: parameter 'font_size' added;
 * Bugs fixed in `computeMatrix.deeptools`
 * Added function `build.bed`.
-* Added R version dependence (set to R >= 3.2.0) to be compatible with `dplyr`. 
+* Added R version dependence (set to R >= 3.2.0) to be compatible with `dplyr`.
+
+## v0.1.4 - January 15th 2021
+* Bugs fixed in `plot.density.profile`
+* Bugs fixed in `build.bed`
+* Bugs fixed in `intersect.bedtools`
+* Updated dependencies required (`labeling`)
+* Added functions `uniform.x.axis` and `uniform.y.axis`

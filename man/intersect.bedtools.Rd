@@ -22,8 +22,8 @@ intersect.bedtools(
   v = FALSE,
   f = NULL,
   F. = NULL,
-  r = NULL,
-  e = NULL,
+  r = FALSE,
+  e = FALSE,
   s = FALSE,
   S = FALSE,
   split = FALSE,
@@ -72,9 +72,9 @@ intersect.bedtools(
 
 \item{F.}{Numeric value defining the minimum overlap required as a fraction of B. Default is 1E-9 (i.e., 1bp). By default \code{NULL}.}
 
-\item{r}{Numeric value defining the required reciprocal fraction of overlap for A and B. In other words, if -f is 0.90 and -r is used, this requires that B overlap at least 90\% of A and that A also overlaps at least 90\% of B. By default \code{NULL}.}
+\item{r}{Logic value defining if the fraction (parameter \code{f}) is required to be reciprocal fraction of overlap for A and B. In other words, if -f is 0.90 and -r is used, this requires that B overlap at least 90\% of A and that A also overlaps at least 90\% of B. By default \code{NULL}.}
 
-\item{e}{Numeric value defining the minimum fraction to be satisfied for A _OR_ B. In other words, if -e is used with -f 0.90 and -F 0.10 this requires that either 90\% of A is covered OR 10\% of B is covered. Without -e, both fractions would have to be satisfied. By default \code{NULL}.}
+\item{e}{Logic value defining if the fraction (parameter \code{f}) must be satisfied for A _OR_ B. In other words, if -e is used with -f 0.90 and -F 0.10 this requires that either 90\% of A is covered OR 10\% of B is covered. Without -e, both fractions would have to be satisfied. By default \code{NULL}.}
 
 \item{s}{Logic value to define if to force “strandedness”. That is, only report hits in B that overlap A on the same strand. By default, overlaps are reported without respect to strand. By default \code{FALSE}.}
 

@@ -141,9 +141,9 @@ build.bed = function(
 
   # TRACK LINE BUILDING
   ##############################################################################
+  track.line = NULL
   if (!is.null(bed.file.name)) {
     if (export.track.line == TRUE) {
-      track.line = c()
       if (!is.null(track.name)) {if (length(track.name) == 1) {track.line = c(track.line, paste('track name="', track.name, '"', sep = ""))}}
       if (!is.null(display.mode)) {if (length(display.mode) == 1 & display.mode %in% c("hide", "dense", "full", "pack", "squish")) {track.line = c(track.line, paste('visibility="', display.mode, '"', sep = ""))}}
       if (itemRgb.ON == TRUE & !is.null(itemRgb)) {track.line = c(track.line, 'itemRgb="on"')}
@@ -197,18 +197,22 @@ build.bed = function(
 
   # OUTPUT GENERATION
   ##############################################################################
+  # Coerce track.line when empty
+  if (is.null(track.line)) {track.line = ""}
+
   # Export file if required
   if (!is.null(bed.file.name)) {
     if (length(bed.file.name) == 1) {
       if (export.track.line == T & track.line != "") {
-        write(x = track.line, file = bed.file.name)
-        write.table(x = bed, file = bed.file.name,
-                    quote = F, sep = "\t", row.names = F, col.names = F, append = T)
+          write(x = track.line, file = bed.file.name)
+          write.table(x = bed, file = bed.file.name,
+                      quote = F, sep = "\t", row.names = F, col.names = F, append = T)
+          message(paste("Bed file exported as -> ", bed.file.name, sep = ""))
       } else {
         write.table(x = bed, file = bed.file.name,
                     quote = F, sep = "\t", row.names = F, col.names = F)
+        message(paste("Bed file exported as -> ", bed.file.name, sep = ""))
       }
-      message(paste("Bed file exported as -> ", bed.file.name, sep = ""))
     }
   }
 

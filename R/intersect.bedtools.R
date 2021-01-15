@@ -24,8 +24,8 @@
 #'
 #' @param f Numeric value defining the minimum overlap required as a fraction of A. Default is 1E-9 (i.e. 1bp). By default \code{NULL}.
 #' @param F. Numeric value defining the minimum overlap required as a fraction of B. Default is 1E-9 (i.e., 1bp). By default \code{NULL}.
-#' @param r Numeric value defining the required reciprocal fraction of overlap for A and B. In other words, if -f is 0.90 and -r is used, this requires that B overlap at least 90\% of A and that A also overlaps at least 90\% of B. By default \code{NULL}.
-#' @param e Numeric value defining the minimum fraction to be satisfied for A _OR_ B. In other words, if -e is used with -f 0.90 and -F 0.10 this requires that either 90\% of A is covered OR 10\% of B is covered. Without -e, both fractions would have to be satisfied. By default \code{NULL}.
+#' @param r Logic value defining if the fraction (parameter \code{f}) is required to be reciprocal fraction of overlap for A and B. In other words, if -f is 0.90 and -r is used, this requires that B overlap at least 90\% of A and that A also overlaps at least 90\% of B. By default \code{NULL}.
+#' @param e Logic value defining if the fraction (parameter \code{f}) must be satisfied for A _OR_ B. In other words, if -e is used with -f 0.90 and -F 0.10 this requires that either 90\% of A is covered OR 10\% of B is covered. Without -e, both fractions would have to be satisfied. By default \code{NULL}.
 #' @param s Logic value to define if to force “strandedness”. That is, only report hits in B that overlap A on the same strand. By default, overlaps are reported without respect to strand. By default \code{FALSE}.
 #' @param S Logic value to define if to require different strandedness. That is, only report hits in B that overlap A on the _opposite_ strand. By default, overlaps are reported without respect to strand. By default \code{FALSE}.
 #'
@@ -91,8 +91,8 @@ intersect.bedtools =
     # options for overlaps restriction
     f = NULL,
     F. = NULL,
-    r = NULL,
-    e = NULL,
+    r = FALSE,
+    e = FALSE,
     s = FALSE,
     S = FALSE,
 
@@ -161,10 +161,10 @@ intersect.bedtools =
 
 
     ###### options for overlaps restriction
-    if (!is.null(f)) {command = paste(command, f)}
-    if (!is.null(F.)) {command = paste(command, F.)}
-    if (!is.null(r)) {command = paste(command, r)}
-    if (!is.null(e)) {command = paste(command, e)}
+    if (!is.null(f)) {command = paste(command, "-f", f)}
+    if (!is.null(F.)) {command = paste(command, "-F", F.)}
+    if (r == T & !is.null(f)) {command = paste(command, "-r")}
+    if (e == T & !is.null(f)) {command = paste(command, "-e")}
     if (s == T) {command = paste(command, "-s")}
     if (S == T) {command = paste(command, "-S")}
 
@@ -172,7 +172,7 @@ intersect.bedtools =
     ###### files handling options
     if (split == T) {command = paste(command, "-split")}
     if (sorted == T) {command = paste(command, "-sorted")}
-    if (!is.null(g) & length(g) == 1) {command = paste(command, add.quotes(g))}
+    if (!is.null(g) & length(g) == 1) {command = paste(command, "-g", add.quotes(g))}
 
 
     ###### Add output command
