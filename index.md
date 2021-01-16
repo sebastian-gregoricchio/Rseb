@@ -1,3 +1,4 @@
+![release](https://img.shields.io/github/v/release/sebastian-gregoricchio/Rseb)
 ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
 ![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/Rseb)
 ![license](https://img.shields.io/badge/License-GPLv3-blue.svg)
