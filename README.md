@@ -22,12 +22,14 @@ To install them directly you need to have previously installed `BiocManager` and
 ```r
 BiocManager::install(c("Biostrings", "biomaRt", "GO.db", "rtracklayer"))
 ```
+<br /> 
 
 ### deepTools
 Certain functions of this package require that `deeptools` is installed on your system. For more information see the [deepTools](https://deeptools.readthedocs.io/en/develop/content/installation.html) installation page.
 * **Installation via `conda`**: `conda install -c bioconda deeptools`
 * **Command line installation using `pip`**: `pip install deeptools`, All python requirements should be automatically installed.
 
+<br /> 
 
 ### bedTools
 Certain functions of this package require that `bedtools` is installed on your system. For more information see the [bedTools](https://bedtools.readthedocs.io/en/latest/content/installation.html) installation page.
@@ -38,6 +40,7 @@ Certain functions of this package require that `bedtools` is installed on your s
     - Homebrew (MacOS): `brew tap homebrew/science; brew install bedtools`
     - MacPorts: `port install bedtools`
 
+<br /> 
 
 ## Installation
 ```r
@@ -51,10 +54,12 @@ install.packages("devtools")
 # Install the Rseb package
 devtools::install_github("sebastian-gregoricchio/Rseb")
 ```
+<br /> 
 
 ## Documentation
 With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_0.1.4_manual.pdf) is available.
 
+<br /> 
 
 ## Package history and releases
 The changeLog could be found [here](https://github.com/sebastian-gregoricchio/Rseb/blob/main/NEWS.md).
@@ -65,6 +70,8 @@ The changeLog could be found [here](https://github.com/sebastian-gregoricchio/Rs
 * [Rseb v0.1.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.2)
 * [Rseb v0.1.3](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.3)
 
+<br /> 
+
 -----------------
 ## Contact
 For any suggestion, bug fixing, commentary please contact Sebastian Gregoricchio at [sebastian.gregoricchio@gmail.com](mailto:sebastian.gregoricchio@gmail.com).
@@ -73,4 +80,5 @@ For any suggestion, bug fixing, commentary please contact Sebastian Gregoricchio
 This package is under a [GNU General Public License (version 3)](https://github.com/sebastian-gregoricchio/Rseb/blob/main/LICENSE.md/LICENSE.md).
 
 
-Contributors: ![contributors](https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true)
+#### Contributors
+![contributors](https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true)
