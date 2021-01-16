@@ -50,10 +50,12 @@ install.packages("devtools")
 # Install the Rseb package
 devtools::install_github("sebastian-gregoricchio/Rseb")
 ```
+<br /> 
 
 ## Documentation
 With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_0.1.4_manual.pdf) is available.
 
+<br /> 
 
 ## Package history and releases
 The changeLog could be found [here](https://github.com/sebastian-gregoricchio/Rseb/blob/main/NEWS.md).
