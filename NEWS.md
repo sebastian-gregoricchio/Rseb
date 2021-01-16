@@ -1,7 +1,5 @@
 # Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
 
-<br /> 
-
 ## [v0.1.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.4) - January 5th 2021
 First release.
 
