@@ -1,5 +1,5 @@
 layout: page
-title: "changeLog"
+title: "changeLog_history"
 permalink: https://sebastian-gregoricchio.github.io/Rseb/changeLog
 
 
