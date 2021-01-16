@@ -1,3 +1,5 @@
+![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
+
 # Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
 
 An R-package for daily tasks required to handle biological data as well as avoid re-coding of small functions for quick but necessary data managing.
