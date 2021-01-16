@@ -36,6 +36,7 @@ Certain functions of this package require that `bedtools` is installed on your s
     - Homebrew (MacOS): `brew tap homebrew/science; brew install bedtools`
     - MacPorts: `port install bedtools`
 
+<br /> 
 
 ## Installation
 ```r
