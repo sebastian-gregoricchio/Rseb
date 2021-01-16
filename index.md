@@ -73,5 +73,6 @@ For any suggestion, bug fixing, commentary please contact Sebastian Gregoricchio
 This package is under a [GNU General Public License (version 3)](https://github.com/sebastian-gregoricchio/Rseb/blob/main/LICENSE.md/LICENSE.md).
 
 <br /> 
+
 ##### Contributors
 ![contributors](https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true)
