@@ -1,4 +1,5 @@
 ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
+![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/Rseb)
 
 ## Dependencies/Requirements <img src="Rseb_logo.svg" align="right" height = 120/>
 Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package. Anyway, install `Bioconductor` repository is recommended. 
@@ -68,9 +69,3 @@ For any suggestion, bug fixing, commentary please contact Sebastian Gregoricchio
 
 ## License
 This package is under a [GNU General Public License (version 3)](https://github.com/sebastian-gregoricchio/Rseb/blob/main/LICENSE.md/LICENSE.md).
-
-<br /> 
-<br /> 
-
------------------
-![Visitor count: ](https://profile-counter.glitch.me/sebastian-gregoricchio/count.svg)
