@@ -1,6 +1,8 @@
+---
 layout: page
 title: changeLog
 permalink: https://sebastian-gregoricchio.github.io/Rseb/changeLog
+---
 
 
 # Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/> ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
