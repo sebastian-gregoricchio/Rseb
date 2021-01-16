@@ -1,4 +1,5 @@
 ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
+![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/Rseb)
 
 # Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
 
