@@ -7,14 +7,12 @@ title: "changeLog"
 #### [v0.1.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.0) - January 5th 2021
 First releasing
 
-<br /> 
 
 #### [v0.1.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.1) - January 6th 2021
 * Some bug-fixing
 * Added the function `read.computeMatrix.file`
 * Optimized function `plot.density.profile` to be compatibile with outputs from `read.computeMatrix.file`
 
-<br /> 
 
 #### [v0.1.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.2) - January 7th 2021
 * Optimization of `IGVsnap` function
