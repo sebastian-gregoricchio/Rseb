@@ -80,4 +80,4 @@ This package is under a [GNU General Public License (version 3)](https://sebasti
 <br /> 
 
 ##### Contributors
-![[https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true]https://sebastian-gregoricchio.github.io/]
+![[https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true]](https://sebastian-gregoricchio.github.io/)
