@@ -36,3 +36,13 @@ First releasing
 * Bugs fixed in `intersect.bedtools`
 * Updated dependencies required (`labeling`)
 * Added functions `uniform.x.axis` and `uniform.y.axis`
+
+
+<br /> 
+<br /> 
+
+-----------------------------------------------------------------------
+
+##### Contributors
+[![contributors](https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true)](https://sebastian-gregoricchio.github.io/)
+
