@@ -37,6 +37,12 @@ First releasing
 * Updated dependencies required (`labeling`)
 * Added functions `uniform.x.axis` and `uniform.y.axis`
 
+<br /> 
+
+#### [v0.1.5](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.5) - January 29th 2021
+* `DE.status` now supports also NAs for the FoldChange
+* Added functions `color.gradient` and `is.color`
+* Bugs fixed in `volcano`
 
 <br /> 
 <br /> 
@@ -45,4 +51,5 @@ First releasing
 
 ##### Contributors
 [![contributors](https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true)](https://sebastian-gregoricchio.github.io/)
+
 
