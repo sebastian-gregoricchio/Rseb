@@ -92,8 +92,8 @@ volcano = function(log2FC_data,
                         legend_title = "Expression status",
 
                         # lables
-                        x_label = "log2(fold change expression)",
-                        y_label = "-log10(p-value adjusted)",
+                        x_label = bquote('log'['2']*'(Fold Change expression)'),
+                        y_label = bquote('-log'['10']*'(p-value'['adjusted']*')'),
 
                         # title
                         title = "Volcano plot",
@@ -214,11 +214,11 @@ volcano = function(log2FC_data,
                        show.legend = F)}
     if (padding == F) {
       p = p +
-        geom_label_repel(data = subset(table, table$DE_status == left_label),
-                         aes(label = ID),
-                         segment.color = 'grey50',
-                         size = names_size,
-                         show.legend = F)}
+        geom_text_repel(data = subset(table, table$DE_status == left_label),
+                        aes(label = ID),
+                        segment.color = 'grey50',
+                        size = names_size,
+                        show.legend = F)}
     }
 
   # Show names of down/right genes

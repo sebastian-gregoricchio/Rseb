@@ -29,6 +29,8 @@ DE.status = function(log2FC, # log2(FC)
                      unresponsive.label = "NoResp",
                      null.label = "NULL") {
 
+  # Check the presence of NAs in the FC
+
   # Check the unresponsive thresholds
   if (is.null(FC_NoResp_left) & is.null(FC_NoResp_rigth)) {
     return(warning("'FC_NoResp_left' and 'FC_NoResp_rigth' parameters can't be both NULL."))
@@ -51,19 +53,21 @@ DE.status = function(log2FC, # log2(FC)
 
   # Definition of the 4 status: UP, DOWN, NoResp, NULL
   for (i in 1:nrow(df)) {
-    if (df$FC_col[i] >= Fc & df$padj_col[i] <= p.value_threshold & !(is.na(df$padj_col[i]))) {
-      df$UP.DOWN[i] = high.FC.status.label} else {
+    if (!is.na(df$FC_col[i])) {
+      if (df$FC_col[i] >= Fc & df$padj_col[i] <= p.value_threshold & !(is.na(df$padj_col[i]))) {
+        df$UP.DOWN[i] = high.FC.status.label} else {
 
-        if (df$FC_col[i] <= -Fc & df$padj_col[i] <= p.value_threshold & !(is.na(df$padj_col[i]))) {
-          df$UP.DOWN[i] = low.FC.status.label} else {
+          if (df$FC_col[i] <= -Fc & df$padj_col[i] <= p.value_threshold & !(is.na(df$padj_col[i]))) {
+            df$UP.DOWN[i] = low.FC.status.label} else {
 
-            if ((FcNS_left <= df$FC_col[i]) & (df$FC_col[i] <= FcNS_rigth) & ((df$padj_col[i] > p.value_threshold) | (is.na(df$padj_col[i])))) {
-              df$UP.DOWN[i] = unresponsive.label} else {
+              if ((FcNS_left <= df$FC_col[i]) & (df$FC_col[i] <= FcNS_rigth) & ((df$padj_col[i] > p.value_threshold) | (is.na(df$padj_col[i])))) {
+                df$UP.DOWN[i] = unresponsive.label} else {
 
-                df$UP.DOWN[i] = null.label}
-          }
-      }
-  } # end for loop
+                  df$UP.DOWN[i] = null.label}
+            }
+        }
+    } # end is.na for FC
+  } # end FOR loop
 
   # Returns the vector of the DE status
   return(df$UP.DOWN)}
