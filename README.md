@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/sebastian-gregoricchio/Rseb/blob/main/LICENSE.md/LICENSE.md)
 ![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb.svg?style=social&label=Fork&maxAge=2592000)
 
-# Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
+# Rseb ![<img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>](https://sebastian-gregoricchio.github.io/Rseb/)
 
 An R-package for daily tasks required to handle biological data as well as avoid re-coding of small functions for quick but necessary data managing.
 
