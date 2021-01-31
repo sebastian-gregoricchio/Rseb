@@ -2,6 +2,7 @@
 ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
 ![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/Rseb)
 ![license](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb.svg?style=social&label=Fork&maxAge=2592000)
 
 ## Dependencies/Requirements <img src="Rseb_logo.svg" align="right" height = 120/>
 Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package. Anyway, install `Bioconductor` repository is recommended. 
