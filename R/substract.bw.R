@@ -22,6 +22,11 @@ substract.bw = function(bw1,
                         export.substracted.bw = T,
                         substracted.bw.file = paste(getwd(), "subtraction.bw", sep = "/")) {
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   # Loading libraries
   #require(sf) # due to a bug load this before
   pkg = "rtracklayer"

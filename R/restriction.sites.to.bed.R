@@ -40,44 +40,49 @@ restriction.sites.to.bed = function(
 
 {
 
-# Sorting the positions vector
-cut_positions = sort(cut_positions, decreasing = FALSE)
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
 
-#Creation of the variables
-chr = c()
-start = c()
-end = c()
-regions = c()
+  # Sorting the positions vector
+  cut_positions = sort(cut_positions, decreasing = FALSE)
 
-# It assigns 1 to enzyme-cut positions and 0 where there is not
-for (i in c(1:length(cut_positions))) {
-  chr[i] = paste("chr", chromosome, sep="", collapse="")
-  start[i] = cut_positions[i] + genome_start
-  end[i] = start[i] + enzyme_cut_length
-  regions[i] = paste(region_name, (i-1), sep="_", collapse = "")}
+  #Creation of the variables
+  chr = c()
+  start = c()
+  end = c()
+  regions = c()
+
+  # It assigns 1 to enzyme-cut positions and 0 where there is not
+  for (i in c(1:length(cut_positions))) {
+    chr[i] = paste("chr", chromosome, sep="", collapse="")
+    start[i] = cut_positions[i] + genome_start
+    end[i] = start[i] + enzyme_cut_length
+    regions[i] = paste(region_name, (i-1), sep="_", collapse = "")}
 
 
-# Removing of all positions that do not contain a cut site, or 'keep all values different from 0' for each vector
-# chr = chr[chr != 0]
-# start = start[start != 0]
-# end = end[end != 0]
+  # Removing of all positions that do not contain a cut site, or 'keep all values different from 0' for each vector
+  # chr = chr[chr != 0]
+  # start = start[start != 0]
+  # end = end[end != 0]
 
-# Creation of the table/bed combining the vectors in the right order
-if (include_region_description == TRUE)
-(bed_file_cut_positions = data.frame(chr, start, end, regions)) else (
-  bed_file_cut_positions = data.frame(chr, start, end))
+  # Creation of the table/bed combining the vectors in the right order
+  if (include_region_description == TRUE)
+  (bed_file_cut_positions = data.frame(chr, start, end, regions)) else (
+    bed_file_cut_positions = data.frame(chr, start, end))
 
-# Exporting the .bed file
-if (export_bed_file == TRUE) {
-  write.table(x = bed_file_cut_positions,
-              file = output_file_name,
-              sep = "\t", quote = FALSE,
-              col.names = FALSE, row.names = FALSE,
-              append = append)
+  # Exporting the .bed file
+  if (export_bed_file == TRUE) {
+    write.table(x = bed_file_cut_positions,
+                file = output_file_name,
+                sep = "\t", quote = FALSE,
+                col.names = FALSE, row.names = FALSE,
+                append = append)
 
-  message("The .bed file has been saved as ", output_file_name)
-}
+    message("The .bed file has been saved as ", output_file_name)
+  }
 
-#check the results
-if (return_bed == TRUE) {return(bed_file_cut_positions)}
+  #check the results
+  if (return_bed == TRUE) {return(bed_file_cut_positions)}
 }

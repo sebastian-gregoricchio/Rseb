@@ -27,6 +27,11 @@ sort.bed = function(bed,
                     export.file.name = paste(getwd(), "sorted.bed", sep="/"),
                     export.header = F) {
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   require(dplyr)
 
   if (class(bed) == "character") {

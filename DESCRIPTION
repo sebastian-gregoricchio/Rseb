@@ -1,16 +1,14 @@
 Package: Rseb
 Type: Package
 Title: A package for NGS data managing and visualization
-Version: 0.1.5
+Version: 0.1.6
 Author: Sebastian Gregoricchio
 Maintainer: Sebastian Gregoricchio <sebastian.gregoricchio@gmail.com>
 Description: An R-package for daily tasks required to handle biological data as well as avoid re-coding of small functions for quick but necessary data managing.
 License: GNU GENERAL PUBLIC LICENSE version 3
 Depends:
-	R (>= 3.2.0), BiocManager, Biostrings, biomaRt, GO.db, rtracklayer, cowplot, data.table, dplyr, ggplot2 (>= 3.3.3), ggrepel, matrixStats, plyr, purrr, robustbase, stringr, tidyr, tools, labeling
+	R (>= 3.2.0), BiocManager, Biostrings, biomaRt, GO.db, rtracklayer, cowplot, data.table, ggplot2 (>= 3.3.3), ggrepel, matrixStats, plyr, dplyr, purrr, robustbase, stringr, tidyr, tools, labeling, devtools, rvcheck, curl
 biocViews:
-Imports:
-	Biostrings, biomaRt, GO.db, rtracklayer, cowplot, data.table, dplyr, ggplot2 (>= 3.3.3), ggrepel, matrixStats, plyr, purrr, robustbase, stringr, tidyr, tools, labeling
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

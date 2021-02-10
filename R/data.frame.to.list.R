@@ -13,6 +13,11 @@
 
 
 data.frame.to.list = function(x) {
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   if (class(x) != "data.frame") {
     return(warning("The input must be a data.frame object"))}
 

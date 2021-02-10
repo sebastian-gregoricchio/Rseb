@@ -10,6 +10,12 @@
 
 
 restore_packages = function(rda_file) { #BEGIN
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
+
   load(rda_file) #creates a variable called 'installedpackages'
 
   #obtain the list of not already installed packages

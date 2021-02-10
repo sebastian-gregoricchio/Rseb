@@ -14,6 +14,8 @@ uniform.x.axis(plot.list, x.min = TRUE, x.max = TRUE, ticks.each = NULL)
 \item{x.max}{Either a logical value to define whether uniform the upper limit or a numeric value defining the upper limit. By default \code{TRUE}.}
 
 \item{ticks.each}{Numeric value to define every how much should be placed a tick. By default \code{NULL}, ticks will be placed automatically.}
+
+\item{digits}{A single integer indicating the maximum number of digits required for the rounding of the axis values.}
 }
 \value{
 Returns a plot list (or a single plot when only one input plot is provided) equivalent to the input list provided by the user in which the X-axis of all the plots will be uniformed.

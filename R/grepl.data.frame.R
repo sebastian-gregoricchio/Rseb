@@ -25,6 +25,11 @@ grepl.data.frame =
            fixed = FALSE,
            useBytes = FALSE) {
 
+    #-----------------------------#
+    # Check if Rseb is up-to-date #
+    Rseb::actualize(update = F, verbose = F)   #
+    #-----------------------------#
+
   df = data.frame(data.frame, stringsAsFactors = F)
 
   for (i in 1:length(colnames(df))) {

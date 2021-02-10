@@ -44,9 +44,14 @@ density_plot = function(
   variance = T,
   print_plot = F,
   line_width = 1,
-  variance_opacity = 0.25)
+  variance_opacity = 0.25) { # BEGIN
 
-{ # BEGIN
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
+
   # Create a matrix
   matrix =
     data.frame(sample = samples,

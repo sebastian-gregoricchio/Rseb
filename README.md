@@ -2,7 +2,6 @@
 ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
 ![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/Rseb)
 [![license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/sebastian-gregoricchio/Rseb/blob/main/LICENSE.md/LICENSE.md)
-![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb.svg?style=social&label=Fork&maxAge=2592000)
 
 # Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
 
@@ -78,3 +77,4 @@ This package is under a [GNU General Public License (version 3)](https://sebasti
 
 #### Contributors
 [![contributors](https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true)](https://sebastian-gregoricchio.github.io/)
+

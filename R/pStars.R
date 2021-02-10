@@ -29,6 +29,11 @@ pStars = function(p.value,
                   three = 0.001,
                   four = 0.0001) {
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   if (length(p.value) > 1) {return(warning("The 'p.value' parameter must a single numeric value."))}
 
   if (one > two & one > three & one > four &

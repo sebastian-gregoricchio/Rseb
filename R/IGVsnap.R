@@ -44,6 +44,11 @@ IGVsnap = function(loci_vector,
                    session = NULL,
                    exit = FALSE) {
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   # check parameters
     help_message = c(
     "Help for 'IGVsnap' function from 'Rseb' package: \n", "\n",

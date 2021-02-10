@@ -21,6 +21,11 @@ convert_sequence = function(sequence = NULL,
                             mode = "not specified",
                             nucleic.acid = "DNA") {
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   ###### Install required packages  ######
   pkg = "Biostrings"
   if (!require(pkg, character.only = TRUE)) {

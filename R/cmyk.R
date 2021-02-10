@@ -17,6 +17,11 @@
 
 cmyk = function(C, M, Y, K) {
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   C = C / 100.0
   M = M / 100.0
   Y = Y / 100.0

@@ -21,6 +21,11 @@
 pkg.check = function(package,
                      archive) {
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   ### check parameters
   if (class(package) != "character" | length(package) != 1) {
     return(warning("The 'package' parameter must be a single string."))

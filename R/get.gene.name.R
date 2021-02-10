@@ -21,6 +21,11 @@ get.gene.name = function(ensembl.id,
                          type = "gene",
                          organism = "mmusculus") { # gene or transcript
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   require(biomaRt)
 
   dataset = paste(organism, "_gene_ensembl", sep = "")

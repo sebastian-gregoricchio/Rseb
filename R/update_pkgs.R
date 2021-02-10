@@ -22,4 +22,7 @@ update_pkgs = function(ask = FALSE) {
     install.packages("BiocManager")
   BiocManager::install(ask = ask)
 
+  # Update Rseb
+  Rseb::actualize(update = T, verbose = F)
+
 } # end function

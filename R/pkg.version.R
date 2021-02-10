@@ -13,6 +13,12 @@
 pkg.version = function(return.session = F,
                        print.versions = T,
                        return.versions = F) {
+
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   session = sessionInfo()
 
   list.v = list(`R version:` = session$R.version$version.string,

@@ -21,6 +21,11 @@ molarity.to.mass = function(final_concentration,
                             final_volume_unit = "mL",
                             MW) { # g/mol
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   # convertion final concentration to molar
   M_unit = final_concentration_unit
   M = final_concentration

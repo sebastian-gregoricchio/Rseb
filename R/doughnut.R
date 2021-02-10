@@ -41,6 +41,12 @@ doughnut =
             main = NULL,
             ...)
   {
+
+    #-----------------------------#
+    # Check if Rseb is up-to-date #
+    Rseb::actualize(update = F, verbose = F)   #
+    #-----------------------------#
+
     ### Open a null PDF to record the file
     grid::grid.newpage()
     pdf(NULL)

@@ -9,5 +9,10 @@
 #' @export install.pkg.source
 
 install.pkg.source = function(pkg.path) {
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   install.packages(pkg.path, repos = NULL, type="source")
 }

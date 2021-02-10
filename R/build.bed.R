@@ -73,6 +73,11 @@ build.bed = function(
 
   # -------------------------------------------------------------------------- #
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   # Check size of vectors for bed generation
   ##############################################################################
   row.number = length(chr)

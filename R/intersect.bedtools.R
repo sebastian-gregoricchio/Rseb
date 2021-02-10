@@ -112,6 +112,10 @@ intersect.bedtools =
     run.command = TRUE
   ) {
 
+    #-----------------------------#
+    # Check if Rseb is up-to-date #
+    Rseb::actualize(update = F, verbose = F)   #
+    #-----------------------------#
 
     ######################################################################################
     # Create function to add single quote to string variables

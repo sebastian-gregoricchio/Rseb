@@ -108,6 +108,11 @@ volcano = function(log2FC_data,
                         font_family = "Helvetica",
                         font_size = 12) {
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   if (length(log2FC_data) != length(padj_data)) {
     return(warning("ERROR: length(log2FC_data) is different from length(padj_data)."))
   }

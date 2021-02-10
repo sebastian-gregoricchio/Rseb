@@ -15,6 +15,11 @@
 
 combine.lists = function(list.of.lists) {
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
   # Check if the 'list.of.lists' is a list
   if (!(class(list.of.lists) == "list")) {
     return(warning("The input must be a list."))

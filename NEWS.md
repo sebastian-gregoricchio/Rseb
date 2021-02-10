@@ -45,6 +45,15 @@ First releasing
 * Bugs fixed in `volcano`
 
 <br /> 
+
+#### [v0.1.6](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.6) - February 10th 2021
+* Added the function `actualize` and integrated in each function to check everytime if `Rseb` package is up-to-date
+* New functions `plot.density.summary`, `floating.ceiling`, `floating.floor`
+* Updated the dependencies to add `rvcheck` and `curl`
+* Optimization for different labeling and better handle of Y-axis autoscale in `plot.density.profile` function
+* Optimization of `uniform.x.axis` and `uniform.y.axis` with the new functions `floating.ceiling` and `floating.floor` and to support a given number of digits
+
+<br /> 
 <br /> 
 
 -----------------------------------------------------------------------

@@ -13,4 +13,11 @@
 
 
 is.nan_df = function(data.frame) {
-  do.call(cbind, lapply(data.frame, is.nan))}
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
+  do.call(cbind, lapply(data.frame, is.nan))
+}
+
