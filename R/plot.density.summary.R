@@ -673,6 +673,12 @@ plot.density.summary = function(
   dodge = position_dodge(width = dodge.width)
 
   ###### Summary plot by group
+  # Define the colors for each sample
+  if ((length(colors) > 1 & length(colors) < length(sample_names)) | length(colors) == 0) {
+    sample_colors = rainbow(length(group_names))} else {
+      sample_colors = colors
+    }
+
   summary.plot.groups =
     ggplot(data = summary_table,
            aes(x = group,
@@ -689,7 +695,7 @@ plot.density.summary = function(
                 size = border.width) +
     xlab("Regions") +
     ylab(y_label_summary) +
-    scale_fill_manual(values = colors) +
+    scale_fill_manual(values = sample_colors) +
     ggtitle("Summary plot by region") +
     theme_classic() +
     theme(text = element_text(size = text.size),
@@ -733,6 +739,12 @@ plot.density.summary = function(
 
 
   ###### Summary plot by sample
+  # Define the colors for each group
+  if ((length(colors) > 1 & length(colors) < length(group_names)) | length(colors) == 0) {
+    group_colors = rainbow(length(group_names))} else {
+      group_colors = colors
+    }
+
   summary.plot.samples =
     ggplot(data = summary_table,
            aes(x = sample,
@@ -749,7 +761,7 @@ plot.density.summary = function(
                 size = border.width) +
     xlab("Samples") +
     ylab(y_label_summary) +
-    scale_fill_manual(values = colors) +
+    scale_fill_manual(values = group_colors) +
     ggtitle("Summary plot by sample") +
     theme_classic() +
     theme(text = element_text(size = text.size),
