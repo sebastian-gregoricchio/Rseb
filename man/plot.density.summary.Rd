@@ -18,6 +18,13 @@
   mean.color = "blue",
   mean.symbol.shape = 20,
   mean.symbol.size = 1,
+  show.stat.multiplot = T,
+  stat.method = "wilcox.test",
+  stat.paired = F,
+  stat.labels.format = "p.signif",
+  stat.hide.ns = T,
+  stat.p.levels = list(cutpoints = c(0, 1e-04, 0.001, 0.01, 0.05, 1), symbols =
+    c("****", "***", "**", "*", "ns")),
   title = NULL,
   x.lab = NULL,
   y.lab = NULL,
@@ -68,6 +75,25 @@
 \item{mean.symbol.shape}{A numeric value or string defining the shape for the mean symbol. By default \code{20}.}
 
 \item{mean.symbol.size}{A numeric value defining the size of the mean symbol. By default \code{1}.}
+
+\item{show.stat.multiplot}{Logical value to define if to add to the plot the statistical comparisons of the means for the groups present in the multiplot. By default \code{TRUE}. All possibile comparisons will be performed.}
+
+\item{stat.method}{A single string defining the method to use for the statistical comparisons. By default \code{"wilcox.test"}. Available options: "t.test" "wilcox.test" "anova" "kruskal.test".}
+
+\item{stat.paired}{Logical value to define if the statistical comparisons should be performed paired. By default \code{"FALSE"}. Notice that to allow a paired comparison the number of data should be the same in the two groups compared, so in the most of the cases non applicable to the comparisons between two regions. Used only in \code{"t.test"} and \code{"wilcox.test"} methods.}
+
+\item{stat.labels.format}{A single string indicating the format of the p-value to show for the statistical comparisons. By default \code{"p.signif"}. Available options: "p.format" (normal p-value), "p.signif" (significance stars), "p.adj" (p-value adjusted).}
+
+\item{stat.hide.ns}{Logical value indicating if the NS ("Not Significant") comparisons should be shown or not. By default \code{TRUE}.}
+
+\item{stat.p.levels}{A list containing the p-values levels/thresholds in the following format (default): \code{list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))}. In other words, we use the following convention for symbols indicating statistical significance:
+\itemize{
+  \item \code{ns}: p > 0.05
+  \item \code{*} p <= 0.05
+  \item \code{**} p <= 0.01
+  \item \code{***} p <= 0.001
+  \item \code{****} p <= 0.0001
+ }}
 
 \item{title}{Title of each plot could be defined by a string vector. If set as \code{NULL} titles will be generated automatically. By default \code{NULL}. \cr Example: \code{c("Title1", "Title2")}}
 
@@ -120,6 +146,7 @@ The functions returns a list containing:
   \item \code{multiplot} with the image of all the plots together;
   \item \code{summary.plot.samples} with a plot showing the scores of all regions per each sample;
   \item \code{summary.plot.regions} with a plot showing the scores of all samples per each region;
+  \item \code{means.comparisons} table with the statistical means comparisons (when \code{show.stat.multiplot = TRUE}, otherwise a string is returned).
  }
 }
 \description{
