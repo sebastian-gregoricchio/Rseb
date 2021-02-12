@@ -78,7 +78,7 @@
 
 \item{show.stat.multiplot}{Logical value to define if to add to the plot the statistical comparisons of the means for the groups present in the multiplot. By default \code{TRUE}. All possibile comparisons will be performed.}
 
-\item{stat.method}{A single string defining the method to use for the statistical comparisons. By default \code{"wilcox.test"}. Available options: "t.test" "wilcox.test" "anova" "kruskal.test".}
+\item{stat.method}{A single string defining the method to use for the statistical comparisons. By default \code{"wilcox.test"}. Available options: "t.test" "wilcox.test".}
 
 \item{stat.paired}{Logical value to define if the statistical comparisons should be performed paired. By default \code{"FALSE"}. Notice that to allow a paired comparison the number of data should be the same in the two groups compared, so in the most of the cases non applicable to the comparisons between two regions. Used only in \code{"t.test"} and \code{"wilcox.test"} methods.}
 
