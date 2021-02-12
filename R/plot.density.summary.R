@@ -15,6 +15,19 @@
 #' @param mean.color A single string expressing an R-supported color for the mean symbol. By default \code{"blue"}.
 #' @param mean.symbol.shape A numeric value or string defining the shape for the mean symbol. By default \code{20}.
 #' @param mean.symbol.size A numeric value defining the size of the mean symbol. By default \code{1}.
+#' @param show.stat.multiplot Logical value to define if to add to the plot the statistical comparisons of the means for the groups present in the multiplot. By default \code{TRUE}. All possibile comparisons will be performed.
+#' @param stat.method A single string defining the method to use for the statistical comparisons. By default \code{"wilcox.test"}. Available options: "t.test" "wilcox.test" "anova" "kruskal.test".
+#' @param stat.paired Logical value to define if the statistical comparisons should be performed paired. By default \code{"FALSE"}. Notice that to allow a paired comparison the number of data should be the same in the two groups compared, so in the most of the cases non applicable to the comparisons between two regions. Used only in \code{"t.test"} and \code{"wilcox.test"} methods.
+#' @param stat.labels.format A single string indicating the format of the p-value to show for the statistical comparisons. By default \code{"p.signif"}. Available options: "p.format" (normal p-value), "p.signif" (significance stars), "p.adj" (p-value adjusted).
+#' @param stat.hide.ns Logical value indicating if the NS ("Not Significant") comparisons should be shown or not. By default \code{TRUE}.
+#' @param stat.p.levels A list containing the p-values levels/thresholds in the following format (default): \code{list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))}. In other words, we use the following convention for symbols indicating statistical significance:
+#' \itemize{
+#'   \item \code{ns}: p > 0.05
+#'   \item \code{*} p <= 0.05
+#'   \item \code{**} p <= 0.01
+#'   \item \code{***} p <= 0.001
+#'   \item \code{****} p <= 0.0001
+#'  }
 #' @param title Title of each plot could be defined by a string vector. If set as \code{NULL} titles will be generated automatically. By default \code{NULL}. \cr Example: \code{c("Title1", "Title2")}
 #' @param x.lab Single string or string vector to define the X-axis label for all the plots. By default \code{NULL}, the label will be defined automatically.
 #' @param y.lab Single string or string vector to define the Y-axis label for all the plots. By default \code{NULL}, the label will be defined automatically.
@@ -45,6 +58,7 @@
 #'   \item \code{multiplot} with the image of all the plots together;
 #'   \item \code{summary.plot.samples} with a plot showing the scores of all regions per each sample;
 #'   \item \code{summary.plot.regions} with a plot showing the scores of all samples per each region;
+#'   \item \code{means.comparisons} table with the statistical means comparisons (when \code{show.stat.multiplot = TRUE}, otherwise a string is returned).
 #'  }
 #'
 #'
@@ -56,6 +70,7 @@
 # @import dplyr
 # @import ggplot2
 # @importFrom data.table fread
+# @importFrom ggpubr compare_means stat_compare_means
 # @importFrom stringr str_split
 # @importFrom robustbase colMedians
 # @importFrom matrixStats colSds
@@ -78,6 +93,13 @@ plot.density.summary = function(
   mean.color = "blue",
   mean.symbol.shape = 20,
   mean.symbol.size = 1,
+  show.stat.multiplot = T,
+  stat.method = "wilcox.test",
+  stat.paired = F,
+  stat.labels.format = "p.signif",
+  stat.hide.ns = T,
+  stat.p.levels = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1),
+                       symbols = c("****", "***", "**", "*", "ns")),
   title = NULL, # string vector
   x.lab = NULL, # single string vector
   y.lab = NULL, # string vector
@@ -108,6 +130,7 @@ plot.density.summary = function(
   require(tidyr)
   require(dplyr)
   require(ggplot2)
+  # require(ggpubr)
   # require(data.table)
   # require(stringr)
   # require(robustbase)
@@ -312,6 +335,7 @@ plot.density.summary = function(
   #############################################################################
   # Generation of the plots
   plot.list = list()
+  comparisons.table = list()
 
   # # Remove error plotting option when using the 'sum' mode, since it means nothing for a sum
   # if (signal.type == "sum") {
@@ -327,6 +351,31 @@ plot.density.summary = function(
         return(NULL)}
       else {return(parameter)}
     }
+
+  # Function to generate the comparisons list for the statistics test
+  comparisons = function(table, score_column, groups_column, hide.ns, stat.p.levels) {
+    # Reshape the table
+    tb = table[,c(score_column, groups_column)]
+    names(tb) = c("score", "groupsToCompare")
+
+    # Generate the comparisons
+    comp = ggpubr::compare_means(formula = score ~ groupsToCompare, data = tb, symnum.args = stat.p.levels)
+    comparisons_data = data.frame(comp)
+
+    if (hide.ns == T) {comp = dplyr::filter(.data = comp, tolower(p.signif) != "ns")}
+
+    # Generate the comparisons
+    if (nrow(comp) != 0) {
+      comp_list = list()
+      for (i in 1:nrow(comp)) {
+        comp_list[[i]] = c(comp$group1[i], comp$group2[i])
+      }
+    } else {comp_list = list()}
+
+
+    return(list(comparisons_data = comparisons_data,
+                comparisons_to_plot = comp_list))
+  }
 
 
   ###########  SINGLE PLOTS FOR EACH CONDITION  ##############
@@ -469,6 +518,40 @@ plot.density.summary = function(
                          shape = mean.symbol.shape,
                          geom = "pointrange")
         }
+
+        # if show.stat.multiplot == T add the p-values bars
+        if (show.stat.multiplot == T & length(unique(current.table$sample)) > 1) {
+
+          my_comparisons = comparisons(current.table, "score", "sample", hide.ns = stat.hide.ns, stat.p.levels = stat.p.levels)
+          comparisons.table[[i]] =
+            my_comparisons$comparisons_data %>%
+            mutate(.y. = signal.type,
+                   region = unique(current.table$group))
+          comparisons.table[[i]] = Rseb::move.df.col(data.frame = comparisons.table[[i]], move.command = "region first")
+          colnames(comparisons.table[[i]]) = c("region", "signal.type", "sample.1", "sample.2", "p", "p.adj", "p.format", "p.signif", "method")
+
+          names(comparisons.table)[i] = unique(current.table$group)
+
+          if (length(my_comparisons$comparisons_to_plot) >= 1) {
+            plot.list[[i]] =
+              plot.list[[i]] +
+              ggpubr::stat_compare_means(comparisons = my_comparisons$comparisons_to_plot,
+                                         paired = stat.paired,
+                                         method = stat.method,
+                                         symnum.args = stat.p.levels,
+                                         label = stat.labels.format,
+                                         hide.ns = stat.hide.ns,
+                                         size = text.size * 0.6,
+                                         color = "#000000")
+          }
+        } else if (show.stat.multiplot == T & length(unique(current.table$sample)) == 1) {
+          comparisons.table[[i]] = data.frame(region = unique(current.table$group),
+                                              signal.type = signal.type,
+                                              sample.1 = unique(current.table$sample),
+                                              sample.2 = NA,
+                                              p = NA, p.adj = NA, p.format = NA, p.signif = NA, method = NA)
+        } # END all stat comparisons
+
       }
 
       # Add a name to the plot, element in the list
@@ -603,6 +686,41 @@ plot.density.summary = function(
                            shape = mean.symbol.shape,
                            geom = "pointrange")
         }
+
+        # if show.stat.multiplot == T add the p-values bars
+        if (show.stat.multiplot == T & length(unique(current.table$group)) > 1) {
+
+          my_comparisons = comparisons(current.table, "score", "group", hide.ns = stat.hide.ns, stat.p.levels = stat.p.levels)
+          comparisons.table[[i]] =
+            my_comparisons$comparisons_data %>%
+            mutate(.y. = signal.type,
+                   sample = unique(current.table$sample))
+          comparisons.table[[i]] = Rseb::move.df.col(data.frame = comparisons.table[[i]], move.command = "sample first")
+          colnames(comparisons.table[[i]]) = c("sample", "signal.type", "region.1", "region.2", "p", "p.adj", "p.format", "p.signif", "method")
+
+          names(comparisons.table)[i] = unique(current.table$sample)
+
+          if (length(my_comparisons$comparisons_to_plot) >= 1) {
+            plot.list[[i]] =
+              plot.list[[i]] +
+              ggpubr::stat_compare_means(comparisons = my_comparisons$comparisons_to_plot,
+                                         paired = stat.paired,
+                                         method = stat.method,
+                                         symnum.args = stat.p.levels,
+                                         label = stat.labels.format,
+                                         hide.ns = stat.hide.ns,
+                                         size = text.size * 0.6,
+                                         color = "#000000")
+          }
+        } else if (show.stat.multiplot == T & length(unique(current.table$group)) == 1) {
+          comparisons.table[[i]] = data.frame(sample = unique(current.table$sample),
+                                              signal.type = signal.type,
+                                              region.1 = unique(current.table$group),
+                                              region.2 = NA,
+                                              p = NA, p.adj = NA, p.format = NA, p.signif = NA, method = NA)
+          names(comparisons.table)[i] = unique(current.table$sample)
+        } # END all stat comparisons
+
       }
 
       # Add a name to the plot, element in the list
@@ -753,6 +871,7 @@ plot.density.summary = function(
                      geom = "pointrange",
                      position = dodge)
     }
+
   }
 
 
@@ -825,6 +944,7 @@ plot.density.summary = function(
                      geom = "pointrange",
                      position = dodge)
     }
+
   }
 
   ##############################################################################
@@ -834,7 +954,10 @@ plot.density.summary = function(
               plot.list = plot.list,
               multiplot = multiplot,
               summary.plot.samples = summary.plot.samples,
-              summary.plot.regions = summary.plot.groups))
+              summary.plot.regions = summary.plot.groups,
+              means.comparisons = ifelse(test = show.stat.multiplot == T,
+                                         yes = purrr::reduce(comparisons.table, rbind),
+                                         no = "Parameter 'show.stat.multiplot == FALSE', no means comparison generated.")))
 
 } # End function
 
