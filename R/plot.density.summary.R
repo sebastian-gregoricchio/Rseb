@@ -16,7 +16,7 @@
 #' @param mean.symbol.shape A numeric value or string defining the shape for the mean symbol. By default \code{20}.
 #' @param mean.symbol.size A numeric value defining the size of the mean symbol. By default \code{1}.
 #' @param show.stat.multiplot Logical value to define if to add to the plot the statistical comparisons of the means for the groups present in the multiplot. By default \code{TRUE}. All possibile comparisons will be performed.
-#' @param stat.method A single string defining the method to use for the statistical comparisons. By default \code{"wilcox.test"}. Available options: "t.test" "wilcox.test" "anova" "kruskal.test".
+#' @param stat.method A single string defining the method to use for the statistical comparisons. By default \code{"wilcox.test"}. Available options: "t.test" "wilcox.test".
 #' @param stat.paired Logical value to define if the statistical comparisons should be performed paired. By default \code{"FALSE"}. Notice that to allow a paired comparison the number of data should be the same in the two groups compared, so in the most of the cases non applicable to the comparisons between two regions. Used only in \code{"t.test"} and \code{"wilcox.test"} methods.
 #' @param stat.labels.format A single string indicating the format of the p-value to show for the statistical comparisons. By default \code{"p.signif"}. Available options: "p.format" (normal p-value), "p.signif" (significance stars), "p.adj" (p-value adjusted).
 #' @param stat.hide.ns Logical value indicating if the NS ("Not Significant") comparisons should be shown or not. By default \code{TRUE}.
@@ -193,6 +193,10 @@ plot.density.summary = function(
     }
   } else {return(warning("The 'mean.error.type' must be a single string among 'se', 'sd' or 'none'."))}
 
+  # Check stat.method
+  if (!(stat.method %in% c("t.test", "wilcox.test")) | length(stat.method) != 1 | class(stat.method) != "character") {
+    return(warning("The 'stat.method' parameter must be one among 't.test' and 'wilcox.test'")) }
+
   ##############################################################################
   # Import/read the matrix.gz file
   if (class(matrix.file) == "character" & length(matrix.file) == 1) {
@@ -353,13 +357,17 @@ plot.density.summary = function(
     }
 
   # Function to generate the comparisons list for the statistics test
-  comparisons = function(table, score_column, groups_column, hide.ns, stat.p.levels) {
+  comparisons = function(table, score_column, groups_column, hide.ns, stat.p.levels, stat.method, stat.paired) {
     # Reshape the table
     tb = table[,c(score_column, groups_column)]
     names(tb) = c("score", "groupsToCompare")
 
     # Generate the comparisons
-    comp = ggpubr::compare_means(formula = score ~ groupsToCompare, data = tb, symnum.args = stat.p.levels)
+    comp = ggpubr::compare_means(formula = score ~ groupsToCompare,
+                                 data = tb,
+                                 symnum.args = stat.p.levels,
+                                 method = stat.method,
+                                 paired = stat.paired)
     comparisons_data = data.frame(comp)
 
     if (hide.ns == T) {comp = dplyr::filter(.data = comp, tolower(p.signif) != "ns")}
@@ -522,7 +530,7 @@ plot.density.summary = function(
         # if show.stat.multiplot == T add the p-values bars
         if (show.stat.multiplot == T & length(unique(current.table$sample)) > 1) {
 
-          my_comparisons = comparisons(current.table, "score", "sample", hide.ns = stat.hide.ns, stat.p.levels = stat.p.levels)
+          my_comparisons = comparisons(current.table, "score", "sample", hide.ns = stat.hide.ns, stat.p.levels = stat.p.levels, stat.method = stat.method, stat.paired = stat.paired)
           comparisons.table[[i]] =
             my_comparisons$comparisons_data %>%
             mutate(.y. = signal.type,
@@ -530,7 +538,6 @@ plot.density.summary = function(
           comparisons.table[[i]] = Rseb::move.df.col(data.frame = comparisons.table[[i]], move.command = "region first")
           colnames(comparisons.table[[i]]) = c("region", "signal.type", "sample.1", "sample.2", "p", "p.adj", "p.format", "p.signif", "method")
 
-          names(comparisons.table)[i] = unique(current.table$group)
 
           if (length(my_comparisons$comparisons_to_plot) >= 1) {
             plot.list[[i]] =
@@ -690,15 +697,13 @@ plot.density.summary = function(
         # if show.stat.multiplot == T add the p-values bars
         if (show.stat.multiplot == T & length(unique(current.table$group)) > 1) {
 
-          my_comparisons = comparisons(current.table, "score", "group", hide.ns = stat.hide.ns, stat.p.levels = stat.p.levels)
+          my_comparisons = comparisons(current.table, "score", "group", hide.ns = stat.hide.ns, stat.p.levels = stat.p.levels, stat.method = stat.method, stat.paired = stat.paired)
           comparisons.table[[i]] =
             my_comparisons$comparisons_data %>%
             mutate(.y. = signal.type,
                    sample = unique(current.table$sample))
           comparisons.table[[i]] = Rseb::move.df.col(data.frame = comparisons.table[[i]], move.command = "sample first")
           colnames(comparisons.table[[i]]) = c("sample", "signal.type", "region.1", "region.2", "p", "p.adj", "p.format", "p.signif", "method")
-
-          names(comparisons.table)[i] = unique(current.table$sample)
 
           if (length(my_comparisons$comparisons_to_plot) >= 1) {
             plot.list[[i]] =
@@ -718,7 +723,6 @@ plot.density.summary = function(
                                               region.1 = unique(current.table$group),
                                               region.2 = NA,
                                               p = NA, p.adj = NA, p.format = NA, p.signif = NA, method = NA)
-          names(comparisons.table)[i] = unique(current.table$sample)
         } # END all stat comparisons
 
       }
@@ -949,15 +953,25 @@ plot.density.summary = function(
 
   ##############################################################################
   # RETURN a list of data
-  return(list(data.table = full.stat.table,
-              metadata = metadata,
-              plot.list = plot.list,
-              multiplot = multiplot,
-              summary.plot.samples = summary.plot.samples,
-              summary.plot.regions = summary.plot.groups,
-              means.comparisons = ifelse(test = show.stat.multiplot == T,
-                                         yes = purrr::reduce(comparisons.table, rbind),
-                                         no = "Parameter 'show.stat.multiplot == FALSE', no means comparison generated.")))
+  if (show.stat.multiplot == T) {
+    return(list(data.table = full.stat.table,
+                metadata = metadata,
+                plot.list = plot.list,
+                multiplot = multiplot,
+                summary.plot.samples = summary.plot.samples,
+                summary.plot.regions = summary.plot.groups,
+                means.comparisons = purrr::reduce(comparisons.table, rbind)))
+  } else {
+    return(list(data.table = full.stat.table,
+                metadata = metadata,
+                plot.list = plot.list,
+                multiplot = multiplot,
+                summary.plot.samples = summary.plot.samples,
+                summary.plot.regions = summary.plot.groups,
+                means.comparisons = "Parameter 'show.stat.multiplot == FALSE', no means comparison generated."))
+  }
+
+
 
 } # End function
 
