@@ -4,7 +4,13 @@
 \alias{uniform.x.axis}
 \title{Plot X-axis uniforming}
 \usage{
-uniform.x.axis(plot.list, x.min = TRUE, x.max = TRUE, ticks.each = NULL)
+uniform.x.axis(
+  plot.list,
+  x.min = TRUE,
+  x.max = TRUE,
+  ticks.each = NULL,
+  digits = 1
+)
 }
 \arguments{
 \item{plot.list}{A single plot or a list of plots.}
@@ -15,7 +21,7 @@ uniform.x.axis(plot.list, x.min = TRUE, x.max = TRUE, ticks.each = NULL)
 
 \item{ticks.each}{Numeric value to define every how much should be placed a tick. By default \code{NULL}, ticks will be placed automatically.}
 
-\item{digits}{A single integer indicating the maximum number of digits required for the rounding of the axis values.}
+\item{digits}{A single integer indicating the maximum number of digits required for the rounding of the axis values. By default \code{1}.}
 }
 \value{
 Returns a plot list (or a single plot when only one input plot is provided) equivalent to the input list provided by the user in which the X-axis of all the plots will be uniformed.

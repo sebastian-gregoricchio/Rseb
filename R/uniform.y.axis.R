@@ -6,7 +6,7 @@
 #' @param y.min Either a logical value to define whether uniform the lower limit or a numeric value defining the lower limit. By default \code{TRUE}.
 #' @param y.max Either a logical value to define whether uniform the upper limit or a numeric value defining the upper limit. By default \code{TRUE}.
 #' @param ticks.each Numeric value to define every how much should be placed a tick. By default \code{NULL}, ticks will be placed automatically.
-#' @param digits A single integer indicating the maximum number of digits required for the rounding of the axis values.
+#' @param digits A single integer indicating the maximum number of digits required for the rounding of the axis values. By default \code{1}.
 #'
 #' @return Returns a plot list (or a single plot when only one input plot is provided) equivalent to the input list provided by the user in which the Y-axis of all the plots will be uniformed.
 #'
@@ -66,7 +66,7 @@ uniform.y.axis = function(
         new_y.max = NA}
 
 
-  # Rund the new range
+  # Round the new range
   if (!is.na(new_y.min)) {new_y.min = Rseb::floating.floor(new_y.min, digits = digits)}
   if (!is.na(new_y.max)) {new_y.max = Rseb::floating.ceiling(new_y.max, digits = digits)}
 
@@ -74,11 +74,15 @@ uniform.y.axis = function(
   # Re-define breaks
   if (!is.null(ticks.each)) {
     breaks_list = list()
+    ticks.each = round(ticks.each, digits = digits)
 
     for (i in 1:length(plot.list)) {
       min = ifelse(test = is.na(new_y.min), yes = y.min_list[i], no = new_y.min)
       max = ifelse(test = is.na(new_y.max), yes = y.max_list[i], no = new_y.max)
-      breaks_list[[i]] = seq(min, max, ticks.each)
+      min = floor((min/ticks.each)) * ticks.each # gets minimum multiple of the ticks bin
+      max = ceiling((max/ticks.each)) * ticks.each # gets maximum multiple of the ticks bin
+      breaks_list[[i]] = seq(from = min, to = max, by = ticks.each)
+      breaks_list[[i]] = breaks_list[[i]][breaks_list[[i]] >= new_y.min & breaks_list[[i]] <= new_y.max] # removes ticks not in the axis range
     }
   }
 

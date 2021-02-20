@@ -58,7 +58,6 @@
 #'
 #' @export plot.density.profile
 #'
-# @import tidyr
 # @import dplyr
 # @import ggplot2
 # @importFrom data.table fread
@@ -107,7 +106,6 @@ plot.density.profile = function(
   ##############################################################################
 
   # Load all libraries
-  require(tidyr)
   require(dplyr)
   require(ggplot2)
   # require(data.table)

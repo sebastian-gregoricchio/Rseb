@@ -4,25 +4,16 @@
 \alias{substract.bw}
 \title{Combination of two or more list in a unique one.}
 \usage{
-substract.bw(
-  bw1,
-  bw2,
-  wd = getwd(),
-  return.substracted.bw = F,
-  export.substracted.bw = T,
-  substracted.bw.file = paste(getwd(), "subtraction.bw", sep = "/")
-)
+substract.bw(bw1, bw2, return.substracted.bw = T, substracted.bw.file = NULL)
 }
 \arguments{
 \item{bw1}{Full path to the first bigWig (the second one will be substracted to this one).}
 
 \item{bw2}{Full path to the second bigWig (it will be substracted to the first one).}
 
-\item{return.substracted.bw}{Logic value to define whether return the resulting bigWig as GRanges object. By default \code{FALSE}.}
+\item{return.substracted.bw}{Logic value to define whether return the resulting bigWig as GRanges object. By default \code{TRUE}.}
 
-\item{export.substracted.bw}{Logic value to define whether export the resulting bigWig. By default \code{TRUE}.}
-
-\item{substracted.bw.file}{String for the path of the resulting bigwig file to be exported. \cr By default \code{<working.directory>/subtraction.bw}.}
+\item{substracted.bw.file}{String for the path of the resulting bigwig file to be exported. \cr By default \code{NULL}, any file will be exported.}
 }
 \value{
 If required a subtraction bigWig is returned as GRanges object. The resulting bigWig can be also directly exported.

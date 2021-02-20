@@ -54,6 +54,24 @@ First releasing
 * Optimization of `uniform.x.axis` and `uniform.y.axis` with the new functions `floating.ceiling` and `floating.floor` and to support a given number of digits
 
 <br /> 
+
+#### [v0.1.7](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.7) - February 20th 2021
+* Updated information in DESCRIPTION file
+* Updated the dependencies to require an R version >= 4.0.0
+* Moved all "depending" packages in "imports" to avoid attaching of all packages. Morover, added `ggpubr` and removed `labeling`
+* Bug fixing in `actualize` and `uniform.x.axis` functions
+* Optimization for better definition of the breaks in the functions `uniform.x.axis` and `uniform.y.axis`
+* Optimization of package handling for `plot.density.summary` and `plot.density.profile`
+* Optimized color handling for summary plots in `plot.density.summary` function
+* Now computation and plot of the statistical mean comparisons is available for `plot.density.summary`
+* In the `plot.density.summary` function a density profile corresponding to the summary plot subset range is generated
+* The data.table of `plot.density.summary` now contains also the orignal positions used to generate the matrix
+* Optimization of `IGVsnap` function and improvment of relative manual information
+* `IGVsnap` allows the addiction of a delay time between snap generation
+
+
+
+<br /> 
 <br /> 
 
 -----------------------------------------------------------------------

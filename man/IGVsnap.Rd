@@ -17,6 +17,7 @@ IGVsnap(
   snap_image_format = "png",
   snap_directory = getwd(),
   maxPanelHeight = 1000,
+  delay.interval = 10,
   session = NULL,
   exit = FALSE
 )
@@ -30,11 +31,11 @@ IGVsnap(
 
 \item{dataset}{Defines the \code{dataset} parameter for \code{biomaRt} package, by default \code{mmusculus_gene_ensembl}.}
 
-\item{reference_genome}{[optional] Defines the genome to use, e.g. "mm10", "hg19", ... . By default \code{NULL}.}
+\item{reference_genome}{[optional] Defines the genome to use, e.g. "mm9", "mm10", "hg19", "hg38", ... . By default \code{NULL}.}
 
-\item{fivePrime}{Numeric value to define how many bases [bp] exapand from full gene position at it's 5'-end, default 1000bp.}
+\item{fivePrime}{Numeric value to define of how many base-pairs (bp) expand from full gene position at it's 5'-end, default 1000bp.}
 
-\item{threePrime}{Numeric value to define how many bases [bp] exapand from full gene position at it's 3'-end, default 1000bp.}
+\item{threePrime}{Numeric value to define of how many base-pairs (bp) expand from full gene position at it's 3'-end, default 1000bp.}
 
 \item{snap_names}{[optional] String vector to define the names of images (without extention), by default uses \code{loci_vector}.}
 
@@ -44,7 +45,9 @@ IGVsnap(
 
 \item{snap_directory}{String for the output directory for the snapshoots. By default <working_directory>.}
 
-\item{maxPanelHeight}{Numeric value to define the height in pixel of the IGV pannel that will be captured on IGV.}
+\item{maxPanelHeight}{Numeric value to define the height in pixel of the IGV pannel that will be captured on IGV. By default \code{1000}.}
+
+\item{delay.interval}{Sets a delay (sleep) time in milliseconds. The sleep interval is invoked between successive commands. By default \code{10}. helps to give the time to IGV to adapt the view before the snap (such as the autoscale).}
 
 \item{session}{[optional] FULL path to an IGV session file (session.xml) to use for the images. By default \code{NULL}.}
 

@@ -4,9 +4,8 @@
 #'
 #' @param bw1 Full path to the first bigWig (the second one will be substracted to this one).
 #' @param bw2 Full path to the second bigWig (it will be substracted to the first one).
-#' @param return.substracted.bw Logic value to define whether return the resulting bigWig as GRanges object. By default \code{FALSE}.
-#' @param export.substracted.bw Logic value to define whether export the resulting bigWig. By default \code{TRUE}.
-#' @param substracted.bw.file String for the path of the resulting bigwig file to be exported. \cr By default \code{<working.directory>/subtraction.bw}.
+#' @param return.substracted.bw Logic value to define whether return the resulting bigWig as GRanges object. By default \code{TRUE}.
+#' @param substracted.bw.file String for the path of the resulting bigwig file to be exported. \cr By default \code{NULL}, any file will be exported.
 #'
 #' @return If required a subtraction bigWig is returned as GRanges object. The resulting bigWig can be also directly exported.
 #'
@@ -17,10 +16,8 @@
 
 substract.bw = function(bw1,
                         bw2,
-                        wd = getwd(),
-                        return.substracted.bw = F,
-                        export.substracted.bw = T,
-                        substracted.bw.file = paste(getwd(), "subtraction.bw", sep = "/")) {
+                        return.substracted.bw = T,
+                        substracted.bw.file = NULL) {
 
   #-----------------------------#
   # Check if Rseb is up-to-date #
@@ -63,9 +60,9 @@ substract.bw = function(bw1,
   score(bws[[1]]) = score(bws[[1]]) - score(bws[[2]])
 
   # Export the subtracted file if required
-  if (export.substracted.bw == T) {
+  if (!is.null(substracted.bw.file)) {
     export(bws[[1]], substracted.bw.file)
-    message("The result was exported has", substracted.bw.file)
+    message("The resulting bigWig was exported has", substracted.bw.file)
   }
 
   # Return the subtracted bigWig if required

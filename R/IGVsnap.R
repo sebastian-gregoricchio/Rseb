@@ -6,14 +6,15 @@
 #' @param input_type Define the input type. Allowed values are \code{genes} and \code{regions}.
 #' @param biomart Defines the \code{biomart} parameter for \code{biomaRt} package, by default \code{ensembl}.
 #' @param dataset Defines the \code{dataset} parameter for \code{biomaRt} package, by default \code{mmusculus_gene_ensembl}.
-#' @param reference_genome [optional] Defines the genome to use, e.g. "mm10", "hg19", ... . By default \code{NULL}.
-#' @param fivePrime Numeric value to define how many bases [bp] exapand from full gene position at it's 5'-end, default 1000bp.
-#' @param threePrime Numeric value to define how many bases [bp] exapand from full gene position at it's 3'-end, default 1000bp.
+#' @param reference_genome [optional] Defines the genome to use, e.g. "mm9", "mm10", "hg19", "hg38", ... . By default \code{NULL}.
+#' @param fivePrime Numeric value to define of how many base-pairs (bp) expand from full gene position at it's 5'-end, default 1000bp.
+#' @param threePrime Numeric value to define of how many base-pairs (bp) expand from full gene position at it's 3'-end, default 1000bp.
 #' @param snap_names [optional] String vector to define the names of images (without extention), by default uses \code{loci_vector}.
 #' @param IGV_batch_file String for the batch_script_file_name/path, by default \code{<working_directory>/IGV_batch.txt}.
 #' @param snap_image_format String to define the format of the images, e.g. "png", "jpeg", "svg", ... . By default \code{png}.
 #' @param snap_directory String for the output directory for the snapshoots. By default <working_directory>.
-#' @param maxPanelHeight Numeric value to define the height in pixel of the IGV pannel that will be captured on IGV.
+#' @param maxPanelHeight Numeric value to define the height in pixel of the IGV pannel that will be captured on IGV. By default \code{1000}.
+#' @param delay.interval Sets a delay (sleep) time in milliseconds. The sleep interval is invoked between successive commands. By default \code{10}. helps to give the time to IGV to adapt the view before the snap (such as the autoscale).
 #' @param session [optional] FULL path to an IGV session file (session.xml) to use for the images. By default \code{NULL}.
 #' @param exit Logical value to indicate whether exit IGV after image capture ended. By default \code{FALSE}.
 #'
@@ -41,6 +42,7 @@ IGVsnap = function(loci_vector,
                    snap_image_format = "png",
                    snap_directory = getwd(),
                    maxPanelHeight = 1000,
+                   delay.interval = 10,
                    session = NULL,
                    exit = FALSE) {
 
@@ -64,6 +66,7 @@ IGVsnap = function(loci_vector,
     "snap_image_format   image format such as 'png', 'jpeg', 'svg', ..., by default 'png'. \n",
     "   snap_directory   output directory for snapshoots, by default <working_directory>. \n",
     "   maxPanelHeight   heigth in pixel of the IGV pannel that will be captured. \n",
+    "   delay.interval   Sets a delay (sleep) time in milliseconds. The sleep interval is invoked between successive commands, default 10. \n",
     "          session   [optional] define an IGV session file .xml to use for the images, 'NULL' by default - USE FULL PATH -. \n",
     "             exit   logical to indicate whether exit IGV after image capture ended, FALSE by default. \n",
     "             help   logical to indicate whether display the help, FALSE by default. \n",
@@ -116,7 +119,7 @@ IGVsnap = function(loci_vector,
 
     } else if (input_type == "regions") {
       if (is.null(snap_names)) {snap_names = loci_vector}
-      list = unique(loci_vector)
+      list = loci_vector
     }
 
   # Initialization/Creation of the batch_file
@@ -130,7 +133,7 @@ IGVsnap = function(loci_vector,
           append = T)
   } else if (!is.null(reference_genome)){
     write(file = IGV_batch_file,
-          x = paste("genome", reference_genome),
+          x = paste("genome", tolower(reference_genome)),
           append = T)
   }
 
@@ -150,6 +153,11 @@ IGVsnap = function(loci_vector,
     # Write the position where to go
     write(file = IGV_batch_file,
           x = paste("goto", list[i]),
+          append = T)
+
+    # Write the command to delay interval
+    write(file = IGV_batch_file,
+          x = paste("setSleepInterval", delay.interval),
           append = T)
 
     # Write the command to take a snapshot with the name of the gene/position with the chosen extension
