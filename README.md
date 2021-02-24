@@ -5,7 +5,7 @@
 
 # Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
 
-An R-package for daily tasks required to handle biological data as well as avoid re-coding of small functions for quick but necessary data managing.
+An R-package for daily tasks required to handle biological data as well as avoid re-coding of small functions for quick but necessary data management.
 
 ## Dependencies/Requirements
 Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package. Anyway, install `Bioconductor` repository is recommended. 
