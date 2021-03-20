@@ -59,8 +59,8 @@ density_plot = function(
                score = scores,
                variance = variance_scores)
 
-  # assigns 0 to the alpha of the ribbon if variance == F
-  if (variance == T) (variance_value = variance_opacity) else (variance_value = 0)
+  # Set to 0 the variance if variance == F
+  if (variance == F) {matrix$variance = 0}
 
   # scaling size of parameters
   n_samples = length(unique(matrix$sample))
@@ -97,8 +97,6 @@ density_plot = function(
     geom_line(size = line_width) +
     scale_color_manual(values = as.vector(colors[1:n_samples])) +
     scale_linetype_manual(values = as.vector(line_type[1:n_samples])) +
-    geom_ribbon(alpha = variance_value,
-                color = NA) +
     scale_fill_manual(values = as.vector(colors[1:n_samples])) +
     xlab(xlab) +
     ylab(ylab) +
@@ -115,6 +113,9 @@ density_plot = function(
           title = element_text(color = "#000000"),
           legend.title = element_text(color = "#000000"),
           legend.text = element_text(color = "#000000"))
+
+  # Add variance if required
+  if (variance == T) {plot = plot + geom_ribbon(alpha = variance_opacity, color = NA)}
 
 
   if (!(is.null(y_lim))) plot = plot + ylim(y_lim)

@@ -15,12 +15,13 @@
 #' @param x.lab Single string or string vector to define the X-axis label for all the plots. By default \code{NULL}, the label will be defined automatically.
 #' @param y.lab Single string or string vector to define the Y-axis label for all the plots. By default \code{NULL}, the label will be defined automatically.
 #' @param line.type Vector to define each line type. Both numeric and string codes are accepted. If only one element is given this will be applied to all the lines. By default "solid". \cr Example 1: \code{c("solid", "dashed")}. \cr Example 2: \code{c(1, 2)}
-#' @param line.width Numeric value to define the line width for all the plots. By default 0.5.
+#' @param line.width Numeric value to define the line width for all the plots. By default \code{0.5}.
 #' @param x.lim List of numeric vectors with two elements each to define the range of the X-axis. To set only one side use NA for the side to leave automatic. If only one range is given this one will be applied to all the plots. By default \code{NULL}, the range will be defined automatically. \cr Example \code{list(c(0, 20), c(NA, 30), c(0, NA), c(NA, NA))}.,
 #' @param y.lim List of numeric vectors with two elements each to define the range of the Y-axis. To set only one side use NA for the side to leave automatic. If only one range is given this one will be applied to all the plots. By default \code{NULL}, the range will be defined automatically. \cr Example \code{list(c(0, 20), c(NA, 30), c(0, NA), c(NA, NA))}.,
 #' @param y.identical.auto Logical value to define whether use the same Y-axis range for all the plots automatically depending on the values. Not used when \code{y.lim} is not \code{NULL}. By default \code{TRUE}.
 #' @param y.ticks.interval A number indicating the interval/bin spacing two ticks on the Y-axis. By default \code{NULL}: ticks are assigned automatically. Active only when \code{y.identical.auto = TRUE} and \code{y.lim != NULL}.
 #' @param y.digits A numeric value to define the number of digits to use for the y.axis values. By default \code{1} (eg. 1.5).
+#' @param axis.line.width Numeric value to define the axes and ticks line width for all plots. By default \code{0.5}.
 #' @param text.size Numeric value to define the size of the text for the labels of all the plots. By default 12.
 #' @param legend.position Any ggplot supported value for the legend position (eg. "none", top", "bottom", "left", "right", c(fraction.x, fraction.y)). By default \code{c(0.2, 0.85)}.
 #' @param plot.vertical.lines Logical value to define whether to plot a dashed gray vertical line in correspondence of the reference points of each plot. By default \code{TRUE}.
@@ -89,6 +90,7 @@ plot.density.profile = function(
   y.identical.auto = T, # subordinated to y.lim which has the priority
   y.ticks.interval = NULL, # only for 'y.identical.auto'
   y.digits = 1,
+  axis.line.width = 0.5,
   text.size = 12,
   legend.position = c(0.2, 0.85),
   plot.vertical.lines = T,
@@ -179,18 +181,18 @@ plot.density.profile = function(
   }
 
   # Generate metadata variables
-  sample_start_column = as.numeric(as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "sample_boundaries")$values, pattern = ",")[[1]]))
-  sample_names = as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "sample_labels")$values, pattern = ",")[[1]])
+  sample_start_column = as.numeric(as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "sample_boundaries")$values, pattern = ",")[[1]]))
+  sample_names = as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "sample_labels")$values, pattern = ",")[[1]])
 
-  group_start_row = as.numeric(as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "group_boundaries")$values, pattern = ",")[[1]]))
-  group_names = as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "group_labels")$values, pattern = ",")[[1]])
+  group_start_row = as.numeric(as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "group_boundaries")$values, pattern = ",")[[1]]))
+  group_names = as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "group_labels")$values, pattern = ",")[[1]])
 
   ##############################################################################
   # Get the number at which the matrix data starts (after 'chr' 'start' 'end' 'strand' etc.)
   number.info.columns = ncol(matrix.data) - sample_start_column[length(sample_start_column)]
 
   # Remove NaN values and substitute them with 0 if missing.data.as.zero = TRUE or NA if FALSE
-  missing.data.as.zero.automatic = as.logical(toupper(filter(.data = metadata, parameters == "missing_data_as_zero")$values))
+  missing.data.as.zero.automatic = as.logical(toupper(dplyr::filter(.data = metadata, parameters == "missing_data_as_zero")$values))
 
   if (is.null(missing.data.as.zero)) {
     missing.data.as.zero = missing.data.as.zero.automatic
@@ -235,7 +237,7 @@ plot.density.profile = function(
 
     sample.table =
       matrix.data %>%
-      select(c(1:number.info.columns, start.col:end.col)) %>%
+      dplyr::select(c(1:number.info.columns, start.col:end.col)) %>%
       # adding a column with the groups names
       mutate(group = rep(group_names,
                          times = c(group_start_row[-1] - group_start_row[-length(group_start_row)])))
@@ -258,7 +260,7 @@ plot.density.profile = function(
       group.table =
         samples.table.list[[s]] %>%
         filter(group == group_names[g]) %>%
-        select(-c(1:number.info.columns), -group)
+        dplyr::select(-c(1:number.info.columns), -group)
 
       group.mean = colMeans(group.table, na.rm = T)
       group.median = robustbase::colMedians(as.matrix(group.table), na.rm = T)
@@ -277,10 +279,10 @@ plot.density.profile = function(
 
 
     # x-axes values, distance from center
-    upstream = as.numeric(as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "upstream")$values, pattern = ",")[[1]]))[s]
-    downstream = as.numeric(as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "downstream")$values, pattern = ",")[[1]]))[s]
-    body = as.numeric(as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "body")$values, pattern = ",")[[1]]))[s]
-    bin = as.numeric(as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "bin_size")$values, pattern = ",")[[1]]))[s]
+    upstream = as.numeric(as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "upstream")$values, pattern = ",")[[1]]))[s]
+    downstream = as.numeric(as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "downstream")$values, pattern = ",")[[1]]))[s]
+    body = as.numeric(as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "body")$values, pattern = ",")[[1]]))[s]
+    bin = as.numeric(as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "bin_size")$values, pattern = ",")[[1]]))[s]
     distance.range = seq(from = -upstream, to = (body + downstream), by = bin)
     distance.range = distance.range[distance.range != 0]
 
@@ -325,7 +327,7 @@ plot.density.profile = function(
     for (i in 1:length(group_names)) {
 
       # Check if plot the center line
-      regionEnd = as.numeric(as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "body")$values, pattern = ",")[[1]]))
+      regionEnd = as.numeric(as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "body")$values, pattern = ",")[[1]]))
       if (length(regionEnd) == 1) {regionEnd = rep(regionEnd, length(group_names))}
 
       if (plot.vertical.lines == T) {
@@ -393,7 +395,9 @@ plot.density.profile = function(
           line_width = line.width,
           variance_opacity = error.transparency) +
         theme(legend.position = legend.position,
-              legend.background = element_blank())
+              legend.background = element_blank(),
+              axis.line = element_line(size = axis.line.width),
+              axis.ticks = element_line(size = axis.line.width))
 
       names(plot.list)[i] = group_names[i]
     } # for loop end
@@ -408,7 +412,7 @@ plot.density.profile = function(
     for (i in 1:length(sample_names)) {
 
       # Check if plot the center line
-      regionEnd = as.numeric(as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "body")$values, pattern = ",")[[1]]))
+      regionEnd = as.numeric(as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "body")$values, pattern = ",")[[1]]))
       if (length(regionEnd) == 1) {regionEnd = rep(regionEnd, length(sample_names))}
 
       if (plot.vertical.lines == T) {
@@ -477,7 +481,9 @@ plot.density.profile = function(
           line_width = line.width,
           variance_opacity = error.transparency) +
         theme(legend.position = legend.position,
-              legend.background = element_blank())
+              legend.background = element_blank(),
+              axis.line = element_line(size = axis.line.width),
+              axis.ticks = element_line(size = axis.line.width))
 
       # Add a name to the plot, element in the list
       names(plot.list)[i] = sample_names[i]
@@ -515,8 +521,8 @@ plot.density.profile = function(
 
   # Reshape the X-axis to include the reference points, if required by 'write.reference.points = T'
   if (write.reference.points == T & is.null(x.lim)) {
-    reference_point = as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "ref_point")$values, pattern = ",")[[1]])
-    body = as.numeric(as.vector(stringr::str_split(string = filter(.data = metadata, parameters == "body")$values, pattern = ",")[[1]]))
+    reference_point = as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "ref_point")$values, pattern = ",")[[1]])
+    body = as.numeric(as.vector(stringr::str_split(string = dplyr::filter(.data = metadata, parameters == "body")$values, pattern = ",")[[1]]))
 
     if (length(reference_point) < length(plot.list)) {reference_point = rep(reference_point[1], length(plot.list))}
     if (length(body) < length(plot.list)) {body = rep(body[1], length(plot.list))}
@@ -560,11 +566,9 @@ plot.density.profile = function(
     pdf(file = multiplot.export.file,
         height = real.height.single.plot * n.row.multiplot,
         width = real.width.single.plot * ceiling(length(plot.list)/n.row.multiplot))
-
     print(multiplot)
-    message("Multiplot exported as: ", multiplot.export.file)
-
     dev.off()
+    message("Multiplot exported as: ", multiplot.export.file)
   }
 
   ##############################################################################

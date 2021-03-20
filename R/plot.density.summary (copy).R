@@ -530,8 +530,9 @@ plot.density.summary = function(
                          geom = "pointrange")
         }
 
-        # Compute the comparisons, and if show.stat.multiplot == T add the p-values bars
-        if (length(unique(current.table$sample)) > 1) {
+        # if show.stat.multiplot == T add the p-values bars
+        if (show.stat.multiplot == T & length(unique(current.table$sample)) > 1) {
+
           my_comparisons = comparisons(current.table, "score", "sample", hide.ns = stat.hide.ns, stat.p.levels = stat.p.levels, stat.method = stat.method, stat.paired = stat.paired)
           comparisons.table[[i]] =
             my_comparisons$comparisons_data %>%
@@ -540,16 +541,7 @@ plot.density.summary = function(
           comparisons.table[[i]] = Rseb::move.df.col(data.frame = comparisons.table[[i]], move.command = "region first")
           colnames(comparisons.table[[i]]) = c("region", "signal.type", "sample.1", "sample.2", "p", "p.adj", "p.format", "p.signif", "method")
 
-        } else if (length(unique(current.table$sample)) == 1) {
-          comparisons.table[[i]] = data.frame(region = unique(current.table$group),
-                                              signal.type = signal.type,
-                                              sample.1 = unique(current.table$sample),
-                                              sample.2 = NA,
-                                              p = NA, p.adj = NA, p.format = NA, p.signif = NA, method = NA)
-        }
 
-        ## Add significant bars/p-stars
-        if (show.stat.multiplot == T & length(unique(current.table$sample)) > 1) {
           if (length(my_comparisons$comparisons_to_plot) >= 1) {
             plot.list[[i]] =
               plot.list[[i]] +
@@ -562,6 +554,12 @@ plot.density.summary = function(
                                          size = text.size * 0.6,
                                          color = "#000000")
           }
+        } else if (show.stat.multiplot == T & length(unique(current.table$sample)) == 1) {
+          comparisons.table[[i]] = data.frame(region = unique(current.table$group),
+                                              signal.type = signal.type,
+                                              sample.1 = unique(current.table$sample),
+                                              sample.2 = NA,
+                                              p = NA, p.adj = NA, p.format = NA, p.signif = NA, method = NA)
         } # END all stat comparisons
 
       }
@@ -701,8 +699,9 @@ plot.density.summary = function(
                            geom = "pointrange")
         }
 
-        # Compute the comparisons, and if show.stat.multiplot == T add the p-values bars
-        if (length(unique(current.table$group)) > 1) {
+        # if show.stat.multiplot == T add the p-values bars
+        if (show.stat.multiplot == T & length(unique(current.table$group)) > 1) {
+
           my_comparisons = comparisons(current.table, "score", "group", hide.ns = stat.hide.ns, stat.p.levels = stat.p.levels, stat.method = stat.method, stat.paired = stat.paired)
           comparisons.table[[i]] =
             my_comparisons$comparisons_data %>%
@@ -711,15 +710,6 @@ plot.density.summary = function(
           comparisons.table[[i]] = Rseb::move.df.col(data.frame = comparisons.table[[i]], move.command = "sample first")
           colnames(comparisons.table[[i]]) = c("sample", "signal.type", "region.1", "region.2", "p", "p.adj", "p.format", "p.signif", "method")
 
-        } else if (length(unique(current.table$group)) == 1) {
-          comparisons.table[[i]] = data.frame(sample = unique(current.table$sample),
-                                              signal.type = signal.type,
-                                              region.1 = unique(current.table$group),
-                                              region.2 = NA,
-                                              p = NA, p.adj = NA, p.format = NA, p.signif = NA, method = NA)
-        }
-
-        if (show.stat.multiplot == T & length(unique(current.table$group)) > 1) {
           if (length(my_comparisons$comparisons_to_plot) >= 1) {
             plot.list[[i]] =
               plot.list[[i]] +
@@ -732,7 +722,13 @@ plot.density.summary = function(
                                          size = text.size * 0.6,
                                          color = "#000000")
           }
-        }  # END all stat comparisons
+        } else if (show.stat.multiplot == T & length(unique(current.table$group)) == 1) {
+          comparisons.table[[i]] = data.frame(sample = unique(current.table$sample),
+                                              signal.type = signal.type,
+                                              region.1 = unique(current.table$group),
+                                              region.2 = NA,
+                                              p = NA, p.adj = NA, p.format = NA, p.signif = NA, method = NA)
+        } # END all stat comparisons
 
       }
 
@@ -1002,15 +998,26 @@ plot.density.summary = function(
                                                print.multiplot = F)
 
   # Build the output list
-  return(list(data.table = cbind(regions.position, full.stat.table),
-              metadata = metadata,
-              plot.list = plot.list,
-              density.profile = density.profile$multiplot,
-              multiplot = multiplot,
-              summary.plot.samples = summary.plot.samples,
-              summary.plot.regions = summary.plot.groups,
-              means.comparisons = dplyr::mutate(.data = purrr::reduce(comparisons.table, rbind),
-                                                paired = stat.paired)))
+  if (show.stat.multiplot == T) {
+    return(list(data.table = cbind(regions.position, full.stat.table),
+                metadata = metadata,
+                plot.list = plot.list,
+                density.profile = density.profile$multiplot,
+                multiplot = multiplot,
+                summary.plot.samples = summary.plot.samples,
+                summary.plot.regions = summary.plot.groups,
+                means.comparisons = purrr::reduce(comparisons.table, rbind)))
+  } else {
+    return(list(data.table = full.stat.table,
+                metadata = metadata,
+                plot.list = plot.list,
+                density.profile = density.profile$multiplot,
+                multiplot = multiplot,
+                summary.plot.samples = summary.plot.samples,
+                summary.plot.regions = summary.plot.groups,
+                means.comparisons = "Parameter 'show.stat.multiplot == FALSE', no means comparison generated."))
+  }
+
 
 
 } # End function
