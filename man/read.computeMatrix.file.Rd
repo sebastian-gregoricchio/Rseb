@@ -12,9 +12,9 @@ read.computeMatrix.file(matrix.file)
 \value{
 The functions returns a named list containing:
 \itemize{
-  \item \code{metadata} data.frame with the information gotten from the matrix_file.gz;
-  \item \code{matrix.data} data.frame with the scores gotten from;
-  \item \code{original.file.path} with full path to the original matrix_file.gz.
+  \item{\code{metadata}}{data.frame with the information gotten from the matrix_file.gz}
+  \item{\code{matrix.data}}{data.frame with the scores gotten from}
+  \item{\code{original.file.path}}{with full path to the original matrix_file.gz.}
  }
  This list can be passed as it is to the function \link{plot.density.profile}.
 }

@@ -4,7 +4,13 @@
 \alias{actualize}
 \title{\code{Rseb} updates verification}
 \usage{
-actualize(update = TRUE, verbose = TRUE, force = FALSE)
+actualize(
+  update = TRUE,
+  verbose = TRUE,
+  force = FALSE,
+  build.manual = TRUE,
+  build.vignettes = TRUE
+)
 }
 \arguments{
 \item{update}{Logical value to define whether update the \code{Rseb} package. By default \code{TRUE}.}
@@ -12,6 +18,10 @@ actualize(update = TRUE, verbose = TRUE, force = FALSE)
 \item{verbose}{Logical value to define whether print messages. By default \code{TRUE}.}
 
 \item{force}{Logical value to define whether to force the installation of \code{Rseb} even though already up-to-date. Parameter passed to \code{devtools::install_github()}. By default \code{FALSE}.}
+
+\item{build.manual}{Logic value to define whether to build the manual. By default \code{TRUE}.}
+
+\item{build.vignettes}{Logic value to define whether to build the vignettes. By default \code{TRUE}.}
 }
 \value{
 Warnings and/or messages. Installation of the latest version of \code{Rseb} if required.
