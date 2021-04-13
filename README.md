@@ -5,7 +5,7 @@
 
 # Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
 
-An R-package for daily tasks required to handle biological data as well as avoid re-coding of small functions for quick but necessary data management.
+An R-package for daily tasks required to handle biological data as well as avoid re-coding of small functions for quick but necessary data managing.
 
 ## Dependencies/Requirements
 Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package. Anyway, install `Bioconductor` repository is recommended. 
@@ -52,17 +52,19 @@ install.packages("devtools")
 ## devtools::install_github("r-lib/devtools")
 
 # Install the Rseb package
-devtools::install_github("sebastian-gregoricchio/Rseb")
+devtools::install_github("sebastian-gregoricchio/Rseb",
+			  build_manual = build.manual,
+                         build_vignettes = build.vignettes)
 ```
 <br /> 
 
 ## Documentation
-With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_manual.pdf) is available.
+With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_manual.pdf) and a [vignette](https://sebastian-gregoricchio.github.io/Rseb/doc/Rseb.overview.vignette.html) are available.
 
 <br /> 
 
 ## Package history and releases
-A list of all realeases and respective description of changes applied could be found [here](https://sebastian-gregoricchio.github.io/Rseb/NEWS).
+A list of all releases and respective description of changes applied could be found [here](https://sebastian-gregoricchio.github.io/Rseb/NEWS).
 
 <br /> 
 

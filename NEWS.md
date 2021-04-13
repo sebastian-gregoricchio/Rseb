@@ -70,6 +70,23 @@ First releasing
 * `IGVsnap` allows the addiction of a delay time between snap generation
 
 
+<br /> 
+
+#### [v0.2.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.2.0) - April 13th 2021
+* Updated information in DESCRIPTION file (new suggested: `ggpmisc`, `prettydoc`, `knitr`, `rmarkdown`, `stats`)
+* Added [vignette](https://sebastian-gregoricchio.github.io/Rseb/doc/Rseb.overview.vignette.html) to describe the main functions of the package
+* Added function `density.matrix` (alternative to `computeMatrix.deeptools`)
+* Added example datasets `RNAseq`, `deeptools.matrix`, `CNV.table`
+* New function `plot.density.differences`
+* Updtate `actualize` function to build vignettes and bugs fixed
+* Optimized the `plot.density.summary` and `plot.density.profile` functions in order to not interfer with other packages
+* Optimized the `plot.density.summary` and `plot.density.profile` functions in order to keep the input order of the samples and groups in the plots colors/legend
+* Updated `plot.density.profile` to change legend title when 'plot.by.group==FALSE'
+* Updated `plot.density.summary` to compute the means comparisons even when not required to show on the plot and indicate whether the statistical test performed was paired or not
+* Bug fixed in matrix loading for `plot.density.summary` function
+* Better handling of Rseb version visualization in `pkg.version` output
+
+
 
 <br /> 
 <br /> 
