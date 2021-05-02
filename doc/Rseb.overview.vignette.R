@@ -1,5 +1,5 @@
 ## ----setup, include = FALSE---------------------------------------------------
-knitr::opts_chunk$set(collapse = TRUE, comment = ">")
+knitr::opts_chunk$set(collapse = TRUE, comment = ">", dev = "svg")
 #knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 #options(tibble.print_min = 4L, tibble.print_max = 4L)
 
