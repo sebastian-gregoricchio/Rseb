@@ -51,11 +51,9 @@ actualize = function(update = TRUE,
   if (check$up_to_date == F & update == T) {
     message(paste("\033[0;37;44m The 'Rseb' package is not up-to-date.\n Rseb will be updated to the last release (v",
                   check$installed_version, " --> v", check$latest_version, "). \033[0m", sep=""))
-    devtools::install_github("sebastian-gregoricchio/Rseb",
-                                                                     build_manual = build.manual,
-                                                                     build_vignettes = build.vignettes)}
+    devtools::install_github("sebastian-gregoricchio/Rseb", build_manual = build.manual, build_vignettes = build.vignettes)}
   else if (check$up_to_date == T) {
-    if (force == T) {devtools::install_github("sebastian-gregoricchio/Rseb", force = force)}
+    if (force == T) {devtools::install_github("sebastian-gregoricchio/Rseb", force = force, build_manual = build.manual, build_vignettes = build.vignettes)}
     else if (verbose == T) {return(message(paste("Rseb's latest version (v", check$installed_version, ") is already installed.", sep = "")))}
   }
 
