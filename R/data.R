@@ -1,5 +1,5 @@
 #' @title RNA-seq example
-#' @description Extract of a DESeq2 result for differential expression analysis on RNA-seq data
+#' @description Dummy example of a DESeq2 result for differential expression analysis on RNA-seq data
 #' @format A data frame with 300 rows and 7 variables:
 #' \describe{
 #'   \item{\code{geneName}}{genes symbols}
@@ -10,7 +10,7 @@
 #'   \item{\code{pvalue}}{Wald test p-value}
 #'   \item{\code{padj}}{BH adjusted p-values}
 #'}
-#' @source \url{http://path.to.paper/}
+#' @source Simulated data
 "RNAseq"
 #'
 #'
