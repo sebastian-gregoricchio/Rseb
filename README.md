@@ -53,8 +53,8 @@ install.packages("devtools")
 
 # Install the Rseb package
 devtools::install_github("sebastian-gregoricchio/Rseb",
-			  build_manual = build.manual,
-                         build_vignettes = build.vignettes)
+			 build_manual = TRUE,
+                         build_vignettes = TRUE)
 ```
 <br /> 
 
