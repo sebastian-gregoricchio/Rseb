@@ -2,7 +2,7 @@
 ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
 ![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/Rseb)
 [![license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://sebastian-gregoricchio.github.io/Rseb/LICENSE.md/LICENSE)
-![downloads](https://img.shields.io/github/downloads/sebastian-gregoricchio/Rseb/total.svg)
+#![downloads](https://img.shields.io/github/downloads/sebastian-gregoricchio/Rseb/total.svg)
 
 # Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
 
