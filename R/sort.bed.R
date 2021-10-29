@@ -34,7 +34,7 @@ sort.bed = function(bed,
 
   require(dplyr)
 
-  if (class(bed) == "character") {
+  if (class(bed)[1] == "character") {
     bed = read.delim(file = bed,
                      header = bed.header,
                      sep = sep,
