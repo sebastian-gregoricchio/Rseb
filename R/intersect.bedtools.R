@@ -4,8 +4,8 @@
 #' @description This function runs a command line that uses \code{bedtools intersect} to intersect one or more .bed files.
 #'
 #'
-#' @param a A single string defining the BAM/BED/GFF/VCF file “A”. Each feature in A is compared to B in search of overlaps. Use “stdin” if passing A with a UNIX pipe.
-#' @param b A character vector with one or more BAM/BED/GFF/VCF file(s) “B”. It could be also a single string containing wildcard (*) character(s).
+#' @param a A single string defining the BAM/BED/GFF/VCF file "A". Each feature in A is compared to B in search of overlaps. Use "stdin" if passing A with a UNIX pipe.
+#' @param b A character vector with one or more BAM/BED/GFF/VCF file(s) "B". It could be also a single string containing wildcard (*) character(s).
 #' @param outputFileName Full path to output file name. By default \code{<working.directory>/intersected.bed}.
 #'
 #' @param abam Logic value to define if file A is a BAM. Each BAM alignment in A is compared to B in search of overlaps. By default \code{FALSE}.
@@ -14,7 +14,7 @@
 #'
 #' @param wa Logic value to define if to write the original entry in A for each overlap. By default \code{FALSE}.
 #' @param wb Logic value to define if to write the original entry in B for each overlap. Useful for knowing what A overlaps. Restricted by -f and -r. By default \code{FALSE}.
-#' @param loj Logic value to define if to perform a “left outer join”. That is, for each feature in A report each overlap with B. If no overlaps are found, report a NULL feature for B. By default \code{FALSE}.
+#' @param loj Logic value to define if to perform a "left outer join". That is, for each feature in A report each overlap with B. If no overlaps are found, report a NULL feature for B. By default \code{FALSE}.
 #' @param wo Logic value to define if to write the original A and B entries plus the number of base pairs of overlap between the two features. Only A features with overlap are reported. Restricted by -f and -r. By default \code{FALSE}.
 #' @param wao Logic value to define if to write the original A and B entries plus the number of base pairs of overlap between the two features. However, A features w/o overlap are also reported with a NULL B feature and overlap = 0. Restricted by -f and -r. By default \code{FALSE}.
 #' @param u Logic value to define if to write original A entry once if any overlaps found in B. In other words, just report the fact at least one overlap was found in B. Restricted by -f and -r. By default \code{FALSE}.
@@ -26,15 +26,15 @@
 #' @param F. Numeric value defining the minimum overlap required as a fraction of B. Default is 1E-9 (i.e., 1bp). By default \code{NULL}.
 #' @param r Logic value defining if the fraction (parameter \code{f}) is required to be reciprocal fraction of overlap for A and B. In other words, if -f is 0.90 and -r is used, this requires that B overlap at least 90\% of A and that A also overlaps at least 90\% of B. By default \code{NULL}.
 #' @param e Logic value defining if the fraction (parameter \code{f}) must be satisfied for A _OR_ B. In other words, if -e is used with -f 0.90 and -F 0.10 this requires that either 90\% of A is covered OR 10\% of B is covered. Without -e, both fractions would have to be satisfied. By default \code{NULL}.
-#' @param s Logic value to define if to force “strandedness”. That is, only report hits in B that overlap A on the same strand. By default, overlaps are reported without respect to strand. By default \code{FALSE}.
+#' @param s Logic value to define if to force "strandedness". That is, only report hits in B that overlap A on the same strand. By default, overlaps are reported without respect to strand. By default \code{FALSE}.
 #' @param S Logic value to define if to require different strandedness. That is, only report hits in B that overlap A on the _opposite_ strand. By default, overlaps are reported without respect to strand. By default \code{FALSE}.
 #'
-#' @param split Logic value to define if to treat “split” BAM (i.e., having an “N” CIGAR operation) or BED12 entries as distinct BED intervals. By default \code{FALSE}.
-#' @param sorted Logic value to define, for very large B files, if to invoke a “sweeping” algorithm that requires position-sorted input. When using -sorted, memory usage remains low even for very large files. By default \code{FALSE}. It is possible to sort a bed file on terminal by \code{(sort -k1,1 -k2,2n unsorted.bed > sorted.bed)} or by the function \link{sort.bed}.
+#' @param split Logic value to define if to treat "split" BAM (i.e., having an "N" CIGAR operation) or BED12 entries as distinct BED intervals. By default \code{FALSE}.
+#' @param sorted Logic value to define, for very large B files, if to invoke a "sweeping" algorithm that requires position-sorted input. When using -sorted, memory usage remains low even for very large files. By default \code{FALSE}. It is possible to sort a bed file on terminal by \code{(sort -k1,1 -k2,2n unsorted.bed > sorted.bed)} or by the function \link{sort.bed}.
 #' @param g Specify a genome file the defines the expected chromosome order in the input files for use with the -sorted option. By default \code{NULL}.
 #'
 #' @param srun Logic value to define whether the command should be run in \code{srun} mode. By default \code{FALSE}.
-#' @param intersect.bedtools.command String to define the command to use to recall the \code{bedtools intersect} function. An example: "/home/user/anaconda3/bin/intersectBed". By default \code{"intersectBed"}.
+#' @param intersect.bedtools.command String to define the command to use to recall the \code{bedtools intersect} function. An example: "/home/user/anaconda3/bin/intersectBed". By default \code{"/home/USERNAME/anaconda3/bin/intersectBed"}.
 #'
 #' @param return.command Logic value to define whether to return the string corresponding to the command for bedtools. By default \code{FALSE}.
 #' @param return.bed Logic value to define whether to return the resulting bed as data.frame. By default \code{FALSE}. Parameter not active when inputs are bam files.
@@ -103,7 +103,7 @@ intersect.bedtools =
 
     # path to bedtools
     srun = FALSE,
-    intersect.bedtools.command = "intersectBed",
+    intersect.bedtools.command = paste0("/home/", Sys.getenv("USERNAME"), "/anaconda3/bin/intersectBed"),
 
     # others parameters for this function in R
     return.command = FALSE,
