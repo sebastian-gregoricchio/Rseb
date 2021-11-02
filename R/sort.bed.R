@@ -5,9 +5,8 @@
 #' @param bed Two options are possible: \cr - String with the path to a .bed file; \cr - Data.frame corresponding to a bed file format (all the columns and their names will be kept).
 #' @param bed.header Logic value to define whether the .bed file contains an header or not. By default \code{FALSE}.
 #' @param sep String containing the separator character for a .bed file. By default \code{"\t"}.
-#' @param return.bed Logic value to define if to return the bed as a data.frame. By default \code{TRUE}.  Only unique rows are kept.
-#' @param export.bed Logic value to define if to export the bed file. By default \code{FALSE}. Only unique rows are kept.
-#' @param export.file.name String to define the path to the file to be exported, if required. By default \code{"<working.directory>/sorted.bed"}.
+#' @param return.bed Logic value to define if to return the bed as a data.frame. By default \code{TRUE}. Only unique rows are kept.
+#' @param export.file.name Optional: string to define the path to the file to be exported, if required. By default \code{NULL}, not exported.
 #' @param export.header Logic value to define whether the header should be exported in the sorted bed file. By default \code{FALSE}.
 #'
 #' @return If required, returns a data.frame corresponding to the sorted .bed file.
@@ -23,8 +22,7 @@ sort.bed = function(bed,
                     bed.header = F,
                     sep = "\t",
                     return.bed = T,
-                    export.bed = F,
-                    export.file.name = paste(getwd(), "sorted.bed", sep="/"),
+                    export.file.name = NULL,
                     export.header = F) {
 
   #-----------------------------#
@@ -81,13 +79,13 @@ sort.bed = function(bed,
   }
 
   # Export if required
-  if (export.bed == T) {
+  if (!is.null(export.file.name)) {
     write.table(x = unique(sorted.bed),
                 file = export.file.name,
                 quote = F, sep = sep,
                 row.names = F, col.names = export.header)
 
-    message(paste("The sorted file have been exported to",
+    message(paste("The sorted file have been exported as",
                   export.file.name))
   }
 
