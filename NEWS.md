@@ -15,7 +15,7 @@ title: "changeLog"
 
 <br />
 
-#### [v0.2.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.2.0) - April 13th 2021
+#### [v0.2.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.2.0) - April 13<sup>th</sup> 2021
 * Updated information in DESCRIPTION file (new suggested: `ggpmisc`, `prettydoc`, `knitr`, `rmarkdown`, `stats`)
 * Added [vignette](https://sebastian-gregoricchio.github.io/Rseb/doc/Rseb.overview.vignette.html) to describe the main functions of the package
 * Added function `density.matrix` (alternative to `computeMatrix.deeptools`)
@@ -31,7 +31,7 @@ title: "changeLog"
 
 <br />
 
-#### [v0.1.7](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.7) - February 20th 2021
+#### [v0.1.7](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.7) - February 20<sup>th</sup> 2021
 * Updated information in DESCRIPTION file
 * Updated the dependencies to require an R version >= 4.0.0
 * Moved all "depending" packages in "imports" to avoid attaching of all packages. Morover, added `ggpubr` and removed `labeling`
@@ -47,7 +47,7 @@ title: "changeLog"
 
 <br />
 
-#### [v0.1.6](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.6) - February 10th 2021
+#### [v0.1.6](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.6) - February 10<sup>th</sup> 2021
 * Added the function `actualize` and integrated in each function to check everytime if `Rseb` package is up-to-date
 * New functions `plot.density.summary`, `floating.ceiling`, `floating.floor`
 * Updated the dependencies to add `rvcheck` and `curl`
@@ -56,14 +56,14 @@ title: "changeLog"
 
 <br />
 
-#### [v0.1.5](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.5) - January 29th 2021
+#### [v0.1.5](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.5) - January 29<sup>th</sup> 2021
 * `DE.status` now supports also NAs for the FoldChange
 * Added functions `color.gradient` and `is.color`
 * Bugs fixed in `volcano`
 
 <br />
 
-#### [v0.1.4](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.4) - January 15th 2021
+#### [v0.1.4](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.4) - January 15<sup>th</sup> 2021
 * Bugs fixed in `plot.density.profile`
 * Bugs fixed in `build.bed`
 * Bugs fixed in `intersect.bedtools`
@@ -72,7 +72,7 @@ title: "changeLog"
 
 <br />
 
-#### [v0.1.3](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.3) - January 11th 2021
+#### [v0.1.3](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.3) - January 11<sup>th</sup> 2021
 * Optimization of `volcano` function: parameter 'font_size' added
 * Bugs fixed in `computeMatrix.deeptools`
 * Added function `build.bed`
@@ -80,20 +80,20 @@ title: "changeLog"
 
 <br />
 
-#### [v0.1.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.2) - January 7th 2021
+#### [v0.1.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.2) - January 7<sup>th</sup> 2021
 * Optimization of `IGVsnap` function
 * Added the function `pkg.check`
 
 <br />
 
-#### [v0.1.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.1) - January 6th 2021
+#### [v0.1.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.1) - January 6<sup>th</sup> 2021
 * Some bug-fixing
 * Added the function `read.computeMatrix.file`
 * Optimized function `plot.density.profile` to be compatibile with outputs from `read.computeMatrix.file`
 
 <br />
 
-#### [v0.1.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.0) - January 5th 2021
+#### [v0.1.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.0) - January 5<sup>th</sup> 2021
 First releasing
 
 
