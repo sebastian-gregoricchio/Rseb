@@ -2,10 +2,11 @@
 ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
 ![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/Rseb)
 [![license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://sebastian-gregoricchio.github.io/Rseb/LICENSE.md/LICENSE)
+[![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/snakeATAC?style=social)](https://github.com/sebastian-gregoricchio/snakeATAC/fork)
 <!---![downloads](https://img.shields.io/github/downloads/sebastian-gregoricchio/Rseb/total.svg)--->
 
 ## Dependencies/Requirements <img src="Rseb_logo.svg" align="right" height = 120/>
-Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package. Anyway, install `Bioconductor` repository is recommended. 
+Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package. Anyway, install `Bioconductor` repository is recommended.
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -19,14 +20,14 @@ To install them directly you need to have previously installed `BiocManager` and
 ```r
 BiocManager::install(c("Biostrings", "biomaRt", "GO.db", "rtracklayer"))
 ```
-<br /> 
+<br />
 
 #### deepTools
 Certain functions of this package require that `deeptools` is installed on your system. For more information see the [deepTools](https://deeptools.readthedocs.io/en/develop/content/installation.html) installation page.
 * **Installation via `conda`**: `conda install -c bioconda deeptools`
 * **Command line installation using `pip`**: `pip install deeptools`, All python requirements should be automatically installed.
 
-<br /> 
+<br />
 
 #### bedTools
 Certain functions of this package require that `bedtools` is installed on your system. For more information see the [bedTools](https://bedtools.readthedocs.io/en/latest/content/installation.html) installation page.
@@ -37,7 +38,7 @@ Certain functions of this package require that `bedtools` is installed on your s
     - Homebrew (MacOS): `brew tap homebrew/science; brew install bedtools`
     - MacPorts: `port install bedtools`
 
-<br /> 
+<br />
 
 ## Installation
 ```r
@@ -53,19 +54,19 @@ devtools::install_github("sebastian-gregoricchio/Rseb",
 			 build_manual = TRUE,
                          build_vignettes = TRUE)
 ```
-<br /> 
+<br />
 
 ## Documentation
 With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_manual.pdf) and a [vignette](https://sebastian-gregoricchio.github.io/Rseb/doc/Rseb.overview.vignette.html) are available.
 
 
-<br /> 
+<br />
 
 ## Package history and releases
 A list of all releases and respective description of changes applied could be found [here](https://sebastian-gregoricchio.github.io/Rseb/NEWS).
 
-<br /> 
-<br /> 
+<br />
+<br />
 
 -----------------
 ## Contact
@@ -75,8 +76,7 @@ For any suggestion, bug fixing, commentary please contact Sebastian Gregoricchio
 This package is under a [GNU General Public License (version 3)](https://sebastian-gregoricchio.github.io/Rseb/LICENSE.md/LICENSE).
 
 
-<br /> 
+<br />
 
 ##### Contributors
 [![contributors](https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true)](https://sebastian-gregoricchio.github.io/)
-
