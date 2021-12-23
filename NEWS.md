@@ -4,7 +4,7 @@ title: "changeLog"
 
 # Rseb <img src="https://sebastian-gregoricchio.github.io/Rseb/Rseb_logo.svg" align="right" height = 150/>
 ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
-[![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/snakeATAC?style=social)](https://github.com/sebastian-gregoricchio/snakeATAC/fork)
+[![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
 #### [v0.2.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.2.10) - November 15th 2021
