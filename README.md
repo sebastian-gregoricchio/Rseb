@@ -11,7 +11,7 @@ An R-package for daily tasks required to handle biological data as well as avoid
 
 
 ## Introduction
-The concept behind the *Rseb* (*R*-package for *S*implified *E*nd-to-end data *B*uild-up) is to provide a toolkit that allows the automation of different type of tasks avoiding retyping of code and loss of time. Furthermore, the advantage is that, in most of the cases, the functions are built in R-language making it suitable for all the operating systems
+The concept behind the `Rseb` (*R*-package for *S*implified *E*nd-to-end data *B*uild-up) is to provide a toolkit that allows the automation of different type of tasks avoiding retyping of code and loss of time. Furthermore, the advantage is that, in most of the cases, the functions are built in R-language making it suitable for all the operating systems
 
 From a more biological point of view, this package simplifies many downstream analyses of high-throughput data that otherwise would require many hours of code typing and case-to-case adaptation. Moreover, most of the functions aimed to visualize these kind of data are thought to provide a high level of possible customization with a large number of graphical parameters compared to the commonly used already available tools. Another advantage of this package is that it offers multiple methods, with a corresponding visualization, to quantify the difference of signal between samples, in a qualitatively and/or quantitatively way, without any additional coding.
 
