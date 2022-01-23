@@ -44,7 +44,7 @@ BiocManager::install()
 ```
 
 The required Biocondutor packages are: `Biostrings`, `biomaRt`, `GO.db`, `rtracklayer`, `GenomicRanges`, `AnnotationFilter`, `EnsDb.Hsapiens.v75`, `EnsDb.Hsapiens.v86`, `EnsDb.Mmusculus.v79`.
-To install it manually procced with:
+To install it manually proceed with:
 
 ```r
 BiocManager::install(c("Biostrings", "biomaRt", "GO.db", "rtracklayer", "GenomicRanges", "AnnotationFilter", "EnsDb.Hsapiens.v75", "EnsDb.Hsapiens.v86", "EnsDb.Mmusculus.v79"))
