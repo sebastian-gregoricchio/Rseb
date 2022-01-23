@@ -10,19 +10,21 @@
 An R-package for daily tasks required to handle biological data as well as avoid re-coding of small functions for quick but necessary data managing.
 
 ## Dependencies/Requirements
-Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package. Anyway, install `Bioconductor` repository is recommended.
+### Bioconductor libraries
+Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package.
+However, if you prefere to manually install `Bioconductor` and required packages proceede with the `Bioconductor` installation:
 
 ```r
-if (!requireNamespace("BiocManager", quietly = TRUE))
+if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install()
 ```
 
-The possibile required packages are: `Biostrings`, `biomaRt`, `GO.db`, `rtracklayer`.
-To install them directly you need to have previously installed `BiocManager` and then:
+The required Biocondutor packages are: `Biostrings`, `biomaRt`, `GO.db`, `rtracklayer`, `GenomicRanges`, `AnnotationFilter`, `EnsDb.Hsapiens.v75`, `EnsDb.Hsapiens.v86`, `EnsDb.Mmusculus.v79`.
+To install it manually procced with:
 
 ```r
-BiocManager::install(c("Biostrings", "biomaRt", "GO.db", "rtracklayer"))
+BiocManager::install(c("Biostrings", "biomaRt", "GO.db", "rtracklayer", "GenomicRanges", "AnnotationFilter", "EnsDb.Hsapiens.v75", "EnsDb.Hsapiens.v86", "EnsDb.Mmusculus.v79"))
 ```
 <br />
 
