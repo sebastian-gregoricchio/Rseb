@@ -17,12 +17,12 @@ A data frame with 300 rows and 7 variables:
 }
 }
 \source{
-\url{http://path.to.paper/}
+Simulated data
 }
 \usage{
 RNAseq
 }
 \description{
-Extract of a DESeq2 result for differential expression analysis on RNA-seq data
+Dummy example of a DESeq2 result for differential expression analysis on RNA-seq data
 }
 \keyword{datasets}

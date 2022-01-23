@@ -39,7 +39,8 @@ computeMatrix.deeptools(
   exonID = "exon",
   transcript_id_designator = "transcript_id",
   srun = FALSE,
-  computeMatrix.deeptools.command = "computeMatrix",
+  computeMatrix.deeptools.command = paste0("/home/", Sys.getenv("USERNAME"),
+    "/anaconda3/bin/computeMatrix"),
   return.command = FALSE,
   run.command = TRUE,
   quiet = FALSE,
@@ -54,7 +55,7 @@ computeMatrix.deeptools(
 
 \item{scoreFileName}{String vector with the full paths to bigWig file(s) containing the scores to be plotted.}
 
-\item{regionsFileName}{String vector with the full paths to .BED or .GTF files containing the regions to plot. If multiple bed files are given, each one is considered a group that can be plotted separately. Also, adding a “#” symbol in the bed file causes all the regions until the previous “#” to be considered one group.}
+\item{regionsFileName}{String vector with the full paths to .BED or .GTF files containing the regions to plot. If multiple bed files are given, each one is considered a group that can be plotted separately. Also, adding a "#" symbol in the bed file causes all the regions until the previous "#" to be considered one group.}
 
 \item{outFileName}{String containing the full file name to save the gzipped matrix file (.gz) needed by \link{plot.density.profile}.}
 
@@ -62,15 +63,15 @@ computeMatrix.deeptools(
 
 \item{outFileSortedRegions}{File name in which the regions are saved after skiping zeros or min/max threshold values. The order of the regions in the file follows the sorting order selected. This is useful, for example, to generate other heatmaps keeping the sorting of the first heatmap. Example: Heatmap1sortedRegions.bed. By default \code{NULL}.}
 
-\item{referencePoint}{Possible choices: TSS, TES, center. The reference point for the plotting could be either the region start (TSS), the region end (TES) or the center of the region. Note that regardless of what you specify, plotHeatmap/plotProfile will default to using “TSS” as the label. By default \code{TSS}.}
+\item{referencePoint}{Possible choices: TSS, TES, center. The reference point for the plotting could be either the region start (TSS), the region end (TES) or the center of the region. Note that regardless of what you specify, plotHeatmap/plotProfile will default to using "TSS" as the label. By default \code{TSS}.}
 
 \item{nanAfterEnd}{Logic value. If set (\code{TRUE}), any values after the region end are discarded. This is useful to visualize the region end when not using the scale-regions mode and when the reference-point is set to the TSS. By default \code{FALSE}.}
 
 \item{regionBodyLength}{Distance in bases to which all regions will be fit. (Default: 1000).}
 
-\item{startLabel}{Label shown in the plot for the start of the region. Default is TSS (transcription start site), but could be changed to anything, e.g. “peak start”. Note that this is only useful if you plan to plot the results yourself and not, for example, with plotHeatmap, which will override this. (Default: “TSS”).}
+\item{startLabel}{Label shown in the plot for the start of the region. Default is TSS (transcription start site), but could be changed to anything, e.g. "peak start". Note that this is only useful if you plan to plot the results yourself and not, for example, with plotHeatmap, which will override this. (Default: "TSS").}
 
-\item{endLabel}{Label shown in the plot for the region end. Default is TES (transcription end site). See the --startLabel option for more information. (Default: “TES”).}
+\item{endLabel}{Label shown in the plot for the region end. Default is TES (transcription end site). See the --startLabel option for more information. (Default: "TES").}
 
 \item{unscaled5prime}{Number of bases at the 5-prime end of the region to exclude from scaling. By default, each region is scaled to a given length (see the --regionBodyLength option). In some cases it is useful to look at unscaled signals around region boundaries, so this setting specifies the number of unscaled bases on the 5-prime end of each boundary. (Default: 0).}
 
@@ -82,13 +83,13 @@ computeMatrix.deeptools(
 
 \item{binSize}{Length, in bases, of the non-overlapping bins for averaging the score over the regions length. (Default: 10).}
 
-\item{sortRegions}{Possible choices: "descend", "ascend", "no", "keep". Whether the output file should present the regions sorted. The default is to not sort the regions. Note that this is only useful if you plan to plot the results yourself and not, for example, with plotHeatmap, which will override this. Note also that unsorted output will be in whatever order the regions happen to be processed in and not match the order in the input files. If you require the output order to match that of the input regions, then either specify “keep” or use computeMatrixOperations to resort the results file. (Default: “keep”).}
+\item{sortRegions}{Possible choices: "descend", "ascend", "no", "keep". Whether the output file should present the regions sorted. The default is to not sort the regions. Note that this is only useful if you plan to plot the results yourself and not, for example, with plotHeatmap, which will override this. Note also that unsorted output will be in whatever order the regions happen to be processed in and not match the order in the input files. If you require the output order to match that of the input regions, then either specify "keep" or use computeMatrixOperations to resort the results file. (Default: "keep").}
 
-\item{sortUsing}{Possible choices: "mean", "median", "max", "min", "sum", "region_length". Indicate which method should be used for sorting. The value is computed for each row.Note that the region_length option will lead to a dotted line within the heatmap that indicates the end of the regions. (Default: “mean”).}
+\item{sortUsing}{Possible choices: "mean", "median", "max", "min", "sum", "region_length". Indicate which method should be used for sorting. The value is computed for each row.Note that the region_length option will lead to a dotted line within the heatmap that indicates the end of the regions. (Default: "mean").}
 
 \item{sortUsingSamples}{List of sample numbers (order as in matrix), that are used for sorting by --sortUsing, no value uses all samples, example: --sortUsingSamples 1 3. By default \code{NULL}.}
 
-\item{averageTypeBins}{Possible choices: "mean", "median", "min", "max", "std", "sum". Define the type of statistic that should be used over the bin size range. (Default: “mean”).}
+\item{averageTypeBins}{Possible choices: "mean", "median", "min", "max", "std", "sum". Define the type of statistic that should be used over the bin size range. (Default: "mean").}
 
 \item{missingDataAsZero}{Logic value to define if set, missing data (NAs) will be treated as zeros. The default is to ignore such cases (\code{NULL}). If not included, this parameter can be changed later in the function \link{plot.density.profile}.}
 
@@ -100,25 +101,25 @@ computeMatrix.deeptools(
 
 \item{blackListFileName}{A BED file containing regions that should be excluded from all analyses. Currently this works by rejecting genomic chunks that happen to overlap an entry. Consequently, for BAM files, if a read partially overlaps a blacklisted region or a fragment spans over it, then the read/fragment might still be considered. (Default: \code{NULL}).}
 
-\item{samplesLabel}{Labels for the samples. This will then be passed to \link{plot.density.profile} function. The default is to use the file name of the sample. The sample labels should be separated by spaces and quoted if a label itself contains a space E.g. --samplesLabel label-1 “label 2”.}
+\item{samplesLabel}{Labels for the samples. This will then be passed to \link{plot.density.profile} function. The default is to use the file name of the sample. The sample labels should be separated by spaces and quoted if a label itself contains a space E.g. --samplesLabel label-1 "label 2".}
 
 \item{smartLabels}{Instead of manually specifying labels for the input bigWig and BED/GTF files, this causes deepTools to use the file name after removing the path and extension. (Default: \code{TRUE}).}
 
 \item{scale}{If set, all values are multiplied by this number. (Default: 1).}
 
-\item{numberOfProcessors}{Number of processors to use. Type “max/2” to use half the maximum number of processors or “max” to use all available processors. (Default: "max").}
+\item{numberOfProcessors}{Number of processors to use. Type "max/2" to use half the maximum number of processors or "max" to use all available processors. (Default: "max").}
 
 \item{metagene}{When either a BED12 or GTF file are used to provide regions, perform the computation on the merged exons, rather than using the genomic interval defined by the 5-prime and 3-prime most transcript bound (i.e., columns 2 and 3 of a BED file). If a BED3 or BED6 file is used as input, then columns 2 and 3 are used as an exon. (Default: \code{FALSE}).}
 
-\item{transcriptID}{When a GTF file is used to provide regions, only entries with this value as their feature (column 3) will be processed as transcripts. (Default: “transcript”).}
+\item{transcriptID}{When a GTF file is used to provide regions, only entries with this value as their feature (column 3) will be processed as transcripts. (Default: "transcript").}
 
-\item{exonID}{When a GTF file is used to provide regions, only entries with this value as their feature (column 3) will be processed as exons. CDS would be another common value for this. (Default: “exon”).}
+\item{exonID}{When a GTF file is used to provide regions, only entries with this value as their feature (column 3) will be processed as exons. CDS would be another common value for this. (Default: "exon").}
 
-\item{transcript_id_designator}{Each region has an ID (e.g., ACTB) assigned to it, which for BED files is either column 4 (if it exists) or the interval bounds. For GTF files this is instead stored in the last column as a key:value pair (e.g., as ‘transcript_id “ACTB”’, for a key of transcript_id and a value of ACTB). In some cases it can be convenient to use a different identifier. To do so, set this to the desired key. (Default: “transcript_id”).}
+\item{transcript_id_designator}{Each region has an ID (e.g., ACTB) assigned to it, which for BED files is either column 4 (if it exists) or the interval bounds. For GTF files this is instead stored in the last column as a key:value pair (e.g., as ‘transcript_id "ACTB"’, for a key of transcript_id and a value of ACTB). In some cases it can be convenient to use a different identifier. To do so, set this to the desired key. (Default: "transcript_id").}
 
 \item{srun}{Logic value to define whether the command should be run in \code{srun} mode. By default \code{FALSE}.}
 
-\item{computeMatrix.deeptools.command}{String to define the command to use to recall the computeMatrix function of deeptools. An example: "/home/user/anaconda3/bin/computeMatrix". By default \code{"computeMatrix"}.}
+\item{computeMatrix.deeptools.command}{String to define the command to use to recall the computeMatrix function of deeptools. An example: "/home/user/anaconda3/bin/computeMatrix". By default \code{"/home/USERNAME/anaconda3/bin/computeMatrix"}.}
 
 \item{return.command}{Logic value to define whether to return the string corresponding to the command for deeptools. By default \code{FALSE}.}
 

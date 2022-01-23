@@ -6,12 +6,12 @@
 \usage{
 \method{sort}{bed}(
   bed,
-  bed.header = F,
+  bed.header = FALSE,
   sep = "\\t",
-  return.bed = T,
-  export.bed = F,
-  export.file.name = paste(getwd(), "sorted.bed", sep = "/"),
-  export.header = F
+  return.bed = TRUE,
+  export.file.name = NULL,
+  export.header = FALSE,
+  unique.regions = TRUE
 )
 }
 \arguments{
@@ -21,13 +21,13 @@
 
 \item{sep}{String containing the separator character for a .bed file. By default \code{"\t"}.}
 
-\item{return.bed}{Logic value to define if to return the bed as a data.frame. By default \code{TRUE}.  Only unique rows are kept.}
+\item{return.bed}{Logic value to define if to return the bed as a data.frame. By default \code{TRUE}. Only unique rows are kept.}
 
-\item{export.bed}{Logic value to define if to export the bed file. By default \code{FALSE}. Only unique rows are kept.}
-
-\item{export.file.name}{String to define the path to the file to be exported, if required. By default \code{"<working.directory>/sorted.bed"}.}
+\item{export.file.name}{Optional: string to define the path to the file to be exported, if required. By default \code{NULL}, not exported.}
 
 \item{export.header}{Logic value to define whether the header should be exported in the sorted bed file. By default \code{FALSE}.}
+
+\item{unique.regions}{Logic value to indicate whether the output bed must contain unique regions. By default \code{TRUE}.}
 }
 \value{
 If required, returns a data.frame corresponding to the sorted .bed file.

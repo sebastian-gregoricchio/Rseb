@@ -30,7 +30,8 @@ intersect.bedtools(
   sorted = FALSE,
   g = NULL,
   srun = FALSE,
-  intersect.bedtools.command = "intersectBed",
+  intersect.bedtools.command = paste0("/home/", Sys.getenv("USERNAME"),
+    "/anaconda3/bin/intersectBed"),
   return.command = FALSE,
   return.bed = FALSE,
   delete.output = FALSE,
@@ -38,9 +39,9 @@ intersect.bedtools(
 )
 }
 \arguments{
-\item{a}{A single string defining the BAM/BED/GFF/VCF file “A”. Each feature in A is compared to B in search of overlaps. Use “stdin” if passing A with a UNIX pipe.}
+\item{a}{A single string defining the BAM/BED/GFF/VCF file "A". Each feature in A is compared to B in search of overlaps. Use "stdin" if passing A with a UNIX pipe.}
 
-\item{b}{A character vector with one or more BAM/BED/GFF/VCF file(s) “B”. It could be also a single string containing wildcard (*) character(s).}
+\item{b}{A character vector with one or more BAM/BED/GFF/VCF file(s) "B". It could be also a single string containing wildcard (*) character(s).}
 
 \item{outputFileName}{Full path to output file name. By default \code{<working.directory>/intersected.bed}.}
 
@@ -54,7 +55,7 @@ intersect.bedtools(
 
 \item{wb}{Logic value to define if to write the original entry in B for each overlap. Useful for knowing what A overlaps. Restricted by -f and -r. By default \code{FALSE}.}
 
-\item{loj}{Logic value to define if to perform a “left outer join”. That is, for each feature in A report each overlap with B. If no overlaps are found, report a NULL feature for B. By default \code{FALSE}.}
+\item{loj}{Logic value to define if to perform a "left outer join". That is, for each feature in A report each overlap with B. If no overlaps are found, report a NULL feature for B. By default \code{FALSE}.}
 
 \item{wo}{Logic value to define if to write the original A and B entries plus the number of base pairs of overlap between the two features. Only A features with overlap are reported. Restricted by -f and -r. By default \code{FALSE}.}
 
@@ -76,19 +77,19 @@ intersect.bedtools(
 
 \item{e}{Logic value defining if the fraction (parameter \code{f}) must be satisfied for A _OR_ B. In other words, if -e is used with -f 0.90 and -F 0.10 this requires that either 90\% of A is covered OR 10\% of B is covered. Without -e, both fractions would have to be satisfied. By default \code{NULL}.}
 
-\item{s}{Logic value to define if to force “strandedness”. That is, only report hits in B that overlap A on the same strand. By default, overlaps are reported without respect to strand. By default \code{FALSE}.}
+\item{s}{Logic value to define if to force "strandedness". That is, only report hits in B that overlap A on the same strand. By default, overlaps are reported without respect to strand. By default \code{FALSE}.}
 
 \item{S}{Logic value to define if to require different strandedness. That is, only report hits in B that overlap A on the _opposite_ strand. By default, overlaps are reported without respect to strand. By default \code{FALSE}.}
 
-\item{split}{Logic value to define if to treat “split” BAM (i.e., having an “N” CIGAR operation) or BED12 entries as distinct BED intervals. By default \code{FALSE}.}
+\item{split}{Logic value to define if to treat "split" BAM (i.e., having an "N" CIGAR operation) or BED12 entries as distinct BED intervals. By default \code{FALSE}.}
 
-\item{sorted}{Logic value to define, for very large B files, if to invoke a “sweeping” algorithm that requires position-sorted input. When using -sorted, memory usage remains low even for very large files. By default \code{FALSE}. It is possible to sort a bed file on terminal by \code{(sort -k1,1 -k2,2n unsorted.bed > sorted.bed)} or by the function \link{sort.bed}.}
+\item{sorted}{Logic value to define, for very large B files, if to invoke a "sweeping" algorithm that requires position-sorted input. When using -sorted, memory usage remains low even for very large files. By default \code{FALSE}. It is possible to sort a bed file on terminal by \code{(sort -k1,1 -k2,2n unsorted.bed > sorted.bed)} or by the function \link{sort.bed}.}
 
 \item{g}{Specify a genome file the defines the expected chromosome order in the input files for use with the -sorted option. By default \code{NULL}.}
 
 \item{srun}{Logic value to define whether the command should be run in \code{srun} mode. By default \code{FALSE}.}
 
-\item{intersect.bedtools.command}{String to define the command to use to recall the \code{bedtools intersect} function. An example: "/home/user/anaconda3/bin/intersectBed". By default \code{"intersectBed"}.}
+\item{intersect.bedtools.command}{String to define the command to use to recall the \code{bedtools intersect} function. An example: "/home/user/anaconda3/bin/intersectBed". By default \code{"/home/USERNAME/anaconda3/bin/intersectBed"}.}
 
 \item{return.command}{Logic value to define whether to return the string corresponding to the command for bedtools. By default \code{FALSE}.}
 
