@@ -14,9 +14,10 @@ From a more biological point of view, this package simplifies many downstream an
 The guide is divided in three parts: the first one will explore some analyses and visualization of RNA-seq data, the second one the representation and quantification of targeted sequencing data (ChIP-seq, ATAC-seq, etc.), while the last part is focused on some of the "general" tools available.
 
 
+### Citation
 If you use this package, please cite:
 
-<div class="warning" style='padding:2.5%; background-color:#c1eac4; color:#fdffb4; margin-left:5%; margin-right:5%; border-radius:15px;'>
+<div class="warning" style='padding:2.5%; background-color:#fdffb4; color:#4d4d4d; margin-left:5%; margin-right:5%; border-radius:15px;'>
 <span>
 <font size="-0.5">
 
