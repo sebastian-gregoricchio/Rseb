@@ -7,11 +7,14 @@ title: "changeLog"
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
-#### [v0.2.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.2.10) - November 15<sup>th</sup> 2021
+#### [v0.2.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.2.1) - November 15<sup>th</sup> 2021
 * Improvement of `sort.bed` usage: a) removed redundant "export.bed" option (now it is sufficient to add a file name in the "export.file.name" option if export is wished), b) added the "unique.regions" option, c) minor bug fixed in `sort.bed` for input class check.
 * Added citation file to cite the article
 * Improvement of the vignette
-* Changed the dafault value for command string parameter for `intersect.bed` and `computeMatrix.deeptools` functions
+* Changed the default value for command string parameter for `intersect.bed` and `computeMatrix.deeptools` functions
+* Bug-fixing for the handling of data.frames inputs in the function `density.matrix`
+* Added new function `genomic.tracks`
+* Updated dependencies to satisfy `genomic.tracks` requirements: *ggbio*, *ggforce*, *GenomicRanges*, *AnnotationFilter*, *EnsDb.Hsapiens.v75*, *EnsDb.Hsapiens.v86*, *EnsDb.Mmusculus.v79*
 
 <br />
 
