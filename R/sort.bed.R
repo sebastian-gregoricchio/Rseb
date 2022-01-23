@@ -8,6 +8,7 @@
 #' @param return.bed Logic value to define if to return the bed as a data.frame. By default \code{TRUE}. Only unique rows are kept.
 #' @param export.file.name Optional: string to define the path to the file to be exported, if required. By default \code{NULL}, not exported.
 #' @param export.header Logic value to define whether the header should be exported in the sorted bed file. By default \code{FALSE}.
+#' @param unique.regions Logic value to indicate whether the output bed must contain unique regions. By default \code{TRUE}.
 #'
 #' @return If required, returns a data.frame corresponding to the sorted .bed file.
 #'
@@ -19,11 +20,12 @@
 
 
 sort.bed = function(bed,
-                    bed.header = F,
+                    bed.header = FALSE,
                     sep = "\t",
-                    return.bed = T,
+                    return.bed = TRUE,
                     export.file.name = NULL,
-                    export.header = F) {
+                    export.header = FALSE,
+                    unique.regions = TRUE) {
 
   #-----------------------------#
   # Check if Rseb is up-to-date #
@@ -75,22 +77,26 @@ sort.bed = function(bed,
 
   # Check rows
   if (nrow(sorted.bed) != nrow(bed)) {
-    return(warning("Something went wrong: the number of rows of the original bed is not the same of the sorted file."))
+    return(warning("Something went wrong: the number of rows of the original bed is not the same of the sorted file (before duplicates removal)."))
   }
 
   # Export if required
   if (!is.null(export.file.name)) {
-    write.table(x = unique(sorted.bed),
+    write.table(x = if (unique.regions == T) {unique(sorted.bed)} else {sorted.bed},
                 file = export.file.name,
                 quote = F, sep = sep,
                 row.names = F, col.names = export.header)
 
-    message(paste("The sorted file have been exported as",
+    message(paste("The sorted file has been exported as",
                   export.file.name))
   }
 
-  message("Only unique values are kept.")
+  if (unique.regions == T) {message("Only unique values are kept.")}
 
   # Return the bed
-  if (return.bed == T) {return(unique(sorted.bed))}
+  if (return.bed == T) {
+    if (unique.regions == T) {
+      return(unique(sorted.bed))
+      } else {return(sorted.bed)}
+  }
 }
