@@ -186,6 +186,7 @@ genomic.tracks =
                                     samples.list = bigWig,
                                     missing.data.as.zero = T,
                                     region.names = "genomic_region",
+                                    sample.names = "bigWig",
                                     upstream = 0,
                                     downstream = 0,
                                     body.length = as.numeric(genomic.region[3]) - as.numeric(genomic.region[2]) + 1,
