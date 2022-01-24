@@ -217,7 +217,15 @@ density.matrix = function(mode,
     score_list = list()
 
     for (i in 1:length(regions)) {
-      score_list[[i]] = import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]]
+      score_list[[i]] = tryCatch(import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]],
+                                 function(e) return(FALSE))
+
+      if (isFALSE(score_list[[i]])) {
+        regions[i]@seqnames@values = gsub(pattern = "chr", replacement = "", x = regions[i]@seqnames@values)
+        score_list[[i]] = import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]]
+      }
+
+
       if (strand(regions[i])@values[1] == "-") {score_list[[i]] = rev(score_list[[i]])}
     }
 
