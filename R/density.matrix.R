@@ -217,15 +217,14 @@ density.matrix = function(mode,
     score_list = list()
 
     for (i in 1:length(regions)) {
-      score_list[[i]] = tryCatch(import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]],
-                                 function(e) return(FALSE))
-
-      if (isFALSE(score_list[[i]])) {
+      # Chek if the bigWig chrom names are the same than in the bed regions
+      if (inherits(try(import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]],
+                       silent = TRUE),
+                   "try-error")) { # it is TRUE when it does not work due to chromosome names in the bigWig != bed
         regions[i]@seqnames@values = gsub(pattern = "chr", replacement = "", x = regions[i]@seqnames@values)
-        score_list[[i]] = import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]]
       }
 
-
+      score_list[[i]] = import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]]
       if (strand(regions[i])@values[1] == "-") {score_list[[i]] = rev(score_list[[i]])}
     }
 
