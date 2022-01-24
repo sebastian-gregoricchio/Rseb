@@ -27,7 +27,8 @@
 #' @param plot.bigWig.area Logical value to indicate whether the bigWig profile should be filled or not. If \code{FALSE} only the signal outline will be plotted. By default \code{TRUE}.
 #' @param bigWig.range.label.size A numerical value to indicate the font size of the bigWig signal range. Default value \code{2.5}.
 #' @param score.bed.shadow Logical value to define whether the filling intensity of the bed segments should reflect the score of each signal. By default \code{FALSE}.
-#' @param heights.ratios Numerical vector of relative track heights, passed to 'rel_heights' parameter of \code{cowplot::plot_grid()}. For example, in a two-row grid, rel_heights = c(2, 1) would make the first column twice as wide as the second column. Value \code{1} indicates that all the tracks should have the same size. By default \code{NULL}, automatic ratios will be computed by this function.
+#' @param height.ratios Numerical vector of relative track heights, passed to 'rel_heights' parameter of \code{cowplot::plot_grid()}. For example, in a two-row grid, rel_heights = c(2, 1) would make the first column twice as wide as the second column. Value \code{1} indicates that all the tracks should have the same size. By default \code{NULL}, automatic ratios will be computed by this function.
+#' @param width.ratios Numerical vector of relative labels vs tracks widths, passed to 'rel_widths' parameter of \code{cowplot::plot_grid()}. For example, in a two-column grid, rel_widths = c(2, 1) would make the first column twice as wide as the second column. Value \code{1} indicates that all the tracks should have the same size. By default \code{c(1,5)} (1 label : 5 tracks).
 #'
 #' @return The function returns a named list containing:
 #' \itemize{
@@ -64,7 +65,8 @@ genomic.tracks =
     plot.bigWig.area = TRUE,
     bigWig.range.label.size = 2.5,
     score.bed.shadow = FALSE,
-    heights.ratios = NULL) {
+    height.ratios = NULL,
+    width.ratios = c(1,5)) {
 
     #-----------------------------#
     # Check if Rseb is up-to-date #
@@ -492,7 +494,7 @@ genomic.tracks =
 
       #######################################################################################################################
       # Assembling of the multi.plot
-      if (is.null(heights.ratios)) {
+      if (is.null(height.ratios)) {
         ratios = c()
         for (i in 1:nrow(config)) {
           if (config$format[i] == "bigWig") {
@@ -503,12 +505,13 @@ genomic.tracks =
             ratios[i] = 0.5}
         }
         ratios = c(ratios, 1) #adding ratio for gene annotation
-      } else {ratio = heights.ratios}
+      } else {ratio = height.ratios}
 
 
       multi.track = cowplot::plot_grid(plotlist = Rseb::combine.lists(list(labels_plot_list, track_plot_list)),
                                        ncol = 2,
                                        rel_heights = ratios,
+                                       rel_widths = width.ratios,
                                        byrow = F)
 
 
