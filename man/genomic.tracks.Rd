@@ -24,7 +24,8 @@ genomic.tracks(
   plot.bigWig.area = TRUE,
   bigWig.range.label.size = 2.5,
   score.bed.shadow = FALSE,
-  heights.ratios = NULL
+  height.ratios = NULL,
+  width.ratios = c(1, 5)
 )
 }
 \arguments{
@@ -72,7 +73,9 @@ genomic.tracks(
 
 \item{score.bed.shadow}{Logical value to define whether the filling intensity of the bed segments should reflect the score of each signal. By default \code{FALSE}.}
 
-\item{heights.ratios}{Numerical vector of relative track heights, passed to 'rel_heights' parameter of \code{cowplot::plot_grid()}. For example, in a two-row grid, rel_heights = c(2, 1) would make the first column twice as wide as the second column. Value \code{1} indicates that all the tracks should have the same size. By default \code{NULL}, automatic ratios will be computed by this function.}
+\item{height.ratios}{Numerical vector of relative track heights, passed to 'rel_heights' parameter of \code{cowplot::plot_grid()}. For example, in a two-row grid, rel_heights = c(2, 1) would make the first column twice as wide as the second column. Value \code{1} indicates that all the tracks should have the same size. By default \code{NULL}, automatic ratios will be computed by this function.}
+
+\item{width.ratios}{Numerical vector of relative labels vs tracks widths, passed to 'rel_widths' parameter of \code{cowplot::plot_grid()}. For example, in a two-column grid, rel_widths = c(2, 1) would make the first column twice as wide as the second column. Value \code{1} indicates that all the tracks should have the same size. By default \code{c(1,5)} (1 label : 5 tracks).}
 }
 \value{
 The function returns a named list containing:
