@@ -221,7 +221,7 @@ density.matrix = function(mode,
       if (inherits(try(import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]],
                        silent = TRUE),
                    "try-error")) { # it is TRUE when it does not work due to chromosome names in the bigWig != bed
-        regions[i]@seqnames@values = gsub(pattern = "chr", replacement = "", x = regions[i]@seqnames@values)
+        regions[i] = diffloop::rmchr(regions[i])
       }
 
       score_list[[i]] = import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]]
