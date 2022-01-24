@@ -14,7 +14,7 @@ title: "changeLog"
 * Changed the default value for command string parameter for `intersect.bed` and `computeMatrix.deeptools` functions
 * Bug-fixing for the handling of data.frames inputs in the function `density.matrix`
 * Added new function `genomic.tracks`
-* Updated dependencies to satisfy `genomic.tracks` requirements: *ggbio*, *ggforce*, *GenomicRanges*, *AnnotationFilter*, *EnsDb.Hsapiens.v75*, *EnsDb.Hsapiens.v86*, *EnsDb.Mmusculus.v79*
+* Updated dependencies to satisfy `genomic.tracks` requirements: *ggbio*, *ggforce*, *GenomicRanges*, *AnnotationFilter*, *EnsDb.Hsapiens.v75*, *EnsDb.Hsapiens.v86*, *EnsDb.Mmusculus.v79*, *openssl*
 
 <br />
 

@@ -9,13 +9,13 @@ License: GNU GENERAL PUBLIC LICENSE version 3
 Depends:
 	R (>= 4.0.0)
 Imports:
-	BiocManager, Biostrings, biomaRt, GO.db, rtracklayer, cowplot, data.table, ggplot2 (>= 3.3.3), ggbio, ggforce, ggrepel, ggpubr, ggpmisc, GenomicRanges, AnnotationFilter, matrixStats, plyr, dplyr, tidyr, purrr, robustbase, stringr, tools, devtools, rvcheck, curl, prettydoc, knitr, rmarkdown, stats, EnsDb.Hsapiens.v75, EnsDb.Hsapiens.v86, EnsDb.Mmusculus.v79
+	BiocManager, AnnotationFilter, Biostrings, biomaRt, EnsDb.Hsapiens.v75, EnsDb.Hsapiens.v86, EnsDb.Mmusculus.v79, GenomicRanges, GO.db, rtracklayer, cowplot, data.table, ggplot2 (>= 3.3.3), ggbio, ggforce, ggrepel, ggpubr, ggpmisc, matrixStats, plyr, dplyr, tidyr, purrr, robustbase, stringr, tools, devtools, rvcheck, curl, prettydoc, knitr, rmarkdown, stats, openssl
 biocViews:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr
-URL: 
+URL:
 	https://sebastian-gregoricchio.github.io/Rseb/
 	https://github.com/sebastian-gregoricchio/Rseb/
 	https://sebastian-gregoricchio.github.io/
