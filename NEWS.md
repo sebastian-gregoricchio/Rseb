@@ -13,7 +13,8 @@ title: "changeLog"
 * Improvement of the vignette
 * Changed the default value for command string parameter for `intersect.bed` and `computeMatrix.deeptools` functions
 * Bug-fixing for the handling of data.frames inputs in the function `density.matrix`
-* Bug-fixing for the handling of bigWig inputs that do not contain 'chr' in the seqnames for the function `density.matrix`
+* Bug-fixing for the handling of bigWig inputs that do not contain 'chr' in the seqnames/chromosome names for the function `density.matrix`
+* Added *stranded* option in the function `density.matrix`, allowing the possibility to reverse the signal of strand '-' regions
 * Addition of *diffloop* dependence used to handle bigWig inputs that do not contain 'chr' in the seqnames for the function `density.matrix`
 * Added new function `genomic.tracks`
 * Updated dependencies to satisfy `genomic.tracks` requirements: *ggbio*, *ggforce*, *GenomicRanges*, *AnnotationFilter*, *EnsDb.Hsapiens.v75*, *EnsDb.Hsapiens.v86*, *EnsDb.Mmusculus.v79*, *openssl*
