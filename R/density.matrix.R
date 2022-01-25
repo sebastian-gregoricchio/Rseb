@@ -20,6 +20,7 @@
 #' @param missing.data.as.zero A logical value to define whether missing data (NAs) should be treated as zeros. By default \code{FALSE}.
 #' @param bin.size Length, in bases (bp), of the non-overlapping bins for averaging the score over the regions length. By default \code{10}.
 #' @param binning.operation A single string to define the type of statistic that should be used over the bin size range. The options are: "mean", "median", "sum". By default \code{"mean"}.
+#' @param stranded Logical value to indicate whether the strand of the region should be taken into account. When \code{TRUE}, the order of the bigWig score for the given region will be reversed. Default \code{FALSE}.
 #'
 #' @return The function returns a named list containing:
 #' \itemize{
@@ -44,7 +45,8 @@ density.matrix = function(mode,
                           body.length = 1000,
                           missing.data.as.zero = FALSE,
                           bin.size = 10,
-                          binning.operation = "mean") { # BEGIN FUNCTION
+                          binning.operation = "mean",
+                          stranded = FALSE) { # BEGIN FUNCTION
 
   ##########################################################################################
   # Check if Rseb is up-to-date #
@@ -225,7 +227,7 @@ density.matrix = function(mode,
       }
 
       score_list[[i]] = import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]]
-      if (strand(regions[i])@values[1] == "-") {score_list[[i]] = rev(score_list[[i]])}
+      if ((strand(regions[i])@values[1] == "-") & stranded == TRUE) {score_list[[i]] = rev(score_list[[i]])}
     }
 
     if (missing.data.as.zero == TRUE) {purrr::pmap(.l = score_list,
