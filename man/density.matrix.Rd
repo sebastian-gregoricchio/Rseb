@@ -18,7 +18,8 @@
   body.length = 1000,
   missing.data.as.zero = FALSE,
   bin.size = 10,
-  binning.operation = "mean"
+  binning.operation = "mean",
+  stranded = FALSE
 )
 }
 \arguments{
@@ -53,6 +54,8 @@
 \item{bin.size}{Length, in bases (bp), of the non-overlapping bins for averaging the score over the regions length. By default \code{10}.}
 
 \item{binning.operation}{A single string to define the type of statistic that should be used over the bin size range. The options are: "mean", "median", "sum". By default \code{"mean"}.}
+
+\item{stranded}{Logical value to indicate whether the strand of the region should be taken into account. When \code{TRUE}, the order of the bigWig score for the given region will be reversed. Default \code{FALSE}.}
 }
 \value{
 The function returns a named list containing:
