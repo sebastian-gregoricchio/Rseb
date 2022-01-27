@@ -185,7 +185,7 @@ genomic.tracks =
                                               bigWig = bigWig,
                                               missing.data.as.zero = T,
                                               reverse.score = F)
-      scores = data.frame(position = 1:ncol(scores) + as.numeric(genomic.region[2]) - 1, score = t(scores))  # assign the positions corresponding to the original genomic region
+      scores = data.frame(position = 1:length(scores) + as.numeric(genomic.region[2]) - 1, score = scores)  # assign the positions corresponding to the original genomic region
 
 
       # plotting of the bigWig
