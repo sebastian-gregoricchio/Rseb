@@ -220,9 +220,9 @@ density.matrix = function(mode,
 
     for (i in 1:length(regions)) {
       # Chek if the bigWig chrom names are the same than in the bed regions
-      if (inherits(try(import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]],
+      if (suppressWarnings(inherits(try(import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]],
                        silent = TRUE),
-                   "try-error")) { # it is TRUE when it does not work due to chromosome names in the bigWig != bed
+                   "try-error"))) { # it is TRUE when it does not work due to chromosome names in the bigWig != bed
         regions[i] = diffloop::rmchr(regions[i])
       }
 
