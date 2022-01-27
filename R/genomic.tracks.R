@@ -181,19 +181,10 @@ genomic.tracks =
     ###### BigWig plot
     plot_bigWig = function(bigWig, genomic.region, color, smooth, span = 0.05, plot.area = T) {
 
-      scores = Rseb::density.matrix(mode = "scale-regions",
-                                    regions.list = Rseb::build.bed(chr = genomic.region[1], start = as.numeric(genomic.region[2]), end = as.numeric(genomic.region[3]), name = "genomic_region", return.data.frame = T),
-                                    samples.list = bigWig,
-                                    missing.data.as.zero = T,
-                                    region.names = "genomic_region",
-                                    sample.names = "bigWig",
-                                    upstream = 0,
-                                    downstream = 0,
-                                    body.length = as.numeric(genomic.region[3]) - as.numeric(genomic.region[2]) + 1,
-                                    bin.size = 1)
-
-      scores = scores$matrix.data[,-c(1:6)]
-      scores = scores[, !grepl(pattern = "^V", x = colnames(scores))]   # to remove the up/downstream positions
+      scores = Rseb::get.single.base.score.bw(region = paste0(genomic.region[1], ":", genomic.region[2], "-", genomic.region[3]),
+                                              bigWig = bigWig,
+                                              missing.data.as.zero = T,
+                                              reverse.score = F)
       scores = data.frame(position = 1:ncol(scores) + as.numeric(genomic.region[2]) - 1, score = t(scores))  # assign the positions corresponding to the original genomic region
 
 
