@@ -23,7 +23,7 @@
 #' @param highlight.color A string indicating the color to use for the regions to highlight in the plot. By default \code{'yellow'}.
 #' @param highlight.transparency A numerical value indicating the transparency (alpha) to use for the highlighted regions. Default value \code{0.15}.
 #' @param smooth.bigWig.signal Logical value to indicate whether the bigWig signals should be smoothed (by loess x ~ y function). By default \code{TRUE}.
-#' @param smooth.bigWig.loess.span Numerical value to indicate the span value for the loess function use to smooth bigWig signals. By default \code{0.05}.
+#' @param smooth.bigWig.loess.span Numerical value to indicate the span value for the loess function used to smooth bigWig signals. By default \code{0.05}.
 #' @param plot.bigWig.area Logical value to indicate whether the bigWig profile should be filled or not. If \code{FALSE} only the signal outline will be plotted. By default \code{TRUE}.
 #' @param bigWig.range.label.size A numerical value to indicate the font size of the bigWig signal range. Default value \code{2.5}.
 #' @param score.bed.shadow Logical value to define whether the filling intensity of the bed segments should reflect the score of each signal. By default \code{FALSE}.
