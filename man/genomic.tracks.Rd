@@ -65,7 +65,7 @@ genomic.tracks(
 
 \item{smooth.bigWig.signal}{Logical value to indicate whether the bigWig signals should be smoothed (by loess x ~ y function). By default \code{TRUE}.}
 
-\item{smooth.bigWig.loess.span}{Numerical value to indicate the span value for the loess function use to smooth bigWig signals. By default \code{0.05}.}
+\item{smooth.bigWig.loess.span}{Numerical value to indicate the span value for the loess function used to smooth bigWig signals. By default \code{0.05}.}
 
 \item{plot.bigWig.area}{Logical value to indicate whether the bigWig profile should be filled or not. If \code{FALSE} only the signal outline will be plotted. By default \code{TRUE}.}
 
