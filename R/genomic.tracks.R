@@ -17,11 +17,13 @@
 #' @param track.colors A string vector indicating the color to use for each track (genome annotation track excluded). If only one value is provided it will be used for all the tracks. Default value \code{"#000000"} ("black").
 #' @param grouping A single numerical vector or a list of numeric vectors. Each list's element indicates the indexes corresponding to the tracks (1 = first track, 2 = second track, etc) for which the y-axes should be normalized. Each element will be taken into account in the order. Default value \code{NULL}.
 #' @param gene.annotation.color A string indicating the color to use for the genome annotation track.
+#' @param expand.bed A logical value to define whether overlapping regions in a bed should be plotted on different levels. Default \code{TRUE}.
 #' @param arcs.direction A string indicating the direction on which arcs should be plotted for bedpe files. Available options \code{"up"} or \code{"down"}. Default value \code{"down"}.
 #' @param fraction.arc.base A numerical value indicating the fraction of total plot height to be used as arc base thickness. By default \code{0.025} (2.5\% of the track height).
 #' @param highlight.bed Either a string indicating the full path to a bed file or a data.frame in BED3 format (chr, start, end) containing regions that should be highlighted in the plot. Regions included in the genomic range will be automatically selected. By default \code{NULL}.
 #' @param highlight.color A string indicating the color to use for the regions to highlight in the plot. By default \code{'yellow'}.
 #' @param highlight.transparency A numerical value indicating the transparency (alpha) to use for the highlighted regions. Default value \code{0.15}.
+#' @param missing.data.as.zero.bw A logical value to define wthere missing data in the bigWigs should be converted to zeros. Default \code{FALSE}.
 #' @param smooth.bigWig.signal Logical value to indicate whether the bigWig signals should be smoothed (by loess x ~ y function). By default \code{TRUE}.
 #' @param smooth.bigWig.loess.span Numerical value to indicate the span value for the loess function used to smooth bigWig signals. By default \code{0.05}.
 #' @param plot.bigWig.area Logical value to indicate whether the bigWig profile should be filled or not. If \code{FALSE} only the signal outline will be plotted. By default \code{TRUE}.
@@ -55,11 +57,13 @@ genomic.tracks =
     track.colors = "#000000",
     grouping = NULL,
     gene.annotation.color = "darkblue",
+    expand.bed = TRUE,
     arcs.direction = "down",
     fraction.arc.base = 0.025,
     highlight.bed = NULL,
     highlight.color = "yellow",
     highlight.transparency = 0.15,
+    missing.data.as.zero.bw = FALSE,
     smooth.bigWig.signal = TRUE,
     smooth.bigWig.loess.span = 0.05,
     plot.bigWig.area = TRUE,
@@ -183,7 +187,7 @@ genomic.tracks =
 
       scores = Rseb::get.single.base.score.bw(region = paste0(genomic.region[1], ":", genomic.region[2], "-", genomic.region[3]),
                                               bigWig = bigWig,
-                                              missing.data.as.zero = T,
+                                              missing.data.as.zero = missing.data.as.zero.bw,
                                               reverse.score = F)
       scores = data.frame(position = 1:length(scores) + as.numeric(genomic.region[2]) - 1, score = scores)  # assign the positions corresponding to the original genomic region
 
@@ -244,7 +248,7 @@ genomic.tracks =
         bed = Rseb::sort.bed(bed = bed, return.bed = T)
 
         # Define overlaps
-        if (nrow(bed) > 1) {
+        if (nrow(bed) > 1 & expand.bed == T) {
           level = 1
           continue = TRUE
           bed = dplyr::mutate(.data = bed, overlap = F)
@@ -317,10 +321,12 @@ genomic.tracks =
 
           arcs =
             arcs %>%
-            mutate(center1 = (start1 + end1)/2,
-                   center2 = (start2 + end2)/2,
-                   middle_point = (center1 + center2)/2,
-                   r = (((center1 + center2)/2) - center1) * arcs.direction)
+            dplyr::mutate(center1 = (start1 + end1)/2,
+                          center2 = (start2 + end2)/2,
+                          middle_point = (center1 + center2)/2,
+                          r = (((center1 + center2)/2) - center1) * arcs.direction)
+
+          for (i in 1:nrow(arcs)) {if (arcs$center1[i] > arcs$center2[i]) {arcs$r[i] = -arcs$r[i]}}
 
           plot =
             ggplot(arcs) +
