@@ -14,11 +14,13 @@ genomic.tracks(
   track.colors = "#000000",
   grouping = NULL,
   gene.annotation.color = "darkblue",
+  expand.bed = TRUE,
   arcs.direction = "down",
   fraction.arc.base = 0.025,
   highlight.bed = NULL,
   highlight.color = "yellow",
   highlight.transparency = 0.15,
+  missing.data.as.zero.bw = FALSE,
   smooth.bigWig.signal = TRUE,
   smooth.bigWig.loess.span = 0.05,
   plot.bigWig.area = TRUE,
@@ -53,6 +55,8 @@ genomic.tracks(
 
 \item{gene.annotation.color}{A string indicating the color to use for the genome annotation track.}
 
+\item{expand.bed}{A logical value to define whether overlapping regions in a bed should be plotted on different levels. Default \code{TRUE}.}
+
 \item{arcs.direction}{A string indicating the direction on which arcs should be plotted for bedpe files. Available options \code{"up"} or \code{"down"}. Default value \code{"down"}.}
 
 \item{fraction.arc.base}{A numerical value indicating the fraction of total plot height to be used as arc base thickness. By default \code{0.025} (2.5\% of the track height).}
@@ -62,6 +66,8 @@ genomic.tracks(
 \item{highlight.color}{A string indicating the color to use for the regions to highlight in the plot. By default \code{'yellow'}.}
 
 \item{highlight.transparency}{A numerical value indicating the transparency (alpha) to use for the highlighted regions. Default value \code{0.15}.}
+
+\item{missing.data.as.zero.bw}{A logical value to define wthere missing data in the bigWigs should be converted to zeros. Default \code{FALSE}.}
 
 \item{smooth.bigWig.signal}{Logical value to indicate whether the bigWig signals should be smoothed (by loess x ~ y function). By default \code{TRUE}.}
 
