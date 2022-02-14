@@ -7,7 +7,7 @@ title: "changeLog"
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
-#### [v0.3.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.0) - February 3<sup>rd</sup> 2022
+#### [v0.3.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.0) - February 14<sup>th</sup> 2022
 * Improvement of `sort.bed` usage: a) removed redundant "export.bed" option (now it is sufficient to add a file name in the "export.file.name" option if export is wished), b) added the "unique.regions" option, c) minor bug fixed in `sort.bed` for input class check.
 * Added citation file to cite the article
 * Improvement of the vignette
@@ -19,7 +19,8 @@ title: "changeLog"
 * Added new function `get.single.base.score.bw`
 * Added new function `plot.density.profile.smooth`
 * Added new function `genomic.tracks`
-* Updated dependencies to satisfy `genomic.tracks` requirements: *ggbio*, *ggforce*, *GenomicRanges*, *AnnotationFilter*, *EnsDb.Hsapiens.v75*, *EnsDb.Hsapiens.v86*, *EnsDb.Mmusculus.v79*, *openssl*
+* Added new function `qPCR.rna.exp`
+* Updated dependencies to satisfy `genomic.tracks` and `qPCR.rna.exp` requirements: *ggbio*, *ggforce*, *GenomicRanges*, *AnnotationFilter*, *EnsDb.Hsapiens.v75*, *EnsDb.Hsapiens.v86*, *EnsDb.Mmusculus.v79*, *openssl*, *readxl*
 
 <br />
 
