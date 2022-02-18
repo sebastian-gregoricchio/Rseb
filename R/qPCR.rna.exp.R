@@ -82,11 +82,11 @@ qPCR.rna.exp = function(results.file,
 
 
 
-  # Set 'undetermined' samples to 100
+  # Set 'undetermined' samples to 0
   results =
     results %>%
     dplyr::mutate(CT = gsub(pattern = "undetermined" ,
-                            replacement = 100,
+                            replacement = 0,
                             x = results$CT,
                             ignore.case = T)) %>%
     dplyr::mutate(CT = as.numeric(CT))
