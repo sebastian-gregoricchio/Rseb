@@ -133,11 +133,12 @@ qPCR.rna.exp = function(results.file,
       current_reps_tb = data.frame(t(data.frame(c(s, t, current_tb$CT))))
       colnames(current_reps_tb) = c("Sample Name", "Target Name", paste0("rep", 1:(ncol(current_reps_tb)-2)))
 
-      reps_tb = rbind(reps_tb, current_reps_tb)
+      reps_tb = plyr::rbind.fill(reps_tb, current_reps_tb)
     }
   }
 
   rownames(reps_tb) = NULL
+  reps_tb[is.na(reps_tb)] = 0
 
 
   # Compute reps differences
