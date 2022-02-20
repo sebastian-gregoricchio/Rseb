@@ -55,7 +55,7 @@ qPCR.rna.exp = function(results.file,
   require(ggplot2)
 
   # Reading the file
-  if (class(results.file) == "character") {
+  if ("character" %in% class(results.file)) {
     results =
       readxl::read_excel(path = results.file,
                          sheet = results.sheet.position,
