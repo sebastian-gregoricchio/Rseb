@@ -7,9 +7,10 @@
 qPCR.rna.exp(
   results.file,
   housekeeping.genes = NULL,
-  max_delta_reps = 0.5,
+  max.delta.reps = 0.5,
   reference.sample = NULL,
   exlude.houskeeping.FC = TRUE,
+  exclude.samples = NULL,
   fix.y.axis = FALSE,
   x.labels.rotation = 45,
   text.size = 3,
@@ -26,11 +27,13 @@ qPCR.rna.exp(
 
 \item{housekeeping.genes}{String vector with the list of genes that have to be used as target genes. By default \code{NULL}: an error message is printed.}
 
-\item{max_delta_reps}{Numeric value indicating the maximum difference among replicate Ct. Default value: \code{0.5}.}
+\item{max.delta.reps}{Numeric value indicating the maximum difference among replicate Ct. Default value: \code{0.5}.}
 
 \item{reference.sample}{Single string indicating the name of the sample to use as reference for the computation of the FoldChanges. By default \code{NULL}: the first sample in the order is used as reference.}
 
 \item{exlude.houskeeping.FC}{Logic value to indicate whether the housekeeping genes should be excluded in the FoldChanges plots. By default \code{TRUE}.}
+
+\item{exclude.samples}{String vector indicating the samples that should be exuded in the expression and FoldChange plots. By default \code{NULL}.}
 
 \item{fix.y.axis}{Logic value indicating whether the y-axis of the plots should be kept fixed among all the genes. By default \code{FALSE}.}
 
@@ -51,7 +54,16 @@ qPCR.rna.exp(
 \item{ignore.reps.errors}{Logic value to define whether the difference between the Ct in replicates should be ignored: all the values are kept.}
 }
 \value{
-
+The function returns a list containing:
+\itemize{
+  \item \code{original.table}: a data.frame containing the original results table;
+  \item \code{reshaped.table}: a data.frame with the original results reorganized for the analyses;
+  \item \code{reshaped.table.cleaned}: the reshaped data.frame upon filtering of the CT values (if required);
+  \item \code{reps.validation.plot}: ;
+  \item \code{analyzed.data}: a named list of data.frames, one for each housekeeping gene and one for the foldChange mean of all housekeeping normalization, containing the normalized expression scores and the FoldChanges over the reference sample;
+  \item \code{expression.plots}: a named list of plots, one for each housekeeping gene, showing the gene expression histograms (facet_wrapped by gene);
+  \item \code{foldChange.plots}: a named list of plots, one for each housekeeping gene and one for the foldChange mean of all housekeeping normalization, showing the FoldChange expression over the reference Sample (facet_wrapped by gene).
+ }
 }
 \description{
 Merge overlapping peaks in a provided .bed file.
