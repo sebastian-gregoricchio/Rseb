@@ -4,9 +4,10 @@
 #'
 #' @param results.file String indicating the full path to the results excel file or a data.frame containing at least the following columns: 'Sample Name', 'Target Name', 'CT'.
 #' @param housekeeping.genes String vector with the list of genes that have to be used as target genes. By default \code{NULL}: an error message is printed.
-#' @param max_delta_reps Numeric value indicating the maximum difference among replicate Ct. Default value: \code{0.5}.
+#' @param max.delta.reps Numeric value indicating the maximum difference among replicate Ct. Default value: \code{0.5}.
 #' @param reference.sample Single string indicating the name of the sample to use as reference for the computation of the FoldChanges. By default \code{NULL}: the first sample in the order is used as reference.
 #' @param exlude.houskeeping.FC Logic value to indicate whether the housekeeping genes should be excluded in the FoldChanges plots. By default \code{TRUE}.
+#' @param exclude.samples String vector indicating the samples that should be exuded in the expression and FoldChange plots. By default \code{NULL}.
 #' @param fix.y.axis Logic value indicating whether the y-axis of the plots should be kept fixed among all the genes. By default \code{FALSE}.
 #' @param x.labels.rotation Numeric value indicating the degrees of x-axis's labels rotation. By default \code{45}.
 #' @param text.size Numeric value to indicate the size of the text for the number above the bars. Default \code{3}.
@@ -17,7 +18,17 @@
 #' @param samples.order A string vector indicating all the samples in order. This order will be used to order the samples in the plots. By default \code{NULL}: the reference sample will be the first, the other will be kept in the order available in the results table.
 #' @param ignore.reps.errors Logic value to define whether the difference between the Ct in replicates should be ignored: all the values are kept.
 #'
-#' @return
+#' @return The function returns a list containing:
+#' \itemize{
+#'   \item \code{original.table}: a data.frame containing the original results table;
+#'   \item \code{reshaped.table}: a data.frame with the original results reorganized for the analyses;
+#'   \item \code{reshaped.table.cleaned}: the reshaped data.frame upon filtering of the CT values (if required);
+#'   \item \code{reps.validation.plot}: ;
+#'   \item \code{analyzed.data}: a named list of data.frames, one for each housekeeping gene and one for the foldChange mean of all housekeeping normalization, containing the normalized expression scores and the FoldChanges over the reference sample;
+#'   \item \code{expression.plots}: a named list of plots, one for each housekeeping gene, showing the gene expression histograms (facet_wrapped by gene);
+#'   \item \code{foldChange.plots}: a named list of plots, one for each housekeeping gene and one for the foldChange mean of all housekeeping normalization, showing the FoldChange expression over the reference Sample (facet_wrapped by gene).
+#'  }
+#'
 #'
 #' @export qPCR.rna.exp
 
@@ -25,9 +36,10 @@
 
 qPCR.rna.exp = function(results.file,
                         housekeeping.genes = NULL,
-                        max_delta_reps = 0.5,
+                        max.delta.reps = 0.5,
                         reference.sample = NULL,
                         exlude.houskeeping.FC = TRUE,
+                        exclude.samples = NULL,
                         fix.y.axis = FALSE,
                         x.labels.rotation = 45,
                         text.size = 3,
@@ -60,12 +72,22 @@ qPCR.rna.exp = function(results.file,
 
 
   # Check reference sample
-  if (!is.null(reference.sample) | (length(reference.sample) != 1)) {
+  if (!is.null(reference.sample) | (length(reference.sample) > 1)) {
     if (!(reference.sample %in% results$`Sample Name`)) {
       return(warning(paste0("The 'reference.sample' must be among the sample_IDs present in your file -> ",
                             paste(unique(results$`Sample Name`), collapse = ", "))))
     }
   } else {reference.sample = results$`Sample Name`[[1]]}
+
+
+
+  # Check excluded samples
+  if (!is.null(exclude.samples)) {
+    if (F %in% (exclude.samples %in% results$`Sample Name`)) {
+      message(paste0("The 'exclude.samples' values are not among the sample_IDs present in your file -> ",
+                            paste(unique(results$`Sample Name`), collapse = ", "), ". \nHowever, the function will run anyway."))
+    }
+  }
 
 
 
@@ -76,9 +98,9 @@ qPCR.rna.exp = function(results.file,
     samples.order = c(reference.sample, actual_order[actual_order != reference.sample])
   } else {samples.order = samples.order}
 
-  results = dplyr::mutate(.data = results, `Sample Name` = factor(`Sample Name`, levels = samples.order))
-
-  results = results %>% dplyr::arrange(`Sample Name`, `Target Name`)
+  results =
+    dplyr::mutate(.data = results, `Sample Name` = factor(`Sample Name`, levels = samples.order)) %>%
+    dplyr::arrange(`Sample Name`, `Target Name`)
 
 
 
@@ -129,17 +151,18 @@ qPCR.rna.exp = function(results.file,
     colnames(reps_tb)[ncol(reps_tb)] = paste0(combinations[1,c], "-", combinations[2,c])
   }
 
+
   # Remove too different CTs
   reps_tb_clean = reps_tb
   rep_names = unique(c(combinations[1,], combinations[2,]))
-  to_keep_tb = reps_tb[(ncol(reps_tb)-ncol(combinations)+1):ncol(reps_tb)] < max_delta_reps
+  to_keep_tb = reps_tb[(ncol(reps_tb)-ncol(combinations)+1):ncol(reps_tb)] < max.delta.reps
 
   list_to_remove = list()
   for (i in 1:nrow(to_keep_tb)) {
     failed = sum(to_keep_tb[i,] == F)
 
     if (failed != 0) {
-      if (failed < (ncol(combinations)-1) | failed == ncol(combinations)) {
+      if ((failed == (ncol(combinations)-2)) | (failed == ncol(combinations))) {
         list_to_remove[[i]] = c("all")} else {
           if (failed == (ncol(combinations)-1)) {
             to_remove = names(to_keep_tb[i,to_keep_tb[i,] == FALSE])
@@ -184,7 +207,7 @@ qPCR.rna.exp = function(results.file,
   differences_table =
     differences_table %>%
     dplyr::mutate(Sample_Name = factor(Sample_Name, levels = rev(levels(results$`Sample Name`))),
-                  good = factor(delta < max_delta_reps, levels = c(T, F)))
+                  good = factor(delta < max.delta.reps, levels = c(T, F)))
 
 
   reps_difference_plot =
@@ -216,6 +239,8 @@ qPCR.rna.exp = function(results.file,
 
 
 
+
+  ##########################
   # Compute the 2^-(target-housekeeping) and FoldChange
   list_norm_tb = list()
 
@@ -252,6 +277,8 @@ qPCR.rna.exp = function(results.file,
 
 
 
+
+  #############################
   # Generate the plots
   exp_plots = list()
   FC_plots = list()
@@ -259,7 +286,8 @@ qPCR.rna.exp = function(results.file,
   for (h in housekeeping.genes) {
     tb =
       list_norm_tb[[h]] %>%
-      dplyr::mutate(`Sample Name` = factor(`Sample Name`, levels = levels(results$`Sample Name`)))
+      dplyr::mutate(`Sample Name` = factor(`Sample Name`, levels = levels(results$`Sample Name`))) %>%
+      dplyr::filter(!(`Sample Name` %in% exclude.samples))
 
     colnames(tb)[grepl("exp_norm_to_|FC_over_", colnames(tb))] = c("exp", "FC")
 
@@ -311,13 +339,82 @@ qPCR.rna.exp = function(results.file,
 
 
 
-  # generating output
+
+  ###############
+  # COMPUTE THE MEANS BETWEEN HOUSEKEEPING
+
+  FC_matrix = list()
+
+  for (h in 1:length(housekeeping.genes)) {
+    FC_matrix[[h]] = list_norm_tb[[h]][which(grepl("FC_over", colnames(list_norm_tb[[h]])))]
+  }
+
+  FC_matrix =
+    data.frame(FC_matrix) %>%
+    dplyr::mutate(mean_FC_over_refereceSample = rowMeans(as.matrix(data.frame(FC_matrix)), na.rm = T),
+                  mean_FC_SEM = matrixStats::rowSds(as.matrix(data.frame(FC_matrix)), na.rm = T) / sqrt(length(housekeeping.genes)))
+
+  mean_table =
+    list_norm_tb[[1]][,-((ncol(list_norm_tb[[1]])-3):ncol(list_norm_tb[[1]]))] %>%
+    mutate(mean_FC_over_refereceSample = FC_matrix$ mean_FC_over_refereceSample,
+           mean_FC_SEM = FC_matrix$mean_FC_SEM)
+
+  names(mean_table)[which(colnames(mean_table) == "mean_FC_over_refereceSample")] = paste0("mean_FC_over_", reference.sample)
+
+  list_norm_tb[[length(list_norm_tb)+1]] = mean_table
+  names(list_norm_tb)[length(list_norm_tb)] = "mean_FC_housekeeping"
+
+
+  # generate mean plots
+  tb =
+    list_norm_tb$mean_FC_housekeeping %>%
+    dplyr::mutate(`Sample Name` = factor(`Sample Name`, levels = samples.order)) %>%
+    dplyr::filter(!(`Sample Name` %in% exclude.samples),
+                  !(`Target Name` %in% housekeeping.genes))
+
+  colnames(tb)[grepl("FC_over_", colnames(tb))] = "FC"
+
+
+  FC_plots[[length(FC_plots)+1]] =
+    ggplot(data = tb,
+           aes(x = `Sample Name`,
+               y = FC)) +
+    geom_bar(stat = "identity", fill = "#ff9225", position = position_dodge(width=0.9)) +
+    geom_errorbar(aes(ymin = FC-mean_FC_SEM, ymax = FC+mean_FC_SEM),
+                  position = position_dodge(width=0.9),
+                  width = 0.3, color = "#000000") +
+    geom_text(data = tb,
+              aes(x = `Sample Name`,
+                  y = FC+mean_FC_SEM,
+                  label  =round(FC,2)),
+              position = position_dodge(width=0.9),
+              vjust=-0.25, size = text.size,
+              inherit.aes = F) +
+    facet_wrap(~`Target Name`,
+               scales = ifelse(test = fix.y.axis == T,
+                               yes = "fixed",
+                               no = "free")) +
+    ylab("mean FoldChange \U00B1 SEM") +
+    ggtitle("Normalization relative to all housekeeping") +
+    theme_classic() +
+    geom_hline(yintercept = 1, linetype = 2, color = "#000000") +
+    theme(axis.text = element_text(color = "#000000"),
+          axis.text.x = element_text(angle = x.labels.rotation,
+                                     hjust = 1))
+
+  names(FC_plots)[length(FC_plots)] = "mean_FC_housekeeping"
+
+
+
+  #########################
+  # Export the output
+
   return(list(original.table = results,
-              analyzed.data = list_norm_tb,
               reshaped.table = reps_tb,
               reshaped.table.cleaned = reps_tb_clean,
               reps.validation.plot = reps_difference_plot,
-              expression_plots = exp_plots,
-              foldChange_plots = FC_plots))
+              analyzed.data = list_norm_tb,
+              expression.plots = exp_plots,
+              foldChange.plots = FC_plots))
 
 } # END function
