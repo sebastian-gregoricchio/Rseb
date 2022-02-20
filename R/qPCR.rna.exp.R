@@ -23,7 +23,7 @@
 #'   \item \code{original.table}: a data.frame containing the original results table;
 #'   \item \code{reshaped.table}: a data.frame with the original results reorganized for the analyses;
 #'   \item \code{reshaped.table.cleaned}: the reshaped data.frame upon filtering of the CT values (if required);
-#'   \item \code{reps.validation.plot}: ;
+#'   \item \code{reps.validation.plot}: a plot representing a table with the differences two-by-two of the technical replicates (facet_wrapped by gene) where the cells have a red background if the difference is greater than the `max.delta.reps` value;
 #'   \item \code{analyzed.data}: a named list of data.frames, one for each housekeeping gene and one for the foldChange mean of all housekeeping normalization, containing the normalized expression scores and the FoldChanges over the reference sample;
 #'   \item \code{expression.plots}: a named list of plots, one for each housekeeping gene, showing the gene expression histograms (facet_wrapped by gene);
 #'   \item \code{foldChange.plots}: a named list of plots, one for each housekeeping gene and one for the foldChange mean of all housekeeping normalization, showing the FoldChange expression over the reference Sample (facet_wrapped by gene).
