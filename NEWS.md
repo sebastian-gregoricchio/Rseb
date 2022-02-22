@@ -20,7 +20,7 @@ title: "changeLog"
 * Added new function `plot.density.profile.smooth`
 * Added new function `genomic.tracks`
 * Added new function `qPCR.rna.exp`
-* Updated dependencies to satisfy `genomic.tracks` and `qPCR.rna.exp` requirements: *ggbio*, *ggforce*, *GenomicRanges*, *AnnotationFilter*, *EnsDb.Hsapiens.v75*, *EnsDb.Hsapiens.v86*, *EnsDb.Mmusculus.v79*, *openssl*, *readxl*
+* Updated dependencies to satisfy `genomic.tracks` and `qPCR.rna.exp` requirements: *ggbio*, *ggforce*, *GenomicRanges*, *AnnotationFilter*, *EnsDb.Hsapiens.v75*, *EnsDb.Hsapiens.v86*, *EnsDb.Mmusculus.v79*, *openssl*, *readxl*, *jpeg*
 
 <br />
 
