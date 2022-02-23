@@ -164,17 +164,15 @@ qPCR.rna.exp = function(results.file,
 
     if (failed != 0) {
       if ((failed == (ncol(combinations)-2)) | (failed == ncol(combinations))) {
-        list_to_remove[[i]] = c("all")} else {
-          if (failed == (ncol(combinations)-1)) {
-            to_remove = names(to_keep_tb[i,to_keep_tb[i,] == FALSE])
-            to_remove = strsplit(to_remove, "-")
-            list_to_remove[[i]] = c(unique(unlist(to_remove)[duplicated(unlist(to_remove))]))
-          }
-        }
-    } else {
-      if (failed == 0) {
-        list_to_remove[[i]] = c("none")
+        list_to_remove[[i]] = c("all")}
+      else {
+        to_remove = names(to_keep_tb[i,to_keep_tb[i,] == FALSE])
+        to_remove = strsplit(to_remove, "-")
+        list_to_remove[[i]] = c(unique(unlist(to_remove)[duplicated(unlist(to_remove))]))
       }
+    }
+    else {
+      if (failed == 0) { list_to_remove[[i]] = c("none") }
     }
   }
 
