@@ -1,3 +1,39 @@
+#' @title Merger of overlapping peaks in a provided .bed file.
+#'
+#' @description Merge overlapping peaks in a provided .bed file.
+#'
+#' @param results.file String indicating the full path to the results excel file or a data.frame containing at least the following columns: 'Sample Name', 'Target Name', 'CT'.
+#' @param housekeeping.genes String vector with the list of genes that have to be used as target genes. By default \code{NULL}: an error message is printed.
+#' @param max.delta.reps Numeric value indicating the maximum difference among replicate Ct. Default value: \code{0.5}.
+#' @param reference.sample Single string indicating the name of the sample to use as reference for the computation of the FoldChanges. By default \code{NULL}: the first sample in the order is used as reference.
+#' @param exlude.houskeeping.FC Logic value to indicate whether the housekeeping genes should be excluded in the FoldChanges plots. By default \code{TRUE}.
+#' @param exclude.samples String vector indicating the samples that should be exuded in the expression and FoldChange plots. By default \code{NULL}.
+#' @param fix.y.axis Logic value indicating whether the y-axis of the plots should be kept fixed among all the genes. By default \code{FALSE}.
+#' @param x.labels.rotation Numeric value indicating the degrees of x-axis's labels rotation. By default \code{45}.
+#' @param text.size Numeric value to indicate the size of the text for the number above the bars. Default \code{3}.
+#' @param results.sheet.position Numeric value indicating the position of the results sheet in the excel file. by default \code{3}.
+#' @param rows.to.skip How many rows must be skipped before to read the excel file. By default \code{44}.
+#' @param file.header Logic value to indicate whether the results excel file contains an header. By default \code{TRUE}.
+#' @param file.tail Logic value to indicate whether the results excel file contains extra rows at the end of the results. By default \code{TRUE}.
+#' @param samples.order A string vector indicating all the samples in order. This order will be used to order the samples in the plots. By default \code{NULL}: the reference sample will be the first, the other will be kept in the order available in the results table.
+#' @param ignore.reps.errors Logic value to define whether the difference between the Ct in replicates should be ignored: all the values are kept.
+#'
+#' @return The function returns a list containing:
+#' \itemize{
+#'   \item \code{original.table}: a data.frame containing the original results table;
+#'   \item \code{reshaped.table}: a data.frame with the original results reorganized for the analyses;
+#'   \item \code{reshaped.table.cleaned}: the reshaped data.frame upon filtering of the CT values (if required);
+#'   \item \code{reps.validation.plot}: a plot representing a table with the differences two-by-two of the technical replicates (facet_wrapped by gene) where the cells have a red background if the difference is greater than the `max.delta.reps` value;
+#'   \item \code{analyzed.data}: a named list of data.frames, one for each housekeeping gene and one for the foldChange mean of all housekeeping normalization, containing the normalized expression scores and the FoldChanges over the reference sample;
+#'   \item \code{expression.plots}: a named list of plots, one for each housekeeping gene, showing the gene expression histograms (facet_wrapped by gene);
+#'   \item \code{foldChange.plots}: a named list of plots, one for each housekeeping gene and one for the foldChange mean of all housekeeping normalization, showing the FoldChange expression over the reference Sample (facet_wrapped by gene).
+#'  }
+#'
+#'
+#' @export qPCR.rna.exp
+ 
+
+
 qPCR.rna.exp = function(results.file,
                         housekeeping.genes = NULL,
                         max.delta.reps = 0.5,
@@ -120,11 +156,12 @@ qPCR.rna.exp = function(results.file,
   # Remove too different CTs
   reps_tb_clean = reps_tb
   rep_names = unique(c(combinations[1, ], combinations[2, ]))
-  to_keep_tb = reps_tb[(ncol(reps_tb) - ncol(combinations) + 
-                          1):ncol(reps_tb)] < max.delta.reps
+  to_keep_tb = reps_tb[(ncol(reps_tb) - ncol(combinations) + 1):ncol(reps_tb)] < max.delta.reps
+  
   list_to_remove = list()
   for (i in 1:nrow(to_keep_tb)) {
     failed = sum(to_keep_tb[i, ] == F)
+    
     if (failed != 0) {
       if ((failed == (ncol(combinations) - 2)) | (failed == ncol(combinations))) {
         list_to_remove[[i]] = c("all")
@@ -137,19 +174,6 @@ qPCR.rna.exp = function(results.file,
     }
     else {
       if (failed == 0) {list_to_remove[[i]] = c("none")}
-    }
-  }
-  for (i in 1:length(list_to_remove)) {
-    if (list_to_remove[[i]][1] != "none") {
-      if (list_to_remove[[i]][1] == "all") {
-        for (k in 1:length(rep_names)) {
-          reps_tb_clean[i, rep_names[k]] = NA}
-      }
-      else {
-        for (k in 1:length(list_to_remove[[i]])) {
-          reps_tb_clean[i, list_to_remove[[i]][k]] = NA
-        }
-      }
     }
   }
   
