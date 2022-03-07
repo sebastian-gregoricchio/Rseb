@@ -449,15 +449,15 @@ genomic.tracks =
 
           track_plot_list[[i]] =
             track_plot_list[[i]] +
-            annoate("text",
-                    label = paste0("[", round(plot_build$layout$panel_params[[1]]$y$limits[1], 2),
-                                   " - ", round(plot_build$layout$panel_params[[1]]$y$limits[2], 2), "]"),
-                    y = Inf,
-                    x = -Inf,
-                    color = "#000000",
-                    hjust = 0,
-                    vjust = 1,
-                    size = bigWig.range.label.size)
+            annotate("text",
+                     label = paste0("[", round(plot_build$layout$panel_params[[1]]$y$limits[1], 2),
+                                    " - ", round(plot_build$layout$panel_params[[1]]$y$limits[2], 2), "]"),
+                     y = Inf,
+                     x = -Inf,
+                     color = "#000000",
+                     hjust = 0,
+                     vjust = 1,
+                     size = bigWig.range.label.size)
         }
       }
 
