@@ -119,24 +119,37 @@ qPCR.rna.exp = function(results.file,
   
   # Remove too different CTs
   reps_tb_clean = reps_tb
-  rep_names = unique(c(combinations[1,], combinations[2,]))
-  to_keep_tb = reps_tb[(ncol(reps_tb)-ncol(combinations)+1):ncol(reps_tb)] < max.delta.reps
-  
+  rep_names = unique(c(combinations[1, ], combinations[2, ]))
+  to_keep_tb = reps_tb[(ncol(reps_tb) - ncol(combinations) + 
+                          1):ncol(reps_tb)] < max.delta.reps
   list_to_remove = list()
   for (i in 1:nrow(to_keep_tb)) {
-    failed = sum(to_keep_tb[i,] == F)
-    
+    failed = sum(to_keep_tb[i, ] == F)
     if (failed != 0) {
-      if ((failed == (ncol(combinations)-2)) | (failed == ncol(combinations))) {
-        list_to_remove[[i]] = c("all")}
+      if ((failed == (ncol(combinations) - 2)) | (failed == ncol(combinations))) {
+        list_to_remove[[i]] = c("all")
+      }
       else {
-        to_remove = names(to_keep_tb[i,to_keep_tb[i,] == FALSE])
+        to_remove = names(to_keep_tb[i, to_keep_tb[i,] == FALSE])
         to_remove = strsplit(to_remove, "-")
         list_to_remove[[i]] = c(unique(unlist(to_remove)[duplicated(unlist(to_remove))]))
       }
     }
     else {
-      if (failed == 0) { list_to_remove[[i]] = c("none") }
+      if (failed == 0) {list_to_remove[[i]] = c("none")}
+    }
+  }
+  for (i in 1:length(list_to_remove)) {
+    if (list_to_remove[[i]][1] != "none") {
+      if (list_to_remove[[i]][1] == "all") {
+        for (k in 1:length(rep_names)) {
+          reps_tb_clean[i, rep_names[k]] = NA}
+      }
+      else {
+        for (k in 1:length(list_to_remove[[i]])) {
+          reps_tb_clean[i, list_to_remove[[i]][k]] = NA
+        }
+      }
     }
   }
   
@@ -147,14 +160,17 @@ qPCR.rna.exp = function(results.file,
     if (list_to_remove[[i]][1] != "none") {
       if (list_to_remove[[i]][1] == "all") {
         for (k in 1:length(rep_names)) {
-          reps_tb_clean[i,rep_names[k]] = NA}
-      } else {
+          reps_tb_clean[i, rep_names[k]] = NA
+        }
+      }
+      else {
         for (k in 1:length(list_to_remove[[i]])) {
-          reps_tb_clean[i,list_to_remove[[i]][k]] = NA
+          reps_tb_clean[i, list_to_remove[[i]][k]] = NA
         }
       }
     }
   }
+  
   
   
   # Plot the reps difference
