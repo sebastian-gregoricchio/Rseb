@@ -2,7 +2,7 @@
 % Please edit documentation in R/qPCR.rna.exp.R
 \name{qPCR.rna.exp}
 \alias{qPCR.rna.exp}
-\title{Merger of overlapping peaks in a provided .bed file.}
+\title{qPCR RNA expression analyses tool.}
 \usage{
 qPCR.rna.exp(
   results.file,
@@ -66,5 +66,5 @@ The function returns a list containing:
  }
 }
 \description{
-Merge overlapping peaks in a provided .bed file.
+Allows to easily analyse qPCR RNA expression data, including: technical replicates verification, gene expression normalization to housekeeping genes and FoldChanges over reference sample computation.
 }
