@@ -23,6 +23,8 @@ qPCR.rna.mean.reps(
 
 \item{exclude.samples}{String vector indicating the samples that should be exuded in the expression and FoldChange plots. By default \code{NULL}.}
 
+\item{exclude.housekeeping.genes}{Logic value to indicate whether the housekeeping genes should be excluded in the plot. By default \code{TRUE}.}
+
 \item{plot.color}{Single string to indicate the color to use for the bar plot. Default value: \code{#D1718B}.}
 
 \item{fix.y.axis}{Logic value indicating whether the y-axis of the plots should be kept fixed among all the genes. By default \code{FALSE}.}
@@ -32,8 +34,6 @@ qPCR.rna.mean.reps(
 \item{x.labels.rotation}{Numeric value indicating the degrees of x-axis's labels rotation. By default \code{45}.}
 
 \item{force}{Logic value to indicate whether the analyses should be performed also when the reference sample is not the same among the replicates. By default \code{FALSE}.}
-
-\item{exlude.houskeeping.genes}{Logic value to indicate whether the housekeeping genes should be excluded in the plot. By default \code{TRUE}.}
 }
 \value{
 The function returns a list containing:

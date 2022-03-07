@@ -9,7 +9,7 @@ qPCR.rna.exp(
   housekeeping.genes = NULL,
   max.delta.reps = 0.5,
   reference.sample = NULL,
-  exlude.houskeeping.FC = TRUE,
+  exclude.housekeeping.FC = TRUE,
   exclude.samples = NULL,
   fix.y.axis = FALSE,
   x.labels.rotation = 45,
@@ -31,7 +31,7 @@ qPCR.rna.exp(
 
 \item{reference.sample}{Single string indicating the name of the sample to use as reference for the computation of the FoldChanges. By default \code{NULL}: the first sample in the order is used as reference.}
 
-\item{exlude.houskeeping.FC}{Logic value to indicate whether the housekeeping genes should be excluded in the FoldChanges plots. By default \code{TRUE}.}
+\item{exclude.housekeeping.FC}{Logic value to indicate whether the housekeeping genes should be excluded in the FoldChanges plots. By default \code{TRUE}.}
 
 \item{exclude.samples}{String vector indicating the samples that should be exuded in the expression and FoldChange plots. By default \code{NULL}.}
 
