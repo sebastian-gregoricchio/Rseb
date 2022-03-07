@@ -1,6 +1,6 @@
-#' @title Merger of overlapping peaks in a provided .bed file.
+#' @title qPCR RNA expression analyses tool.
 #'
-#' @description Merge overlapping peaks in a provided .bed file.
+#' @description Allows to easily analyse qPCR RNA expression data, including: technical replicates verification, gene expression normalization to housekeeping genes and FoldChanges over reference sample computation.
 #'
 #' @param results.file String indicating the full path to the results excel file or a data.frame containing at least the following columns: 'Sample Name', 'Target Name', 'CT'.
 #' @param housekeeping.genes String vector with the list of genes that have to be used as target genes. By default \code{NULL}: an error message is printed.
@@ -49,6 +49,11 @@ qPCR.rna.exp = function(results.file,
                         file.tail = TRUE,
                         samples.order = NULL,
                         ignore.reps.errors = FALSE) {
+  
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
   
   # Libraries
   require(dplyr)
