@@ -9,7 +9,7 @@ License: GNU GENERAL PUBLIC LICENSE version 3
 Depends:
 	R (>= 4.0.0)
 Imports:
-	BiocManager, AnnotationFilter, Biostrings, biomaRt, diffloop, EnsDb.Hsapiens.v75, EnsDb.Hsapiens.v86, EnsDb.Mmusculus.v79, GenomicRanges, GO.db, rtracklayer, cowplot, data.table, ggplot2 (>= 3.3.3), ggbio, ggforce, ggrepel, ggpubr, ggpmisc, matrixStats, jpeg, plyr, dplyr, tidyr, purrr, readxl, robustbase, stringr, tools, devtools, rvcheck, curl, prettydoc, knitr, rmarkdown, stats, openssl
+	BiocManager, AnnotationFilter, Biostrings, biomaRt, colorspace, diffloop, EnsDb.Hsapiens.v75, EnsDb.Hsapiens.v86, EnsDb.Mmusculus.v79, GenomicRanges, GO.db, rtracklayer, cowplot, data.table, ggplot2 (>= 3.3.3), ggbio, ggforce, ggrepel, ggpubr, ggpmisc, matrixStats, jpeg, plyr, dplyr, tidyr, purrr, readxl, robustbase, stringr, tools, devtools, rvcheck, curl, prettydoc, knitr, rmarkdown, stats, openssl
 biocViews:
 Encoding: UTF-8
 LazyData: true
