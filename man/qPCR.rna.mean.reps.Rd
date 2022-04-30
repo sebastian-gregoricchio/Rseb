@@ -6,20 +6,19 @@
 \usage{
 qPCR.rna.mean.reps(
   reps.list,
-  housekeeping.genes = NULL,
+  reference.sample = NULL,
   exclude.samples = NULL,
   exclude.housekeeping.genes = TRUE,
   plot.color = "#d1718b",
   fix.y.axis = FALSE,
   text.size = 3,
-  x.labels.rotation = 45,
-  force = F
+  x.labels.rotation = 45
 )
 }
 \arguments{
-\item{reps.list}{A list of \link{qPCR.rna.exp} results (and/or 'mean_FC_housekeeping' data.frames).}
+\item{reps.list}{A list of \link{qPCR.rna.exp} result objects.}
 
-\item{housekeeping.genes}{String vector with the list of genes that have to be used as target genes. By default \code{NULL}: if the input is a list of qPCR.rna.exp objects, the housekeeping genes are retrieved automatically.}
+\item{reference.sample}{Single string indicating the name of the sample to use as reference for the computation of the FoldChanges. By default \code{NULL}: if the input is a list of qPCR.rna.exp objects, the reference.sample is retrieved automatically. However, if the number of reference used are multiple and/or not shared among replicates, the first sample in the order is used as reference.}
 
 \item{exclude.samples}{String vector indicating the samples that should be exuded in the expression and FoldChange plots. By default \code{NULL}.}
 
@@ -32,16 +31,15 @@ qPCR.rna.mean.reps(
 \item{text.size}{Numeric value to indicate the size of the text for the number above the bars. Default \code{3}.}
 
 \item{x.labels.rotation}{Numeric value indicating the degrees of x-axis's labels rotation. By default \code{45}.}
-
-\item{force}{Logic value to indicate whether the analyses should be performed also when the reference sample is not the same among the replicates. By default \code{FALSE}.}
 }
 \value{
 The function returns a list containing:
 \itemize{
-  \item \code{mean.reps.table}: a data.frame containing the mean, number of reps (n), SD and SEM for each sample-target combination;
-  \item \code{mean.reps.FC.plot}: a plot showing the replicates mean FoldChange expression over the reference Sample (facet_wrapped by gene).
+  \item \code{mean.reps.data.table}: a list of data.frames, one per housekeeping gene and the mean of all housekeeping genes, containing the number of reps (n), SD and SEM for each sample-target combination for both normalized expression and FoldChanges;
+  \item \code{mean.reps.exp.plots}: a list of a plots, one per housekeeping gene, showing the replicates' normalized expression over the reference Sample (facet_wrapped by gene);
+  \item \code{mean.reps.FC.plots}: a list of a plots, one per housekeeping gene and the mean of all housekeeping genes, showing the replicates' mean FoldChange expression over the reference Sample (facet_wrapped by gene).
  }
 }
 \description{
-This function allows to generate a table and a plot result of the mean of different replicates of an experiment starting from analyses performed by \link{qPCR.rna.exp}.
+This function allows to generate a table and a plot result (FoldChange and normalized Expression) of the mean of different replicates of an experiment starting from analyses performed by \link{qPCR.rna.exp}.
 }
