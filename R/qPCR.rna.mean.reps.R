@@ -60,7 +60,7 @@ qPCR.rna.mean.reps = function(
 
   for (i in 1:length(reps.list)) {
     if ("list" %in% class(reps.list[[i]])) {
-      if (is.null(housekeeping.genes)) {housekeeping.genes.list = unique(c(housekeeping.genes.list, names(reps.list[[i]]$expression.plots)))}
+      housekeeping.genes.list = unique(c(housekeeping.genes.list, names(reps.list[[i]]$expression.plots)))
       samples.list = unique(c(samples.list, unique(reps.list[[i]]$analyzed.data$mean_FC_housekeeping$`Sample Name`)))
       all.samples[[i]] = unique(reps.list[[i]]$analyzed.data$mean_FC_housekeeping$`Sample Name`)
       reference.sample.detected = unique(c(reference.sample.detected,
@@ -323,5 +323,3 @@ qPCR.rna.mean.reps = function(
               mean.reps.FC.plots = FoldChange_plots))
 
 } # END function
-
-
