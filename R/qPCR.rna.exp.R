@@ -82,7 +82,7 @@ qPCR.rna.exp = function(results.file,
       return(warning(paste0("The 'reference.sample' must be among the sample_IDs present in your file -> ",
                             paste(unique(results$`Sample Name`), collapse = ", "))))
     }
-  } else {reference.sample = results$`Sample Name`[[1]]}
+  } else {reference.sample = as.character(results$`Sample Name`[[1]])}
 
 
 
@@ -97,7 +97,7 @@ qPCR.rna.exp = function(results.file,
 
 
   # Define the sample order
-  actual_order = unique(results$`Sample Name`)
+  actual_order = as.character(unique(results$`Sample Name`))
 
   if (is.null(samples.order)) {
     samples.order = c(reference.sample, actual_order[actual_order != reference.sample])
