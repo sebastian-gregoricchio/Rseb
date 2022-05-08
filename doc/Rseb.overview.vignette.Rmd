@@ -1,10 +1,10 @@
 ---
-title: "Rseb: an R-package for NGS data management and visualization"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+title: "*Rseb*: an R-package for NGS data management and visualization"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 author:
-- name: "Sebastian Gregoricchio, Ph.D. student"
+- name: "Sebastian Gregoricchio, Ph.D."
   affiliation:
-    - "Gustave Roussy Cancer Campus, Université Paris-Saclay, INSERM U1170, Villejuif - France"
+    - "Gustave Roussy Cancer Campus, Université Paris-Saclay, INSERM U1170, Villejuif - France (2016-2021) <br> Netherlands Cancer Institute, Oncogenomics division, Amsterdam - Netherlands (2021-present)"
   email: "sebastian.gregoricchio@gmail.com"
 package: "*[Rseb](https://sebastian-gregoricchio.github.io/Rseb/)*"
 output:
@@ -37,17 +37,43 @@ knitr::opts_chunk$set(collapse = TRUE, comment = ">", dev = "svg")
 
 # **Introduction** {#intro}
 <div style="text-align: justify">
-The idea behind the *Rseb* (*R*-package for *S*implified *E*nd-to-end data *B*uild-up) is to provided a tool-kit that allows the automation of different type of tasks avoiding retyping of code and loss of time. Furthermore, the advantage is that, in most of the cases, the functions are build in R-language making it suitable for all the operating systems.
+The concept behind the *Rseb* (*R*-package for *S*implified *E*nd-to-end data *B*uild-up) is to provide a toolkit that allows the automation of different type of tasks avoiding retyping of code and loss of time. Furthermore, the advantage is that, in most of the cases, the functions are built in R-language making it suitable for all the operating systems
 
-From a more biological point of view, this package simplifies many downstream analysis of high-throughput data that otherwise would require many hours of code typing and case-to-case adaptation. Moreover, most of the functions aimed to visualize these kind of data are thought to have an high level of possible customization with a large number of graphical parameters compared to the commonly used already available tools. Another advantage of this package is that it offers multiple methods, with a corresponding visualization, to quantify the difference of signal between samples, in a qualitatively and/or quantitatively way, without any additional coding in contrast to the commonly used tools.
+From a more biological point of view, this package simplifies many downstream analyses of high-throughput data that otherwise would require many hours of code typing and case-to-case adaptation. Moreover, most of the functions aimed to visualize these kind of data are thought to provide a high level of possible customization with a large number of graphical parameters compared to the commonly used already available tools. Another advantage of this package is that it offers multiple methods, with a corresponding visualization, to quantify the difference of signal between samples, in a qualitatively and/or quantitatively way, without any additional coding.
 
-The guide is divided in three parts: the first one will explore some analyses and visualization of RNA-seq data, the second one the representation and quantification of targeted sequencing data (ChIP-seq, ATAC-seq, etc.), while the last part is focused on some of the "general" tools available.
+The guide is divided in four parts: 1) the first one will explore some analyses and visualization of RNA-seq data; 2) the second one the representation and quantification of targeted sequencing data (ChIP-seq, ATAC-seq, etc.); 3) the third part is focused on the analyses of RNA expression by RT-qPCR; 4) while the last part is focused on some of the “general” tools available in this package.
+</div>
+
+## Citation
+If you use this package, please cite:
+
+<div class="warning" style='padding:2.5%; background-color:#c1eac4; color:#226a27; margin-left:5%; margin-right:5%; border-radius:15px;'>
+<span>
+<font size="-0.5">
+<p style='margin-top:1em; text-align:left'> **Citation** </p>
+
+<div style="margin-left:2%; margin-right:2%; text-align: justify">
+... The publication is under revision ... <br>
+Gregoricchio S., *et al.*, "Title". <br>
+*Journal* (Year). <br>
+doi: ABCD 
+</div>
+</font>
+
+</span>
+</div>
+
+<br>
+
+```{r message=FALSE, warning=FALSE}
+citation("Rseb")
+```
 
 <br>
 
 # **RNA-seq data** {#RNAseq}
 <div style="text-align: justify">
-A common analysis performed on RNA-seq data is the evaluation of the differentially expressed genes between two different conditions (e.g. untreated vs treated cells.
+A common analysis performed on RNA-seq data is the evaluation of the differentially expressed genes between two different conditions (*e.g.*, untreated vs treated cells).
 
 For this analysis it is common to use the R-package [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html)^[Love, M.I., Huber, W., Anders, S., "Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2", Genome Biology 15(12):550 (2014)] which returns a table as the following one:
 </div>
@@ -62,14 +88,14 @@ data("RNAseq", package = "Rseb")
 
 set.seed(floor(runif(1, 1, 1000)))
 n = floor(runif(n = 10, min = 1, max = nrow(RNAseq)))
-knitr::kable(RNAseq[n,], row.names = F, caption = "DESeq2 results table example")
+knitr::kable(RNAseq[n,], row.names = F, caption = "**DESeq2 results table example**")
 ```
 
 <br>
 
 ## Differentially expressed genes {#diffExp}
 <div style="text-align: justify">
-The differential genes are defined depending on the Fold Change (FC) of expression and the adjusted p-value.
+The differential genes are defined depending on the Fold Change (FC) of expression and the adjusted p-value (P~adj~).
 The function `DEstatus` helps in this definition. It takes as input the fold change expression and the p-value adjusted, then a threshold for these two parameters can be set to define four status:
 
 * UP-regulated (FC greater than threshold, significant p-value);
@@ -96,7 +122,7 @@ RNAseq <-
 
 ```
 ```{r, echo=FALSE}
-knitr::kable(RNAseq[n,], row.names = F, caption = "RNA-seq table with differential expression status")
+knitr::kable(RNAseq[n,], row.names = F, caption = "**RNA-seq table with differential expression status**")
 ```
 
 It is possible now to use the `DE.status` column to count the number of genes per each group:
@@ -109,7 +135,8 @@ RNAseq.summary.table <-
 
 ```
 ```{r, echo=FALSE}
-knitr::kable(RNAseq.summary.table, row.names = F, caption = "RNA-seq differential expression summary")
+knitr::kable(RNAseq.summary.table, row.names = F, caption = "<b>RNA-seq differential expression summary</b>",
+             format = "html", table.attr = "style='width:30%';")
 ```
 </div>
 
@@ -122,9 +149,9 @@ Two simple representations for RNA-seq data are the [MA-plot](#MAplot) and the [
 
 ### *MA-plot* {#MAplot}
 <div style="text-align: justify">
-The MA-plot helps to estimate the difference between two samples plotting the Fold Change expression of a gene as function of its expression among all the samples (all the replicates of both conditions compared, defined by "baseMean" in the DESeq2 output table). Different colors could be used depending on the DE.status column that we just added to the RNA-seq table.
+The MA-plot helps to estimate the difference between two samples plotting the Fold Change expression of a gene as function of its expression among all the samples (all the replicates of both conditions compared, defined by the "baseMean" in the DESeq2 output table). Different colors could be used depending on the "DE.status" column that we just added to the RNA-seq table.
 
-```{r message=FALSE, warning=FALSE, fig.cap='MA-plot of RNA-seq data. <br> Correlation between log~2~(mean normalized expression in all samples and replicates) and log~2~(Fold Change expression) among two conditions are reprresented as dots for each single gene. Up-regulated (FC ≥ 2, P~adj~ < 0.05), down-regulated (FC ≤ 0.5, P~adj~ < 0.05), unresponsive (0.9 ≤ FC ≤ 1.1, P~adj~ ≥ 0.05) or null genes are indicated as pink, green, blue or gray points respectively.', fig.align="center"}
+```{r message=FALSE, warning=FALSE, fig.cap='<div style="text-align: justify"> <font size="-0.5"> **MA-plot of RNA-seq data** <br> Correlation between log~2~(mean normalized expression in all samples and replicates) and log~2~(Fold Change expression) among two conditions are reprresented as dots for each single gene. Up-regulated (FC &#8805; 2, P~adj~ < 0.05), down-regulated (FC &#8804; 0.5, P~adj~ < 0.05), unresponsive (0.9 &#8804; FC &#8804; 1.1, P~adj~ &#8805; 0.05) or null genes are indicated as pink, green, blue or gray points respectively. </font> </div> <br>', fig.align="center"}
 require(ggplot2)
 
 MA.plot <-
@@ -144,7 +171,7 @@ MA.plot
 ### *Volcano-plot* {#volcano}
 <div style="text-align: justify">
 To plot the Fold Change as function of the p-value it is possible to use the function `volcano`.
-```{r message=FALSE, warning=FALSE, fig.cap='Volcano plot of RNA-seq data. <br> Correlation between log~2~(Foldchange expression) among two conditions and -log~10~(p-value~adjusted~) of the comparisons are reprresented as dots for each single gene. Up-regulated (FC ≥ 2, P~adj~ < 0.05), down-regulated (FC ≤ 0.5, P~adj~ < 0.05), unresponsive (0.9 ≤ FC ≤ 1.1, P~adj~ ≥ 0.05) or null genes are indicated as pink, green, blue or gray points respectively.', fig.align="center"}
+```{r message=FALSE, warning=FALSE, fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Volcano plot of RNA-seq data** <br> Correlation between log~2~(Foldchange expression) among two conditions and -log~10~(p-value~adjusted~) of the comparisons are reprresented as dots for each single gene. Up-regulated (FC &#8805; 2, P~adj~ < 0.05), down-regulated (FC &#8804; 0.5, P~adj~ < 0.05), unresponsive (0.9 &#8804; FC &#8804; 1.1, P~adj~ &#8805; 0.05) or null genes are indicated as pink, green, blue or gray points respectively. </font> </div> <br>', fig.align="center"}
 volcano.plot <-
   Rseb::volcano(log2FC_data = RNAseq$log2FC,
                 padj_data = RNAseq$padj,
@@ -162,7 +189,7 @@ volcano.plot
 ```
 
 This function allows to label the points corresponding to differentially expressed genes with the corresponding gene name if required.
-```{r message=FALSE, warning=FALSE, fig.cap='Volcano plot of RNA-seq data. <br> Correlation between log~2~(Foldchange expression) among two conditions and -log~10~(p-value~adjusted~) of the comparisons are reprresented as dots for each single gene. Up-regulated (FC ≥ 2, P~adj~ < 0.05), down-regulated (FC ≤ 0.5, P~adj~ < 0.05), unresponsive (0.9 ≤ FC ≤ 1.1, P~adj~ ≥ 0.05) or null genes are indicated as pink, green, blue or gray points respectively. Names of Down-regulated genes are labelled.', fig.align="center"}
+```{r message=FALSE, warning=FALSE, fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Volcano plot of RNA-seq data** <br> Correlation between log~2~(Foldchange expression) among two conditions and -log~10~(p-value~adjusted~) of the comparisons are reprresented as dots for each single gene. Up-regulated (FC &#8805; 2, P~adj~ < 0.05), down-regulated (FC &#8804; 0.5, P~adj~ < 0.05), unresponsive (0.9 &#8804; FC &#8804; 1.1, P~adj~ &#8805; 0.05) or null genes are indicated as pink, green, blue or gray points respectively. Names of Down-regulated genes are labelled. </font> </div> <br>', fig.align="center"}
 volcano.plot.with.names <-
   Rseb::volcano(log2FC_data = RNAseq$log2FC,
                 padj_data = RNAseq$padj,
@@ -192,7 +219,7 @@ Transcription factors and histone marks occupancy (eg. ChIP/Cut&Tag-seq), chroma
 The general workflow to generate this type of graphs includes the generation of a [score matrix](#matrix) for each position of each region and each signal (*A*). This matrix than can be reshaped in order to calculate the mean/median/sum of the signal among regions in a set (*B*, [density profile](#densityProfile)) or for each single region (*C*, [density summary](#densitySummary). Furthermore, it is possible to compute and visualize the difference of signal between to samples (*D*, density difference [area](#areaPlot) and/or their [correlation](#correlationPlot)). This process is schematized in the following figure and will be discussed in detail in the further paragraphs.
 
 
-```{r, echo=FALSE, out.width = '100%', fig.cap = 'Sequencing signal visualization ([Full size image](https://sebastian-gregoricchio.github.io/Rseb/vignettes/images/Rseb_workflow.svg)). <br> **(A)** The function computeMatrix from deeptools used by [`computeMatrix.deeptools`](#matrix), in the "reference-point mode", extends the center of all the regions in one or more datasets (.bed files) and divides each one in *n* bins of a desired size (eg. 20bp). Then the signal of one or more signals tracks (.bw files) is calculated at each bin and the scores values are stored in a matrix. **(B)** The function [`plot.density.profile`](#densityProfile) calculates the mean/median/sum and the variance for each bin of all the regions in a dataset for each track signal provided (left). Then can be generated a plot (right) showing the profile density around the center of the regions. The plot could be generated by sample (a plot per sample with a different curve for each dataset of regions) or by region (a plot per region with a different curve for each sample). **(C)** The function [`plot.density.summary`](#densitySummary) computes the mean/median/sum of the signal over each single region for each sample. Then violins plot can be generated to reppresent the distribution of all the single density values of the regions by dataset or sample (simalary to [`plot.density.profile`](#densityProfile)). The function computes as well the means statistical comparison whose corresponding significance level/p-value can be directly added to the plots. **(D)** The function [`plot.density.differences`](#densityDifferences) computes the difference of mean/median/sum signal for each single region for each sample in each group. Two graphical rappresentation are available. On top, an [area/line plot](#areaPlot) showing the values of the signal difference for each region which are ranked by these values. On the X-axis it is indicated the number of regions with negative and positive difference. On bottom, a [scatter/correlation plot](#correlationPlot) showing the correlation between the mean/median/sum signal of a region in one sample vs an other one. Positive and negative values of the difference in the signal are indicated by different colors. The function infers the significance for the means difference in the groups for all the pair comparisons and returns it as a list of tables for each group.'}
+```{r, echo=FALSE, out.width = '100%', fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Sequencing signal visualization** ([Full size image](https://sebastian-gregoricchio.github.io/Rseb/vignettes/images/Rseb_workflow.svg)) <br> **(A)** The function computeMatrix from deeptools used by [`computeMatrix.deeptools`](#matrix), in the "reference-point mode", extends the center of all the regions in one or more datasets (.bed files) and divides each one in *n* bins of a desired size (eg. 20bp). Then the signal of one or more signals tracks (.bw files) is calculated at each bin and the scores values are stored in a matrix. **(B)** The function [`plot.density.profile`](#densityProfile) calculates the mean/median/sum and the variance for each bin of all the regions in a dataset for each track signal provided (left). Then can be generated a plot (right) showing the profile density around the center of the regions. The plot could be generated by sample (a plot per sample with a different curve for each dataset of regions) or by region (a plot per region with a different curve for each sample). **(C)** The function [`plot.density.summary`](#densitySummary) computes the mean/median/sum of the signal over each single region for each sample. Then violins plot can be generated to reppresent the distribution of all the single density values of the regions by dataset or sample (simalary to [`plot.density.profile`](#densityProfile)). The function computes as well the means statistical comparison whose corresponding significance level/p-value can be directly added to the plots. **(D)** The function [`plot.density.differences`](#densityDifferences) computes the difference of mean/median/sum signal for each single region for each sample in each group. Two graphical rappresentation are available. On top, an [area/line plot](#areaPlot) showing the values of the signal difference for each region which are ranked by these values. On the X-axis it is indicated the number of regions with negative and positive difference. On bottom, a [scatter/correlation plot](#correlationPlot) showing the correlation between the mean/median/sum signal of a region in one sample vs an other one. Positive and negative values of the difference in the signal are indicated by different colors. The function infers the significance for the means difference in the groups for all the pair comparisons and returns it as a list of tables for each group. </font> </div> <br>', fig.align="center"}
 #magick::image_read(rsvg::rsvg_svg("url_image"))
 knitr::include_graphics("https://sebastian-gregoricchio.github.io/Rseb/vignettes/images/Rseb_workflow.svg")
 ```
@@ -204,10 +231,37 @@ knitr::include_graphics("https://sebastian-gregoricchio.github.io/Rseb/vignettes
 <div style="text-align: justify">
 For the generation of the score matrix I refer to the function `computeMatrix` from [deepTools](https://deeptools.readthedocs.io/en/develop/)^[Ramírez, Fidel, Devon P. Ryan, Björn Grüning, Vivek Bhardwaj, Fabian Kilpert, Andreas S. Richter, Steffen Heyne, Friederike Dündar, and Thomas Manke. deepTools2: A next Generation Web Server for Deep-Sequencing Data Analysis. Nucleic Acids Research (2016). doi:10.1093/nar/gkw257.]. This package provides a function called `computeMatrix.deeptools` that allows to automatically build the command line required to run the tool on the command line.
 
-Alternatively, but based on a more time consuming algorithm, a fully R-based function, `density.matrix`, is available with this package. This function generates a list that can be directly used as input for others functions as described further. The parameters are more or less the same found in the `computeMatrix.deeptools` function and for this reason only the latter will be described in this guide. 
+Alternatively, but based on a more time consuming algorithm, a fully R-based function, `density.matrix`, is available with this package (see box below). This function generates a list that can be directly used as input for others functions as described further. The parameters are more or less the same found in the `computeMatrix.deeptools` function and for this reason only the latter will be described in this guide.
+</div>
 
+<br>
+
+
+<div class="warning" style='padding:2.5%; background-color:#c1eac4; color:#226a27; margin-left:5%; margin-right:5%; border-radius:15px;'>
+<span>
+<font size="-0.5">
+<p style='margin-top:1em; text-align:center'> **The `density.matrix` function** </p>
+
+<div style="margin-left:2%; margin-right:2%; text-align: justify">
+This function is completely built in R-code but requires much more time for the execution. This drawback is to attribute to the way by which R handles .bigWig and .bed files. Indeed, a first step required to build a score matrix is to get the bigWig score for each position in each region. This process requires to import a bed file (either from a data.frame or a text file) as a `GRanges` object by the `rtracklayer` package (Bioconductor) and get the score position-by-position from a given bigWig. Unfortunately, `GRanges` objects are quite heavy to handle in R and therefore much more CPU performance and RAM memory are required. <br>
+     
+Then, if the chosen modality of matrix computation is “reference-point” all the final regions will have the same length (defined by the upstream and downstream region) and it will be sufficient to split each region score vector (with length n equal to the number of bases of a given region) in chunks of length equal to the required bin size to then calculate the mean/median/sum for each chuck. This process will result in a final score vector of length n/binSize. <br>
+     
+In the case the mode selected is instead “scale-regions” the process is more complicated. Indeed, to scale the regions in a perfect way it would require bringing every single region to the body size indicated by the users. This would require calculating the least common multiple (lcm) between the lengths of all the regions and the indicated body length and repeat each base score as much times as lcm/lengthRegion (“base-repetition”). The issue is the size order of the lcm number that makes quite hard the computation in a reasonable time. Hence, the escamotage used in the function is to bring, with the “base-repetition” method, each region to a length &#8805; body length and then split in an almost-equal number of chunks. The number of chunks is equivalent to body length. This definition ends often in up to ~5 bases excluded by this splitting in chunks which will be integrated in the last chuck generated be-fore to compute the mean of the scores inside each chunk. At the end of this process to each region corresponds a list of scores of length equivalent to the user-defined body length. Now that all the regions have the same length it is possible to proceed to define the bins scores as described for the “reference-point” mode.
+</div>
+</font>
+
+</span>
+</div>
+
+<br>
+
+
+<div style="text-align: justify">
 To generate the score matrix, the required arguments are the score/signal files (usually .bigWig/.bw files) and regions files (.bed files). 
 The function `build.bed` guides the user in the creation of bed files with the option to include header ([track line](https://genome.ucsc.edu/goldenPath/help/hgTracksHelp.html#TRACK)) useful for visualization on IGV or UCSC genome browser (eg. color shadow by region score, track color, track name, etc.). This function allows to export directly the bed file as well save it into a variable as data.frame. Furthermore, many internal controls are automatically performed such as check that END position comes after START position or that all the columns are filled if not provided by the user. Beside the quality controls, the bed could be automatically sorted depending on the genomic position and score^[The "classic" way to sort a bed file is to sort it by chromosome > start > end, but sometimes it is required a more extended sorting by score. Missed score sorting could lead to encounter errors in certain software.] (by the function `sort.bed` of this package) and duplicated rows are removed.
+</div">
+
 
 ```{r, eval=FALSE, echo=TRUE}
 bed <- Rseb::build.bed(chr = paste("chr", c(round(runif(8,1,23)),"X","Y"), sep=""),
@@ -225,10 +279,18 @@ bed <- Rseb::build.bed(chr = paste("chr", c(round(runif(8,1,23)), "X", "Y"), sep
                        name = paste("peak_", round(runif(10,1,1000)), sep=""),
                        strand = "+",
                        return.data.frame = T)
-knitr::kable(bed, row.names = F, caption = "Bed file example generated by `build.bed`")
+knitr::kable(bed, row.names = F, caption = "**Bed file example generated by `build.bed`**")
 ```
 
+<div style="text-align: justify">
+Sometimes it happens that in a bed file are present overlapping or adjacent regions that we would like to merge in order to obtain an unique one composed by the fusion of the original regions (*e.g.*, adjacent ChIP-seq peaks). To do that, in this package is available the `collapse.bed` function. This function allows to specify whether the merge should take into account the region strandness (the merge will be applied only if the regions are in the same strand), or to merge the regions in only one strand. Furthermore, the output file consists in a .bed^[Only up to 6 columns (BED6) will be kept: chr, start, end, name, score, strand] in which the region names will correspond to the concatenation of the names of the original regions that served to produced the overlapped region, and the scores (if available) will correspond to the median/mean/sum of the parental scores. 
+</div>
 
+
+<br>
+
+
+<div style="text-align: justify">
 Once built and/or available the region and signal files it is possible to generate the score matrix. The key parameters are^[For more details on parameters visit [computeMatrix](https://deeptools.readthedocs.io/en/develop/content/tools/computeMatrix.html) manual page.]:
 
 * `mode`: 
@@ -240,6 +302,7 @@ Once built and/or available the region and signal files it is possible to genera
 * `upstream`|`downstream`: to indicate the number of bases to consider before (upstream)/after (downstream) the reference point/region extremities depending on the `mode` used;
 * `binSize`: the window size by which each region will be subdivided and for each of which the scores will be calculate;
 * `computeMatrix.deeptools.command`: the path to the computeMatrix script (here an example for conda installed deepTools).
+</div>
 
 ```{r, eval=FALSE, echo=TRUE}
 computeMatrix.deeptools(
@@ -257,7 +320,8 @@ computeMatrix.deeptools(
   quiet = T)
 ```
 
-Score matrix from deepTools can be used directly (full path) to generate density plots or can be read by the function `read.computeMatrix.file` which returns a list composed of a data.frame containing the matrix metadata (bin size, regions size, sample names, region names, etc.) and the scores table. This list than can be used to plot the signals as well as the path of the matrix.gz archive.
+
+Score matrix from deepTools can be used directly (full path) to generate density plots or can be read by the function `read.computeMatrix.file` which returns a list composed of a data.frame containing the matrix metadata (bin size, regions size, sample_names, region_names, etc.) and the scores table. To plot the signals it can be used this list as well as the path of the source matrix.gz archive.
 
 ```{r, eval=FALSE, echo=TRUE}
 matrix <- read.computeMatrix.file(matrix.file = "/path/to/matrix_file.gz")
@@ -276,7 +340,7 @@ data("deeptools.matrix", package = "Rseb")
 set.seed(floor(runif(1, 1, 1000)))
 n = floor(runif(n = 10, min = 1, max = nrow(deeptools.matrix$matrix.data)))
 
-knitr::kable(deeptools.matrix$metadata, row.names = F, caption = "Example of `read.computeMatrix.file` result: metadata")
+knitr::kable(deeptools.matrix$metadata, row.names = F, caption = "**Example of `read.computeMatrix.file` result: metadata**")
 ```
 
 ```{r, eval=FALSE, echo=TRUE}
@@ -284,7 +348,7 @@ deeptools.matrix$data.table
 ```
 
 ```{r, echo=FALSE}
-knitr::kable(deeptools.matrix$matrix.data[n,1:10], row.names = F, caption = "Example of `read.computeMatrix.file` result: matrix.data")
+knitr::kable(deeptools.matrix$matrix.data[n,1:10], row.names = F, caption = "**Example of `read.computeMatrix.file` result: matrix.data**")
 ```
 
 ```{r, eval=FALSE, echo=TRUE}
@@ -297,9 +361,9 @@ deeptools.matrix$original.file.path
 
 ## Density profile {#densityProfile}
 <div style="text-align: justify">
-High-throughput sequencing data allow the detection of different types of signals at genome-wide scale as well at a single locus as described [further](#IGV). A common analysis involves the comparison of the average signal over different categories of regions (eg. Transcription Staring Site (TSS) vs enhancers, activated vs repressed genes, etc.). For this aim the average signal over regions of the same group can be plotted and compared sample by sample or group by group. To generate this kind of signal profile it can be used the function `plot.density.profile` which accepts as input a [score matrix](#matrix) as described hereafter. Noteworthy, it is possible to scale-down to a specific range the final plot by the option "subset.range" without the need to re-compute the matrix.
+High-throughput sequencing data allow the detection of different types of signals at genome-wide scale as well at a single locus as described [further](#IGV). A common analysis involves the comparison of the average signal over different categories of regions (*e.g.*, Transcription Staring Site (TSS) vs Enhancers, Activated vs Repressed genes, etc.). For this aim the average signal over regions of the same group can be plotted and compared sample-by-sample or group-by-group. To generate this kind of signal profile it can be used the `plot.density.profile` function which accepts as input a [score matrix](#matrix) as described hereafter. Noteworthy, it is possible to narrow the final plot to a specific range by the option "subset.range" without the need to re-compute the matrix.
 
-The function returns a list with the scores table, a list of each single plot and a single multiplot with the combination of all the single plots. The latter can be directly exported by passing the full output path to the option "multiplot.export.file", while the option "print.multiplot" allows to show the multiplot output without call the variable (useful to save time during the parameters test phase).
+The function returns a list with the scores table, a list of each single plot and a single multiplot with the combination of all the single plots. The latter can be directly exported by passing the full output path to the option "multiplot.export.file", while the option "print.multiplot" allows to show the multiplot output without call/print the variable (useful to save time during the parameters test phase).
 
 Here an example of the output list structure:
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -327,7 +391,7 @@ str(density.profile.by.group, max.level = 1, give.attr = F)
 ```
 
 
-```{r message=FALSE, warning=FALSE, fig.cap='Density profile. <br> Example of density plot profiles of ChIP-seq normalized signal around the center of four different dataset regions for each sample **(A)** or group **(B)**.', fig.width=6, fig.height=10.5, fig.align="center"}
+```{r message=FALSE, warning=FALSE, fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Density profile** <br> Example of density plot profiles of ChIP-seq normalized signal around the center of four different dataset regions for each sample **(A)** or group **(B)**. </font> </div> <br>', fig.width=6, fig.height=10.5, fig.align="center"}
 # Load the example matrix list
 data("deeptools.matrix", package = "Rseb")
 
@@ -384,10 +448,10 @@ cowplot::plot_grid(density.profile.by.group$multiplot,
 
 ## Quantification of the signal differences
 <div style="text-align: justify">
-With the [density profiles](#densityProfile) it is possible to qualitatively estimate the difference of signal between two or more groups of regions or samples over the same region type. Albeit sometimes the difference between two datasets is obvious, other cases might require a more precises quantification and statistical evaluation of the difference.
+With the [density profiles](#densityProfile) it is possible to qualitatively estimate the difference of signal between two or more groups of regions, or samples, over the same region type. Albeit sometimes the difference between two datasets is obvious, other cases might require a more precises quantification and statistical evaluation of the difference.
 
-Therefore, below in this section three different methods to infer and visualize the difference between two samples will be explored: the [density summary](#densitySummary), the [area difference](#densityDifferences) and the [#correlation plot](#correlationPlot).  
-All these methods import a [score matrix](#matrix) generated, for instance, by deepTools or by the `density.matrix` function.
+Therefore, below in this section, three different methods to infer and visualize the difference between two samples will be explored: the [density summary](#densitySummary), the [area difference](#densityDifferences) and the [correlation plot](#correlationPlot).  
+All these methods import a [score matrix](#matrix) generated, for instance, by deepTools or by the [`density.matrix`](#matrix) function.
 
 Noteworthy, in all cases it is possible to carryout the analyses narrowing down the range on which compute the scores by specifying the range to use in the "subset.range" parameter without the need to re-compute the matrix.
 
@@ -405,11 +469,11 @@ For both this two methods a t-test (parametric) or Wilcoxon-test (non parametric
 
 ### *Density summary* {#densitySummary}
 <div style="text-align: justify">
-The first type of representation is generated by the function `plot.density.summary` which shows, through a violin plot, the distribution of the scores over each region in a given group/sample. An option allows to add a mean symbol with the corresponding SD/SEM. Furthermore, the statistical comparison could be added directly above each violin plot either as "stars" or numeric format. As well as for a boxplot, on each violin plot three lines indicate respectively the 25^th^, 50^th^ and 75^th^ percentile of the data distribution.
+The first type of representation is generated by the function `plot.density.summary` which shows, through a violin plot, the distribution of the scores over each region in a given group/sample. An option allows to add a mean symbol with the corresponding SD/SEM. Furthermore, the statistical comparison could be added directly above each violin plot either as "stars" or numeric format. As well as for a boxplot, on each violin plot three lines indicate respectively the 25^th^, 50^th^ and 75^th^ percentile of the data distribution, respectively.
 
-Since the original size of the regions could not be the same it is preferable to use as score on which compute the analyses the sum of the score over each region (equivalent to the area under the curve of a density profile).
+Since the original size of the regions could not be the same it, is preferable to use as score on which compute the analyses the sum of the score over each region (equivalent to the area under the curve of a density profile).
 
-The output of this function is composed of a list of single plots, as well a multiple plot with the distribution of the score of the different samples per each group or alternatively the scores on different regions per each sample or group. Finally, also a table with all the comparisons with the respective significance is available.
+The output of this function is composed of a list of single plots, as well as a multiple plot (multiplot) with the distribution of the scores of the different samples per each group or alternatively the scores on different regions per each sample or group. The output list provides a summary plot with all the region groups for each sample, or alternatively all the samples for each region group. Finally, also a table with all the comparisons with the respective significance is available.
 
 Here an example of the output list structure:
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -437,7 +501,7 @@ str(summary.plot.by.group, max.level = 1, give.attr = F)
 ```
 
 
-```{r message=FALSE, warning=FALSE, fig.cap='Density summary plot. <br> Violin plots indicate the distribution of signal **(A)** for each dataset comparing all the samples in each dataset, or **(B)** for each sample comparing all the datasets. Horizontal bars with stars indicate the means comparison perfomerd by paired Wilcoxon test. P* < 0.05, P** < 0.01, P*** < 0.001, P**** < 0.0001, ns = not significant. ', fig.width=9, fig.height=5, fig.align="center"}
+```{r message=FALSE, warning=FALSE, fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Density summary plot** <br> Violin plots indicate the distribution of signal **(A)** for each dataset comparing all the samples in each dataset, or **(B)** for each sample comparing all the datasets. Horizontal bars with stars indicate the means comparison perfomerd by paired Wilcoxon test. <i>P</i>* < 0.05, <i>P</i>** < 0.01, <i>P</i>*** < 0.001, <i>P</i>**** < 0.0001, *ns* = not significant. Blue dots with bars indicate the value of the mean &plusmn; SEM. </font> </div> <br>', fig.width=9, fig.height=5, fig.align="center"}
 # Load the example matrix list
 data("deeptools.matrix", package = "Rseb")
 
@@ -487,7 +551,7 @@ cowplot::plot_grid(summary.plot.by.group$multiplot,
 ```
 
 
-```{r message=FALSE, warning=FALSE, fig.cap='Combined density summary plot. <br> Violin plots indicate the distribution of signal for all datasetes for all the samples comparing **(A)** the datasetes for each sample or **(B)** the samples for each dataset.', fig.width=8.5, fig.height=6, fig.align="center"}
+```{r message=FALSE, warning=FALSE, fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Combined density summary plot** <br> Violin plots indicate the distribution of signal for all datasetes for all the samples comparing **(A)** the datasetes for each sample or **(B)** the samples for each dataset. Blue dots with bars indicate the value of the mean &plusmn; SEM. </font> </div> <br>', fig.width=8.5, fig.height=6, fig.align="center"}
 cowplot::plot_grid(summary.plot.by.group$summary.plot.samples,
                    summary.plot.by.group$summary.plot.regions,
                    nrow = 2, labels = "AUTO")
@@ -499,7 +563,7 @@ summary.plot.by.sample$means.comparisons
 ```
 
 ```{r, echo=FALSE}
-knitr::kable(summary.plot.by.sample$means.comparisons, row.names = F, caption = "Example of comparisons table for the plots by sample")
+knitr::kable(summary.plot.by.sample$means.comparisons, row.names = F, caption = "**Example of comparisons table for the plots by sample**")
 ```
 </div>
 
@@ -515,7 +579,7 @@ In this section two methods to represent the difference of signal between two co
 On method by which it is possible to visualize the difference between two samples is to correlate the signal for each given region in the two conditions, generating in this way a correlation/scatter plot. Dots corresponding to regions with no difference between two conditions will lie on the diagonal line (defined by the equation $y = x$), while regions with a signal difference will be placed in the half-quadrant of one or the other axis (the two conditions) depending on which condition has a stronger signal on the given region. To generate this kind of plots it is possible to use the function as described below.
 </div>
 
-```{r message=FALSE, warning=FALSE, fig.cap='Correlation plot. <br> Correlation of the signal over each region in each datasetes for one sample is correlated with the signal in the same region in the second sample. Blue dots correspond to regions with a signal higher in Sample1 while green dots indicate regions with a higher signal in Sample2, while regions whose signal is unchanged among the two samples are indicated in violet. The diagonal dashed line corresponds to the $y = x$ equation. Scores of each dot are projectied perpendicularly to each axis and indicated by a green/blue line. Orange line indicates the correlation function that exists between the two samples with the relative SEM. Correlation equation and R-squared for the regression are indicated on the plot.', fig.width=7, fig.height=7, fig.align="center"}
+```{r message=FALSE, warning=FALSE, fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Correlation plot** <br> Correlation of the signal over each region in each datasetes for one sample is correlated with the signal in the same region in the second sample. Blue dots correspond to regions with a signal higher in Sample1 while green dots indicate regions with a higher signal in Sample2, while regions whose signal is unchanged among the two samples are indicated in violet. The diagonal dashed line corresponds to the $y = x$ equation. Scores of each dot are projectied perpendicularly to each axis and indicated by a green/blue line. Orange line indicates the correlation function that exists between the two samples with the relative SEM. Correlation equation and R-squared for the regression are indicated on the plot. </font> </div> <br>', fig.width=7, fig.height=7, fig.align="center"}
 # Load the example matrix list
 data("deeptools.matrix", package = "Rseb")
 
@@ -545,10 +609,10 @@ cowplot::plot_grid(plotlist = Rseb::uniform.y.axis(Rseb::uniform.x.axis(correlat
 
 #### Signal difference {#areaPlot}
 <div style="text-align: justify">
-As already mentioned above, another way to quantify the difference between two signals is literally the "difference", intended as subtraction, between the area/signal over a region in one condition and an other. This could be computed region-by-region always by the function `plot.density.differences`, but in this case instead of the population shift the regions are ranked by the value of the area/signal subtraction. Then the closest to 0 ("no difference") rank position is calculated and its value subtracted to all the rank positions. In this way on the plot it is possible to know the number of regions with a negative (lower signal) or positive (higher signal) score. This representation allows firstly to know how many regions have an enriched signal compared to those that have an enrichment of the other compared signal, secondly setting the axis to the same ranges it is possible to observe whether de differences between two samples for a region set compared to another are wide or rather narrowed around the 0 (no difference between the samples signal), beside eventual outliers that could distort the mean in the [density profile](#densityProfile).
+As already mentioned above, another way to quantify the difference between two signals is literally the "difference", intended as subtraction, between the signal over a region (equivalent to the area under the curve in a density profile but for only one region) in one condition and another. This could be computed region-by-region by the function `plot.density.differences`, but in this case instead of the population shift the regions are ranked by the value of the area/signal subtraction. Then the closest to 0 ("no difference") rank position is calculated and its value subtracted to all the rank positions. In this way on the plot it is possible to know the number of regions with a negative (lower signal) or positive (higher signal) score. This representation allows firstly to know how many regions have an enriched signal (Sample 1) compared to those that have an enrichment of the other compared signal (Sample 2), secondly setting the axis to the same ranges it is possible to observe whether de differences between two samples for a region set compared to another are wide or rather narrowed around the 0 (no difference between the samples signal), beside eventual outliers that could distort the mean in the [density profile](#densityProfile).
 </div>
 
-```{r message=FALSE, warning=FALSE, fig.cap='Area plot. <br> Distribution of the difference between Sample1 (blue) and Sample2 (green) of the signals within each region for each dataset. The dots represent the signal difference value over each region. Blue and green dots signal intensity higher in Sample1 and Sample2 respectively. Regions with unchanged signal among the two samples are indicated in purple.', fig.width=7, fig.height=6, fig.align="center"}
+```{r message=FALSE, warning=FALSE, fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Area plot** <br> Distribution of the difference between Sample1 (blue) and Sample2 (green) of the signals within each region for each dataset. The dots represent the signal difference value over each region. Blue and green dots signal intensity higher in Sample1 and Sample2 respectively. Regions with unchanged signal among the two samples are indicated in purple. </font> </div> <br>', fig.width=7, fig.height=6, fig.align="center"}
 # Load the example matrix list
 data("deeptools.matrix", package = "Rseb")
 
@@ -607,6 +671,189 @@ Rseb::IGVsnap(loci_vector = gene_list,
 
 <br>
 
+
+
+
+
+
+# **Real-Time qPCR analyses for RNA expression** {#qPCR}
+<div style="text-align: justify">
+This tool is designed to analyse RNA expression RT-qPCR data. In particular it is based on the output of RT-qPCR machines of the Applied Biosystems. Indeed it is possible to use the function `qPCR.rna.exp` directly on results in excel file format generated by the qPCR devices (it could be required to indicate the position number of the excel sheet to use, using the parameter `results.sheet.position`). However, it is also possible to provide a data.frame with at least two columns: `Target Name` (e.g., primers), `Sample Name` (e.g. samples), `CT` [all must include space and capital letters as indicated].
+
+A mandatory parameter is the list of "housekeeping" genes that will be used for the computation of the normalized expression. On the other hand, also fold changes (FC) over a reference sample are computed. The reference sample if it is not provided by the user will be automatically defined as the first one appearing in the list of all the samples. Notably, specific samples (e.g., blank the negative controls) could be excluded using the parameter `exclude.samples`.
+
+In the list resulting form the analyses there is a plot showing the technical replicates detected in the data. Technical replicates that as a difference greater than a certain threshold could be excluded setting the parameter `max.delta.reps` (default value 0.5)
+</div>
+
+<br>
+
+## How to run the analyses
+```{r eval=FALSE}
+# Load the data
+data_to_analyse <- Rseb::qPCR.results
+
+print(data_to_analyse)
+```
+
+```{r, echo=FALSE}
+data_to_analyse = data.frame(Rseb::qPCR.results, check.names = F)
+knitr::kable(head(data_to_analyse, n = 10), row.names = F, caption = '**Example of RT-qPCR data.frame for RNA expression analyses**')
+```
+
+
+```{r message=FALSE, warning=FALSE}
+# Run the analyses
+analyses <- Rseb::qPCR.rna.exp(results.file = data_to_analyse,
+                               housekeeping.genes = c("geneB", "housekeeping"),
+                               reference.sample = "Ctrl",
+                               max.delta.reps = 0.5)
+```
+
+
+<br>
+
+## Interpretation of the output
+<div style="text-align: justify">
+The structure of the analyzed data is the following:
+</div>
+
+```{r echo=FALSE}
+cat(paste0(
+  " analyses\n",
+  "   ¦--original.table\n",
+  "   ¦--reshaped.table\n",
+  "   ¦--reshaped.table.cleaned\n",
+  "   ¦--reps.validation.plot\n",
+  "   ¦--analyzed.data\n",
+  "   ¦   ¦--geneB\n",
+  "   ¦   ¦--housekeeping\n",
+  "   ¦   °--mean_FC_housekeeping\n",
+  "   ¦--expression.plots\n",
+  "   ¦   ¦--geneB\n",
+  "   ¦   °--housekeeping\n",
+  "   °--foldChange.plots\n",
+  "       ¦--geneB\n",
+  "       ¦--housekeeping\n",
+  "       °--mean_FC_housekeeping"))
+```
+
+<div style="text-align: justify">
+The `original.table` is the input table, while the `reshaped.table` contains the replicates and their deltas. The `reshaped.table.cleaned` table instead is a filtered version without the discarded replicates.
+</div>
+
+```{r, echo=FALSE}
+knitr::kable(head(analyses$reshaped.table.cleaned, n = 15), row.names = F, caption = '**RT-qPCR analyses results: `reshaped.table.cleaned`**')
+```
+
+
+<div style="text-align: justify">
+The replicate deltas can be inspected in the `reps.validation.plot`. The red background indicates that the corresponding replicate comparison did not pass the threshold test defined by `max.delta.reps`.
+</div>
+
+```{r echo=FALSE, fig.align="center", fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Replicates validation plot** <br> The difference of all the replicate, two-by-two, is computed for each Sample/Target combination. Red boxes indicate that the corresponding replicate comparison did not pass the threshold test defined by `max.delta.reps`. </font> </div> <br>', fig.width=7, fig.height=6, message=FALSE, warning=FALSE}
+
+print(analyses$reps.validation.plot)
+```
+
+
+<div style="text-align: justify">
+The `analyzed.data` branch is a list of tables, one for each housekeeping and an extra one for the mean of all housekeeping genes. Each table shows the replicate CT values, the replicate deltas, the mean of the (filtered) CTs, the calculated expression normalized to the corresponding houskeeping gene and the Fold Change (FC) of expression over the reference.sample.
+</div>
+
+```{r, echo=FALSE}
+knitr::kable(head(analyses$analyzed.data$housekeeping, n = 15), row.names = F, caption = '**RT-qPCR analyses results: `analyzed.data$housekeeping`**')
+```
+
+
+<div style="text-align: justify">
+The results then are plotted either as normalized expression to each housekeeping gene (**A**) or the Fold Change expression of the `reference.sample` (**B**). Furthermore, also a mean of the fold changes obtained from the data normalized to each housekeeping genes is plotted as well (**C**).
+</div>
+
+```{r fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Expression and Fold Change plots** <br> **(A)** Expression normalized to one of the housekeeping genes. The numbers above the histograms indicate the values of the graph. The housekeeping gene is removed by default but it can be included setting `exclude.housekeeping.FC=FALSE`. **(B)** Similar plot than in B is showed for the Fold Change expression over the `reference.sample` for each normalization. **(C)** The mean of the fold changes obtained from the data normalized to each housekeeping genes is plotted. The mean value is idicated above each histogram and the bars indicate the SEM. </font> </div> <br>', fig.height=7, fig.width=9, message=FALSE, warning=FALSE, echo=FALSE, fig.align="center"}
+
+cowplot::plot_grid(analyses$expression.plots$housekeeping,
+                   cowplot::plot_grid(analyses$foldChange.plots$housekeeping,
+                                      analyses$foldChange.plots$mean.FC.housekeeping,
+                                      labels = c("B", "C")),
+                   labels = c("A",""), nrow = 2)
+```
+
+
+<br>
+
+## Merge multiple experiments
+<div style="text-align: justify">
+In most of the cases, it is required to compute the average among multiple experiments. To achieve that, a list of [`qPCR.ran.exp`](#qPCR) objects can be submitted to the function `qPCR.rna.mean.reps`.
+
+The function will automatically define which are the housekeeping genes and the reference sample using the list names or the column names of the tables in the [`qPCR.ran.exp`](#qPCR) objects. However, if the reference sample used are multiple and/or not shared among replicates, the first sample in the order is used as reference. The reference sample can be also redefined manually during the averaging: all the Fold Changes will be recomputed. In all cases a message indicating which reference sample has been used is printed at each time (it will be always the first sample in the fold change plots).
+
+Also in this case, specific samples can be excluded from the analyses (e.g., blank negative control).
+
+
+In the following example two different analyses are run starting from the same data (rep1 and rep2). Then the two replicates are merged by `qPCR.rna.mean.reps`.
+</div>
+
+```{r warnings=FALSE}
+# Run the analyses for the two replicates
+rep1 <- Rseb::qPCR.rna.exp(results.file = data_to_analyse,
+                           housekeeping.genes = c("geneB", "housekeeping"),
+                           reference.sample = "Ctrl",
+                           max.delta.reps = 0.5)
+
+rep2 <- Rseb::qPCR.rna.exp(results.file = data_to_analyse,
+                           housekeeping.genes = "housekeeping",
+                           reference.sample = "sample_1",
+                           max.delta.reps = 0.3)
+
+
+# Compute the average of the two replicates
+mean_reps <- Rseb::qPCR.rna.mean.reps(reps.list = list(rep1, rep2))
+```
+
+
+<div style="text-align: justify">
+The structure of the output is similar to that of [`qPCR.ran.exp`](#qPCR):
+</div>
+
+```{r echo=FALSE}
+cat(paste0(
+  " mean_reps\n",
+  "   ¦--mean.reps.data.table\n",
+  "   ¦   ¦--geneB\n",
+  "   ¦   ¦--housekeeping\n",
+  "   ¦   °--mean_FC.means\n",
+  "   ¦--mean.exp.plots\n",
+  "   ¦   ¦--geneB\n",
+  "   ¦   °--housekeeping\n",
+  "   °--mean.reps.FC.plots\n",
+  "       ¦--geneB\n",
+  "       ¦--housekeeping\n",
+  "       °--mean_FC.means"))
+```
+
+
+<div style="text-align: justify">
+However the analyzed data tables (`mean.reps.data.table`) are simplified showing only the means (exp = normalized expression, FC = Fold Change) and statistics without the single values of each CT in each replicate:
+</div>
+
+```{r, echo=FALSE}
+knitr::kable(head(mean_reps$mean.reps.data.table$housekeeping, n = 15), row.names = F, caption = '**RT-qPCR merged replicates: `mean.reps.data.table$housekeeping`**')
+```
+
+<div style="text-align: justify">
+The plots are similar as well, but now also the number of values in each bar of gra[h are indicated since the number of samples and/or housekeeping genes could be different among the replicates:
+</div>
+
+```{r fig.cap='<div style="text-align: justify"> <font size="-0.5"> **Expression and Fold Change plots of merged replicates** <br> **(A)** Expression normalized to one of the housekeeping genes. **(B)** Similar plot than in B is showed for the Fold Change expression over the `reference.sample` for each normalization. <br> The numbers above the histograms indicate the mean values of the graph, while the numbers on the bottom the sample size. The error bars indicate the SEM. </font> </div> <br>', fig.height=3.5, fig.width=8, message=FALSE, warning=FALSE, echo=FALSE, fig.align="center"}
+
+cowplot::plot_grid(mean_reps$mean.reps.exp.plots$housekeeping,
+                   mean_reps$mean.reps.FC.plots$mean_FC.means,
+                   labels = c("AUTO"), nrow = 1)
+```
+
+
+<br>
+
 # **Generic tools**
 <div style="text-align: justify">
 This package provides functions that can simplify routine task such as [axis equal re-scale](#uniformAxis) among a list of plots or [filter lines](#grepL) of a data.frame in a shell-like method, and many others.
@@ -617,11 +864,11 @@ This package provides functions that can simplify routine task such as [axis equ
 In the previous paragraphs the functions `uniform.x.axis` and `uniform.y.axis` have been used to re-format and uniform the axis among a list of plots. These functions allow to re-set the maximum, minimum, ticks interval and number formatting of the plot axes.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-Rseb::uniform.x.axis(plot.list = list.of.plots,
-                     x.min = 0,
-                     x.max = NA,
-                     ticks.each = 0.5,
-                     digits = 1)
+uniformed.list.of.plots <- Rseb::uniform.x.axis(plot.list = list.of.plots,
+                                                x.min = 0,
+                                                x.max = NA,
+                                                ticks.each = 0.5,
+                                                digits = 1)
 ```
 
 For this function could be useful to combine multiple lists of plots in a unique one using the function `combine.lists` of this package. The latter, from an input list of list, generates an output list result of the combination of all the lists contained in the provided input.
@@ -637,13 +884,13 @@ In the following example is shown a dummy table of copy number variation (CNV) i
 ```{r, eval=FALSE}
 # Loading the table
 data("CNV.data", package = "Rseb")
-CNV.data
+print(CNV.data)
 ```
 
 ```{r, echo=FALSE}
 data("CNV.data", package = "Rseb")
 
-knitr::kable(CNV.data[round(runif(n = 10, min = 1, max = nrow(CNV.data))),], row.names = F, caption = "Example of CNV annotation table")
+knitr::kable(CNV.data[round(runif(n = 10, min = 1, max = nrow(CNV.data))),], row.names = F, caption = "**Example of CNV annotation table**")
 ```
 
 Now it is possible to filter only the lines containing, in any position, the pattern "gain/loss" using the function `grepl.data.frame`.
@@ -658,7 +905,7 @@ print(CNV.gain.loss)
 ```{r, echo=FALSE}
 CNV.gain.loss = dplyr::filter(.data = CNV.data, Rseb::grepl.data.frame(data.frame = CNV.data, pattern = "gain/loss"))
 
-knitr::kable(CNV.gain.loss, row.names = F, caption = 'CNV annotation table filtered for the pattern "gain/loss"')
+knitr::kable(CNV.gain.loss, row.names = F, caption = '**CNV annotation table filtered for the pattern "gain/loss"**')
 ```
 
 </div>
@@ -670,7 +917,9 @@ knitr::kable(CNV.gain.loss, row.names = F, caption = 'CNV annotation table filte
 # **Package information** {#info}
 ## Documentation
 <div style="text-align: justify">
-With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_manual.pdf) with details for each function and respective parameters is available.
+With the package a detailed [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_manual.pdf) with details for each function and respective parameters is available.
+
+The R-package have been published on [GitHub](https://github.com/sebastian-gregoricchio/Rseb) and a [git-pages website](https://sebastian-gregoricchio.github.io/Rseb) is available as well. At both these sites it is possible to find the installation procedure, required dependencies, and the links for changeLog, manual and vignette.
 </div>
 
 <br>
@@ -679,6 +928,7 @@ With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rs
 <div style="text-align: justify">
 A list of all releases and respective description of changes applied could be found [here](https://sebastian-gregoricchio.github.io/Rseb/NEWS).
 </div>
+
 
 <br>
 
