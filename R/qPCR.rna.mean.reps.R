@@ -131,6 +131,7 @@ qPCR.rna.mean.reps = function(
     # Compute stats for current housekeeping
     housekeeping.table.list[[i]] =
       housekeeping.table.list[[i]] %>%
+      dplyr::filter(!is.na(exp_norm)) %>%
       dplyr::group_by(`Sample Name`, `Target Name`) %>%
       dplyr::summarise(n = n(),
                        mean_exp = mean(exp_norm, na.rm = T),
@@ -186,6 +187,7 @@ qPCR.rna.mean.reps = function(
 
   FC_all_housekeeping =
     FC_all_housekeeping %>%
+    dplyr::filter(!is.na(mean_FoldChange)) %>%
     dplyr::group_by(`Sample Name`, `Target Name`) %>%
     dplyr::summarise(n = n(),
                      mean_FC = mean(mean_FoldChange, na.rm = T),
