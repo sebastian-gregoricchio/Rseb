@@ -19,11 +19,21 @@ The guide is divided in three parts: the first one will explore some analyses an
 
 
 
+### Citation
 If you use this package, please cite:
 
-```
+<div class="warning" style='padding:2.5%; background-color:#ffffee; color:#787878; margin-left:5%; margin-right:5%; border-radius:15px;'>
+<span>
+<font size="-0.5">
+
+<div style="margin-left:2%; margin-right:2%; text-align: justify">
 ... the publication is under revision ...
-```
+</div>
+</font>
+
+</span>
+</div>
+
 
 <br>
 
