@@ -39,13 +39,13 @@ get.single.base.score.bw =
 
     ### get score
     # Check if the bigWig chrom names are the same than in the bed regions
-    if (suppressWarnings(inherits(try(import(BigWigFile(bigWig), selection = region, as = 'NumericList')[[1]],
+    if (suppressWarnings(inherits(try(rtracklayer::import(BigWigFile(bigWig), selection = region, as = 'NumericList')[[1]],
                                       silent = TRUE),
                                   "try-error"))) { # it is TRUE when it does not work due to chromosome names in the bigWig != bed
       region = diffloop::rmchr(region)
     }
 
-    score = import(BigWigFile(bigWig), selection = region, as = 'NumericList')[[1]]
+    score = rtracklayer::import(BigWigFile(bigWig), selection = region, as = 'NumericList')[[1]]
     if (reverse.score == TRUE) {score = rev(score)}
 
     if (missing.data.as.zero == TRUE) {score[is.na(score)]=0}
