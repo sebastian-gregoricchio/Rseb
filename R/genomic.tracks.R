@@ -385,7 +385,7 @@ genomic.tracks =
       # Plot genomic region annotation (genes)
       gene_annotation_plot =
         autoplot(ensdb,
-                 AnnotationFilter::GRangesFilter(GRanges(seqnames = as.numeric(gsub("chr", "", genomic.region[1])),
+                 AnnotationFilter::GRangesFilter(GRanges(seqnames = gsub("chr", "", genomic.region[1]),
                                                          IRanges(as.numeric(genomic.region[2]), as.numeric(genomic.region[3])),
                                                          strand = "*")),
                  names.expr = "gene_name",
