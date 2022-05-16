@@ -5,7 +5,7 @@
 \alias{qPCR.results}
 \title{qPCR RNA expression results example}
 \format{
-A data frame with 117 rows and 35 variables. Three of these columns are required to run \link{\code{qPCR.rna.exp}}:
+A data frame with 117 rows and 35 variables. Three of these columns are required to run \link{qPCR.rna.exp}:
 \describe{
   \item{\code{Sample Name}}{Name of the samples/conditions}
   \item{\code{Target Name}}{The target genes to quantify}
