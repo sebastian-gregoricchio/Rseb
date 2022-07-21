@@ -30,7 +30,6 @@ If you use this package, please cite:
 "HDAC1 and PRC2 mediate combinatorial control in SPI1/PU.1-dependent gene repression in murine erythroleukaemia."
 
 Gregoricchio S. *et al.*, *Nucleic Acids Research* (2022)
-
 *doi*: [https://doi.org/10.1093/nar/gkac613](https://doi.org/10.1093/nar/gkac613)
 </div>
 </font>
