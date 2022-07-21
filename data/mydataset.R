@@ -6,7 +6,8 @@ RNAseq = data.frame(data.table::fread("https://sebastian-gregoricchio.github.io/
 deeptools.matrix = readRDS(url("https://sebastian-gregoricchio.github.io/Rseb/inst/extdata/matrix.deepTools.rds"))
 
 # Example of qPCR data results
-qPCR.results = readRDS(url("https://sebastian-gregoricchio.github.io/Rseb/inst/extdata/qPCR_results_example.rds"))
+qPCR.results.rep1 = readRDS(url("https://sebastian-gregoricchio.github.io/Rseb/inst/extdata/qPCR_results_rep1.rds"))
+qPCR.results.rep2 = readRDS(url("https://sebastian-gregoricchio.github.io/Rseb/inst/extdata/qPCR_results_rep2.rds"))
 
 # Generate a random CNV.data table
 generate.CNV = function(values, ncol, nrow, random.value, n.random) {
@@ -33,5 +34,6 @@ CNV.data = generate.CNV(values = c("gain", "gain", "gain", "loss", "loss", "loss
 
 ################################################################################
 # Generate data files
-usethis::use_data(RNAseq, deeptools.matrix, CNV.data, qPCR.results,
+usethis::use_data(RNAseq, deeptools.matrix, CNV.data,
+                  qPCR.results.rep1, qPCR.results.rep2,
                   overwrite = T)
