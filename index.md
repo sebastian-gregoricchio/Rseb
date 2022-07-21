@@ -22,9 +22,9 @@ If you use this package, please cite:
 <font size="-0.5">
 
 <div style="margin-left:2%; margin-right:2%; text-align: justify">
-"HDAC1 and PRC2 mediate combinatorial control in SPI1/PU.1-dependent gene repression in murine erythroleukaemia."
+"HDAC1 and PRC2 mediate combinatorial control in SPI1/PU.1-dependent gene repression in murine erythroleukaemia." <br>
 
-Gregoricchio S. <i>et al.</i>, <i>Nucleic Acids Research</i> (2022)
+Gregoricchio S. *et al.*, *Nucleic Acids Research* (2022) <br>
 
 <i>doi</i>: [https://doi.org/10.1093/nar/gkac613](https://doi.org/10.1093/nar/gkac613)
 </div>
