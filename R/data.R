@@ -43,8 +43,8 @@
 #'
 #'
 #'
-#' @title qPCR RNA expression results example
-#' @description Simulation of appliedBiosystem qPCR results
+#' @title qPCR RNA expression results example (rep1)
+#' @description Simulation of appliedBiosystem qPCR results (rep1)
 #' @format A data frame with 117 rows and 35 variables. Three of these columns are required to run \link{qPCR.rna.exp}:
 #' \describe{
 #'   \item{\code{Sample Name}}{Name of the samples/conditions}
@@ -52,4 +52,18 @@
 #'   \item{\code{CT}}{Values of the cycle detected at a given threshold}
 #'}
 #' @source Simulated data
-"qPCR.results"
+"qPCR.results.rep1"
+#'
+#'
+#'
+#'
+#' @title qPCR RNA expression results example (rep2)
+#' @description Simulation of appliedBiosystem qPCR results (rep2).
+#' @format A data frame with 117 rows and 35 variables. Three of these columns are required to run \link{qPCR.rna.exp}:
+#' \describe{
+#'   \item{\code{Sample Name}}{Name of the samples/conditions}
+#'   \item{\code{Target Name}}{The target genes to quantify}
+#'   \item{\code{CT}}{Values of the cycle detected at a given threshold}
+#'}
+#' @source Simulated data
+"qPCR.results.rep2"
