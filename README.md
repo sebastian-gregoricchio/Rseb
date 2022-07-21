@@ -102,6 +102,7 @@ devtools::install_github("sebastian-gregoricchio/Rseb",
 
 ## Documentation
 With the package a [PDF manual](https://sebastian-gregoricchio.github.io/Rseb/Rseb_manual.pdf) and a [vignette](https://sebastian-gregoricchio.github.io/Rseb/doc/Rseb.overview.vignette.html) are available.
+The vignette can be inspected on R as well by typing `browseVignettes("Rseb")`.
 
 
 <br />
