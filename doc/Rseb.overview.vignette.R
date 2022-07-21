@@ -235,14 +235,14 @@ cowplot::plot_grid(density.profile.by.group$multiplot,
 
 ## ----echo=FALSE, message=FALSE, warning=FALSE---------------------------------
 data("deeptools.matrix", package = "Rseb")
-summary.plot.by.group <- 
+summary.plot.by.group <-
     Rseb::plot.density.summary(
       matrix.file = deeptools.matrix,
       plot.by.group = TRUE,
       missing.data.as.zero = TRUE,
       signal.type = "sum",
       stat.paired = FALSE,
-      stat.hide.ns = FALSE, 
+      stat.hide.ns = FALSE,
       axis.line.width = 0.5,
       mean.symbol.size = 0.2,
       y.identical.auto = TRUE,
@@ -261,14 +261,14 @@ str(summary.plot.by.group, max.level = 1, give.attr = F)
 data("deeptools.matrix", package = "Rseb")
 
 # Generate the density profile by group
-summary.plot.by.group <- 
+summary.plot.by.group <-
     Rseb::plot.density.summary(
       matrix.file = deeptools.matrix,
       plot.by.group = TRUE,
       missing.data.as.zero = TRUE,
       signal.type = "sum",
       stat.paired = FALSE,
-      stat.hide.ns = FALSE, 
+      stat.hide.ns = FALSE,
       axis.line.width = 0.5,
       mean.symbol.size = 0.2,
       y.identical.auto = TRUE,
@@ -281,14 +281,14 @@ summary.plot.by.group <-
       by.row = TRUE)
 
 # Generate the density profile by sample
-summary.plot.by.sample <- 
+summary.plot.by.sample <-
     Rseb::plot.density.summary(
       matrix.file = deeptools.matrix,
       plot.by.group = FALSE,
       missing.data.as.zero = TRUE,
       signal.type = "sum",
       stat.paired = FALSE,
-      stat.hide.ns = FALSE, 
+      stat.hide.ns = FALSE,
       axis.line.width = 0.5,
       mean.symbol.size = 0.2,
       y.identical.auto = TRUE,
@@ -320,7 +320,7 @@ knitr::kable(summary.plot.by.sample$means.comparisons, row.names = F, caption = 
 data("deeptools.matrix", package = "Rseb")
 
 # Generate the correlation.plot
-correlation.plot <- 
+correlation.plot <-
   Rseb::plot.density.differences(matrix.file = deeptools.matrix,
                                  inverted.comparisons = T,
                                  missing.data.as.zero = T,
@@ -346,7 +346,7 @@ cowplot::plot_grid(plotlist = Rseb::uniform.y.axis(Rseb::uniform.x.axis(correlat
 data("deeptools.matrix", package = "Rseb")
 
 # Generate the area.plot
-areaDifference.plot <- 
+areaDifference.plot <-
   Rseb::plot.density.differences(matrix.file = deeptools.matrix,
                                  inverted.comparisons = T,
                                  missing.data.as.zero = T,
@@ -384,12 +384,12 @@ cowplot::plot_grid(plotlist = Rseb::uniform.y.axis(areaDifference.plot$area.plot
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # Load the data
-#  data_to_analyse <- Rseb::qPCR.results
+#  data_to_analyse <- Rseb::qPCR.results.rep1
 #  
 #  print(data_to_analyse)
 
 ## ---- echo=FALSE--------------------------------------------------------------
-data_to_analyse = data.frame(Rseb::qPCR.results, check.names = F)
+data_to_analyse = data.frame(Rseb::qPCR.results.rep1, check.names = F)
 knitr::kable(head(data_to_analyse, n = 10), row.names = F, caption = '**Example of RT-qPCR data.frame for RNA expression analyses**')
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
@@ -438,12 +438,12 @@ cowplot::plot_grid(analyses$expression.plots$housekeeping,
 
 ## ----warnings=FALSE-----------------------------------------------------------
 # Run the analyses for the two replicates
-rep1 <- Rseb::qPCR.rna.exp(results.file = data_to_analyse,
+rep1 <- Rseb::qPCR.rna.exp(results.file = Rseb::qPCR.results.rep1,
                            housekeeping.genes = c("geneB", "housekeeping"),
                            reference.sample = "Ctrl",
                            max.delta.reps = 0.5)
 
-rep2 <- Rseb::qPCR.rna.exp(results.file = data_to_analyse,
+rep2 <- Rseb::qPCR.rna.exp(results.file = Rseb::qPCR.results.rep2,
                            housekeeping.genes = "housekeeping",
                            reference.sample = "sample_1",
                            max.delta.reps = 0.3)
