@@ -1,6 +1,6 @@
 ![release](https://img.shields.io/github/v/release/sebastian-gregoricchio/Rseb)
-![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
-![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/Rseb)
+<!-- ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
+![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/Rseb) -->
 [![license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://sebastian-gregoricchio.github.io/Rseb/LICENSE.md/LICENSE)
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 <!---![downloads](https://img.shields.io/github/downloads/sebastian-gregoricchio/Rseb/total.svg)--->
@@ -27,7 +27,11 @@ If you use this package, please cite:
 <font size="-0.5">
 
 <div style="margin-left:2%; margin-right:2%; text-align: justify">
-Publication accepted, soon online available
+"HDAC1 and PRC2 mediate combinatorial control in SPI1/PU.1-dependent gene repression in murine erythroleukaemia."
+
+Gregoricchio S. *et al.*, *Nucleic Acids Research* (2022)
+
+*doi*: [https://doi.org/10.1093/nar/gkac613](https://doi.org/10.1093/nar/gkac613)
 </div>
 </font>
 
@@ -42,7 +46,7 @@ Publication accepted, soon online available
 ### Bioconductor libraries
 
 Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package.
-However, if you prefere to manually install `Bioconductor` and required packages proceede with the `Bioconductor` installation:
+However, if you prefer to manually install `Bioconductor` and required packages proceed with the `Bioconductor` installation:
 
 
 ```r
