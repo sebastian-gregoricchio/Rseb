@@ -1,0 +1,32 @@
+citHeader("To cite 'Rseb' in publications use:")
+
+citEntry(entry = "Article",
+  title        = "HDAC1 and PRC2 mediate combinatorial control in SPI1/PU.1-dependent gene repression in murine erythroleukaemia",
+  author       = personList(as.person("Sebastian Gregoricchio"),
+                            as.person("Lelia Polit"),
+                            as.person("Michela Esposito"),
+                            as.person("Jeremy Berthelet"),
+                            as.person("Laure Delestre"),
+                            as.person("Emilie Evanno"),
+                            as.person("M'Boyba Diop"),
+                            as.person("Isabelle Gallais"),
+                            as.person("Hanna Aleth"),
+                            as.person("Mathilde Poplineau"),
+                            as.person("Wilbert Zwart"),
+                            as.person("Frank Rosenbauer"),
+                            as.person("Fernando Rodrigues-Lima"),
+                            as.person("Estelle Duprez"),
+                            as.person("Valentina Boeva"),
+                            as.person("Christel Guillouf")),
+  journal      = "Nucleic Acids Research",
+  year         = "2022",
+  volume       = "X",
+  number       = "X",
+  pages        = "1--25",
+  url          = "https://doi.org/10.1093/nar/gkac613",
+
+  textVersion  = paste("S. Gregoricchio et al.,",
+                       "HDAC1 and PRC2 mediate combinatorial control in SPI1/PU.1-dependent gene repression in murine erythroleukaemia.",
+                       "Nucleic Acids Research, Volume XX, Issue XX (2022), Pages XXX-XXX",
+                       "https://doi.org/10.1093/nar/gkac613")
+)
