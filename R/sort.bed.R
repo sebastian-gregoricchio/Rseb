@@ -9,6 +9,7 @@
 #' @param export.file.name Optional: string to define the path to the file to be exported, if required. By default \code{NULL}, not exported.
 #' @param export.header Logic value to define whether the header should be exported in the sorted bed file. By default \code{FALSE}.
 #' @param unique.regions Logic value to indicate whether the output bed must contain unique regions. By default \code{TRUE}.
+#' @param verbose Logic value to indicate whether messages should be printed or not. By default \code{TRUE}.
 #'
 #' @return If required, returns a data.frame corresponding to the sorted .bed file.
 #'
@@ -25,7 +26,8 @@ sort.bed = function(bed,
                     return.bed = TRUE,
                     export.file.name = NULL,
                     export.header = FALSE,
-                    unique.regions = TRUE) {
+                    unique.regions = TRUE,
+                    verbose = TRUE) {
 
   #-----------------------------#
   # Check if Rseb is up-to-date #
@@ -81,7 +83,7 @@ sort.bed = function(bed,
   }
 
   # Export if required
-  if (!is.null(export.file.name)) {
+  if (!is.null(export.file.name) & verbose == T) {
     write.table(x = if (unique.regions == T) {unique(sorted.bed)} else {sorted.bed},
                 file = export.file.name,
                 quote = F, sep = sep,
@@ -91,12 +93,12 @@ sort.bed = function(bed,
                   export.file.name))
   }
 
-  if (unique.regions == T) {message("Only unique values are kept.")}
+  if ((unique.regions == T) & (verbose == T)) {message("Only unique values are kept.")}
 
   # Return the bed
   if (return.bed == T) {
     if (unique.regions == T) {
-      return(unique(sorted.bed))
-      } else {return(sorted.bed)}
+      return(format(unique(sorted.bed), scientific = F))
+      } else {return(format(sorted.bed, scientific = F))}
   }
 }

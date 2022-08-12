@@ -12,6 +12,7 @@
 #' @param return.bed Logic value to define if to return the bed as a data.frame. By default \code{TRUE}. Only unique rows are kept.
 #' @param export.file.name Optional: string to define the path to the file to be exported, if required. By default \code{NULL}, not exported.
 #' @param export.header Logic value to define whether the header should be exported in the sorted bed file. By default \code{FALSE}.
+#' @param verbose Logic value to indicate whether messages should be printed or not. By default \code{TRUE}.
 #'
 #' @return If required, returns a data.frame corresponding to the collapsed .bed file.
 #'
@@ -31,35 +32,36 @@ collapse.bed = function(bed,
                         sep = "\t",
                         return.bed = TRUE,
                         export.file.name = NULL,
-                        export.header = FALSE) {
-  
+                        export.header = FALSE,
+                        verbose = TRUE) {
+
   #-----------------------------#
   # Check if Rseb is up-to-date #
   Rseb::actualize(update = F, verbose = F)   #
   #-----------------------------#
-  
-  
+
+
   ### -------------------------------------------------------------------------------- ###
   ###                                Libraries & Controls                              ###
   ### -------------------------------------------------------------------------------- ###
   # Load libraries
   require(dplyr)
-  
-  
+
+
   # Check scoreoperation
   if (!(score.operation %in% c("mean", "median", "sum"))) {
     return(warning("The 'score.operation' parameter must be one among: 'mean', 'median', 'sum'. Default value = 'mean'."))
   }
-  
-  
-  
+
+
+
   # Read and sort bed, keeping only first 6 columns
-  sorted.bed = suppressMessages(Rseb::sort.bed(bed = bed,
-                                               bed.header = bed.header,
-                                               sep = sep),
-                                classes = "message")
-  
-  
+  sorted.bed = Rseb::sort.bed(bed = bed,
+                              bed.header = bed.header,
+                              sep = sep,
+                              verbose = F)
+
+
   # Select the first 6 columns or add dummy columns if missing column 4|5|6
   if (ncol(sorted.bed) >= 6) {
     sorted.bed = sorted.bed[,1:6]
@@ -79,31 +81,31 @@ collapse.bed = function(bed,
     sorted.bed = dplyr::mutate(sorted.bed, strand = "+")
     final.ncol = 5
   }
-  
+
   names(sorted.bed) = c("chr", "start", "end", "name", "score", "strand")
-  
-  
+
+
   # in case of only one strand, check if the strand exists
   if (!is.null(only.one.strand)) {
-    if (!(only.one.strand %in% sorted.bed$strand)) {
+    if (!(only.one.strand %in% sorted.bed$strand) & (verbose == T)) {
       only.one.strand = NULL
       message(paste0("The 'only.one.strand' indicate is '",
                      only.one.strand,
                      "', but no regions are displaying this strand.\n",
-                     "For this reason, the 'only.one.strand' option has beed coerced to 'NULL' value.\n",
-                     "The collapsing will be performed ingoring the strandness."))
+                     "For this reason, the 'only.one.strand' option has been coerced to 'NULL' value.\n",
+                     "The collapsing will be performed ignoring the strandness."))
     }
   }
-  
-  
+
+
   # Check that END.position > START.position
   if (length((unique((sorted.bed$end - sorted.bed$start) < 0))) > 1) {
     return(warning("The input bed file contains regions in which the END boundary position is lower than the START one. Collapsing interrupted with no output."))
   }
   ### -------------------------------------------------------------------------------- ###
-  
-  
-  
+
+
+
   ### -------------------------------------------------------------------------------- ###
   ###                                    Function                                      ###
   ### -------------------------------------------------------------------------------- ###
@@ -111,31 +113,31 @@ collapse.bed = function(bed,
   sorted.bed = dplyr::mutate(.data = sorted.bed,
                              start = start - maximal.distance,
                              end = end + maximal.distance)
-  
-  
+
+
   #F# define the function for the overlap's merge
   merge.peaks = function(sorted.bed) {
     merged.bed = data.frame()
-    
+
     for (c in unique(sorted.bed$chr)) {
       current.chr.bed = dplyr::filter(.data = sorted.bed, chr == c)
-      
+
       # Add check columns
       current.chr.bed = dplyr::mutate(.data = current.chr.bed,
                                       analyse = T,
                                       ID = 1:nrow(current.chr.bed))
-      
+
       # Identify the overlaps
       for (i in 1:nrow(current.chr.bed)) {
         if (current.chr.bed$analyse[i] == T) {
           current_overlap = dplyr::filter(.data = current.chr.bed,
                                           (start == current.chr.bed$start[i]) | (start <= current.chr.bed$end[i]),
                                           analyse == T)
-          
+
           if (nrow(current_overlap) == 1) {
             merged.bed = rbind(merged.bed, current_overlap[,1:6])
             current.chr.bed$analyse[i] = F
-            
+
           } else {
             merged.region = data.frame(chr = c,
                                        start = min(current_overlap$start),
@@ -149,116 +151,114 @@ collapse.bed = function(bed,
                                        strand = ifelse(test = length(unique(current_overlap$strand)) == 1,
                                                        yes = unique(current_overlap$strand),
                                                        no = "."))
-            
+
             merged.bed = rbind(merged.bed, merged.region)
-            
+
             current.chr.bed$analyse[current.chr.bed$ID %in% current_overlap$ID] = FALSE
           }
         }
-        
-        
+
+
       } #> END overlap for loop
-      
+
     } #> END chr for loop
-    
+
     return(merged.bed[,1:6])
   } #F# END merge.peaks
-  
-  
-  
-  
+
+
+
+
   collapsed.bed = data.frame()
-  
+
   # Compute overlap merge for only one strand (if only.one.strand != NULL)
   if (!is.null(only.one.strand)) {
     strand.collapsed.bed = data.frame()
     continue = T
     to.collapse.bed = dplyr::filter(sorted.bed, strand == only.one.strand)
-    
+
     # Repeat the overlapping until no anymore overlaps are found
     while (continue == T) {
       strand.collapsed.bed = merge.peaks(sorted.bed = to.collapse.bed)
-      
+
       continue = ifelse(test = nrow(strand.collapsed.bed) == nrow(to.collapse.bed),
                         yes = F,
                         no = T)
-      
+
       to.collapse.bed = strand.collapsed.bed
     }
-    
-    collapsed.bed = suppressMessages(Rseb::sort.bed(rbind(strand.collapsed.bed[,1:6],
-                                                          dplyr::filter(sorted.bed, strand != only.one.strand))),
-                                     classes = "message")
+
+    collapsed.bed = Rseb::sort.bed(rbind(strand.collapsed.bed[,1:6],
+                                   dplyr::filter(sorted.bed, strand != only.one.strand),
+                                   verbose = F))
   }
-  
-  
+
+
   # Compute overlap keeping strandness (if only.one.strand == NULL & keep.strandness == TRUE)
   if (is.null(only.one.strand) & keep.strandness == TRUE) {
     bed_list = list()
-    
+
     for (s in 1:length(unique(sorted.bed$strand))) {
       strand.collapsed.bed = data.frame()
       continue = T
       to.collapse.bed = dplyr::filter(sorted.bed, strand == unique(sorted.bed$strand)[s])
-      
+
       # Repeat the overlapping until no anymore overlaps are found
       while (continue == T) {
         strand.collapsed.bed = merge.peaks(sorted.bed = to.collapse.bed)
-        
+
         continue = ifelse(test = nrow(strand.collapsed.bed) == nrow(to.collapse.bed),
                           yes = F,
                           no = T)
-        
+
         to.collapse.bed = strand.collapsed.bed
       }
-      
+
       bed_list[[s]] = strand.collapsed.bed
     }
-    
-    collapsed.bed = suppressMessages(Rseb::sort.bed(purrr::reduce(.x = bed_list, .f = rbind)),
-                                     classes = "message")
+
+    collapsed.bed = Rseb::sort.bed(purrr::reduce(.x = bed_list, .f = rbind), verbose = F)
   }
-  
-  
-  
+
+
+
   # Compute overlap without strand resctriction
   if (is.null(only.one.strand) & keep.strandness == FALSE) {
     to.collapse.bed = sorted.bed
     continue = T
-    
+
     while (continue == T) {
       collapsed.bed = merge.peaks(sorted.bed = to.collapse.bed)
-      
+
       continue = ifelse(test = nrow(collapsed.bed) == nrow(to.collapse.bed),
                         yes = F,
                         no = T)
-      
-      to.collapse.bed = suppressMessages(Rseb::sort.bed(collapsed.bed),
-                                         classes = "message")
+
+      to.collapse.bed = Rseb::sort.bed(collapsed.bed, verbose = F)
     }
   }
-  
-  
+
+
   # Remove the maximal.distance at the extremities added at the beginning
   collapsed.bed$start = collapsed.bed$start + maximal.distance
   collapsed.bed$end = collapsed.bed$end - maximal.distance
-  
-  
+
+
   ### -------------------------------------------------------------------------------- ###
   ###                                      Export                                      ###
   ### -------------------------------------------------------------------------------- ###
   # Export bed if required
-  if (!is.null(export.file.name)) {
+  if (!is.null(export.file.name) & (verbose == T)) {
     write.table(x = unique(collapsed.bed[,1:final.ncol]),
                 file = export.file.name,
                 quote = F,
                 sep = sep,
                 col.names = export.header)
-    
+
     message(paste("The collapsed bed file has been exported as",
                   export.file.name))
   }
-  
+
   # Return the bed
-  if (return.bed == T) {return(unique(collapsed.bed[,1:final.ncol]))}
+  if (return.bed == T) {return(format(unique(collapsed.bed[,1:final.ncol]), scientific = FALSE))}
 }
