@@ -114,21 +114,3 @@ This package is under a [GNU General Public License (version 3)](https://sebasti
 
 ##### Contributors
 [![contributors](https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true)](https://sebastian-gregoricchio.github.io/)
-## Package history and releases
-A list of all releases and respective description of changes applied could be found [here](https://sebastian-gregoricchio.github.io/Rseb/NEWS).
-
-<br />
-<br />
-
------------------
-## Contact
-For any suggestion, bug fixing, commentary please report it in the [issues](https://github.com/sebastian-gregoricchio/Rseb/issues)/[request](https://github.com/sebastian-gregoricchio/Rseb/pulls) tab of this repository.
-
-## License
-This package is under a [GNU General Public License (version 3)](https://sebastian-gregoricchio.github.io/Rseb/LICENSE.md/LICENSE).
-
-
-<br />
-
-##### Contributors
-[![contributors](https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true)](https://sebastian-gregoricchio.github.io/)

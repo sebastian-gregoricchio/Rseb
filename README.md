@@ -31,7 +31,7 @@ If you use this package, please cite:
 
 Gregoricchio S. *et al.*, *Nucleic Acids Research* (2022)
 
-*doi*: [https://doi.org/10.1093/nar/gkac613](https://doi.org/10.1093/nar/gkac613)
+*doi*: [10.1093/nar/gkac613](https://doi.org/10.1093/nar/gkac613)
 </div>
 </font>
 
