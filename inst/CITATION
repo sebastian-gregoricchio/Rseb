@@ -27,6 +27,6 @@ citEntry(entry = "Article",
 
   textVersion  = paste("S. Gregoricchio et al.,",
                        "HDAC1 and PRC2 mediate combinatorial control in SPI1/PU.1-dependent gene repression in murine erythroleukaemia.",
-                       "Nucleic Acids Research, Volume 50, Issue 14 (2022), Pages 7938-7958", ";"
+                       "Nucleic Acids Research, Volume 50, Issue 14 (2022), Pages 7938-7958", ";",
                        "doi: 10.1093/nar/gkac613")
 )
