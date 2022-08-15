@@ -55,7 +55,7 @@ If you use this package, please cite:
 <div style="margin-left:2%; margin-right:2%; text-align: justify">
 "HDAC1 and PRC2 mediate combinatorial control in SPI1/PU.1-dependent gene repression in murine erythroleukaemia.". <br>
 Gregoricchio S. *et al.*, *Nucleic Acids Research* (2022). <br>
-*doi*: [https://doi.org/10.1093/nar/gkac613](https://doi.org/10.1093/nar/gkac613)
+*doi*: [10.1093/nar/gkac613](https://doi.org/10.1093/nar/gkac613)
 </div>
 </font>
 
@@ -360,7 +360,7 @@ deeptools.matrix$original.file.path
 
 ## Density profile {#densityProfile}
 <div style="text-align: justify">
-High-throughput sequencing data allow the detection of different types of signals at genome-wide scale as well at a single locus as described [further](#IGV). A common analysis involves the comparison of the average signal over different categories of regions (*e.g.*, Transcription Staring Site (TSS) vs Enhancers, Activated vs Repressed genes, etc.). For this aim the average signal over regions of the same group can be plotted and compared sample-by-sample or group-by-group. To generate this kind of signal profile it can be used the `plot.density.profile` function which accepts as input a [score matrix](#matrix) as described hereafter. Noteworthy, it is possible to narrow the final plot to a specific range by the option "subset.range" without the need to re-compute the matrix.
+High-throughput sequencing data allow the detection of different types of signals at genome-wide scale as well at a single locus as described [further](#IGV). A common analysis involves the comparison of the average signal over different categories of regions (*e.g.*, Transcription Staring Site (TSS) vs Enhancers, Activated vs Repressed genes, etc.). For this aim the average signal over regions of the same group can be plotted and compared sample-by-sample or group-by-group. To generate this kind of signal profile it can be used the `plot.density.profile`/`plot.density.profile.smooth` function which accepts as input a [score matrix](#matrix) as described hereafter. Noteworthy, it is possible to narrow the final plot to a specific range by the option "subset.range" without the need to re-compute the matrix.
 
 The function returns a list with the scores table, a list of each single plot and a single multiplot with the combination of all the single plots. The latter can be directly exported by passing the full output path to the option "multiplot.export.file", while the option "print.multiplot" allows to show the multiplot output without call/print the variable (useful to save time during the parameters test phase).
 
