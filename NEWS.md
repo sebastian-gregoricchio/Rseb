@@ -7,7 +7,7 @@ title: "changeLog"
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
-#### [v0.3.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.0) - August 12<sup>th</sup> 2022
+#### [v0.3.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.0) - August 15<sup>th</sup> 2022
 * Improvement of `sort.bed` usage: a) removed redundant "export.bed" option (now it is sufficient to add a file name in the "export.file.name" parameter if exporting is wished), b) added the "unique.regions" option, c) minor bug fixed in `sort.bed` for input class check
 * Added option 'verbose' for `sort.bed` and `collapse.bed` functions
 * Added citation file to cite the article associated to this package
