@@ -18,7 +18,7 @@
 #' @param lty Numeric value to define the type of line for the borders. By default \code{NULL}.
 #' @param main String to set the title of the plot. By default \code{NULL}.
 #'
-#' @return
+#' @return Prints the plot
 #'
 #' @examples
 #' doughnut(x = c(3,5,9,12), inner.radius=0.5, col=c("red", "blue", "green", "yellow"))

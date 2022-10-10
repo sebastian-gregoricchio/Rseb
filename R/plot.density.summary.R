@@ -754,7 +754,7 @@ plot.density.summary = function(
 
   ##############################################################################
   # generate the multiplot
-  multiplot = cowplot::plot_grid(plotlist = plot.list, nrow = n.row.multiplot, byrow = by.row)
+  multiplot = cowplot::plot_grid(plotlist = plot.list, nrow = n.row.multiplot, byrow = by.row, align = "hv")
 
   # Print multiplot if required
   if (print.multiplot == T) {print(multiplot)}

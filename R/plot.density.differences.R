@@ -622,11 +622,11 @@ plot.density.differences = function(
 
     # Generation of the multiplots for the current group
     if (length(comparison.by.group.tables[[g]]) == 1) {
-      area.multiplot.list[[g]] = cowplot::plot_grid(plotlist = list(area.groups[[g]]), nrow = n.row.multiplot, byrow = by.row)
-      scatter.multiplot.list[[g]] = cowplot::plot_grid(plotlist = list(scatter.groups[[g]]), nrow = n.row.multiplot, byrow = by.row)
+      area.multiplot.list[[g]] = cowplot::plot_grid(plotlist = list(area.groups[[g]]), nrow = n.row.multiplot, byrow = by.row, align = "hv")
+      scatter.multiplot.list[[g]] = cowplot::plot_grid(plotlist = list(scatter.groups[[g]]), nrow = n.row.multiplot, byrow = by.row, align = "hv")
     } else {
-      area.multiplot.list[[g]] = cowplot::plot_grid(plotlist = area.groups[[g]], nrow = n.row.multiplot, byrow = by.row)
-      scatter.multiplot.list[[g]] = cowplot::plot_grid(plotlist = scatter.groups[[g]], nrow = n.row.multiplot, byrow = by.row)
+      area.multiplot.list[[g]] = cowplot::plot_grid(plotlist = area.groups[[g]], nrow = n.row.multiplot, byrow = by.row, align = "hv")
+      scatter.multiplot.list[[g]] = cowplot::plot_grid(plotlist = scatter.groups[[g]], nrow = n.row.multiplot, byrow = by.row, align = "hv")
     }
 
     names(area.multiplot.list)[g] = names(comparison.by.group.tables)[g]
