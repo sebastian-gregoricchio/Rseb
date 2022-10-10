@@ -43,6 +43,8 @@ intersect.regions =
     # require(diffloop)
     require(dplyr)
     require(S4Vectors)
+    require(GenomicRanges)
+    require(IRanges)
 
     # Check if Rseb is up-to-date #
     Rseb::actualize(update = F, verbose = F)
@@ -135,17 +137,22 @@ intersect.regions =
 
 
         # Return Overlaps in ref, overlaps in test, and the regions not overlapping for each region list
+        overlaps.reference = unique(reference.regions[queryHits(filtered.hits)])
+        overlaps.test = unique(test.regions[subjectHits(filtered.hits)])
+
+        overlaps.list = list(overlaps.reference = overlaps.reference,
+                             non.overlaps.reference = unique(reference.regions[!(reference.regions %in% overlaps.reference)]),
+                             overlaps.test = overlaps.test,
+                             non.overlaps.test = unique(test.regions[!(test.regions %in% overlaps.test)]))
+
         if (isTRUE(sort.overlaps)) {
-          return(list(overlaps.reference = sort(unique(reference.regions[queryHits(filtered.hits)])),
-                      non.overlaps.reference = sort(unique(reference.regions[!(reference.regions %in% sort(unique(reference.regions[queryHits(filtered.hits)])))])),
-                      overlaps.test = sort(unique(test.regions[subjectHits(filtered.hits)])),
-                      non.overlaps.test = sort(unique(test.regions[!(test.regions %in% sort(unique(test.regions[subjectHits(filtered.hits)])))]))))
-        } else{
-          return(list(overlaps.reference = unique(reference.regions[queryHits(filtered.hits)]),
-                      non.overlaps.reference = unique(reference.regions[!(reference.regions %in% unique(reference.regions[queryHits(filtered.hits)]))]),
-                      overlaps.test = unique(test.regions[subjectHits(filtered.hits)]),
-                      non.overlaps.test = unique(test.regions[!(test.regions %in% unique(test.regions[subjectHits(filtered.hits)]))])))
+          overlaps.list$overlaps.reference = sort(overlaps.list$overlaps.reference)
+          overlaps.list$non.overlaps.reference = sort(overlaps.list$non.overlaps.reference)
+          overlaps.list$overlaps.test = sort(overlaps.list$overlaps.test)
+          overlaps.list$non.overlaps.test = sort(overlaps.list$non.overlaps.test)
         }
+
+        return(overlaps.list)
       } # end find.intersections
 
 
