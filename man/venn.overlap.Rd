@@ -11,7 +11,7 @@ venn.overlap(
     "gray30"),
   color.transparency = 0.25,
   min.percentage.reference = 0,
-  min.precentage.test = 0,
+  min.percentage.test = 0,
   min.bases.overlap = 1,
   input.type = "union",
   shape.type = "ellipse",
@@ -30,6 +30,8 @@ venn.overlap(
 
 \item{min.percentage.reference}{A numeric value in 0-100 to define which percentage of a region in the 'reference' dataset must overlap with a region in the 'test' one. If the value is lower than 0 or greater than 100, will be coerced to 0 or 100 respectively. Default value: \code{0}.}
 
+\item{min.percentage.test}{Numeric value in 0-100 to define which percentage of a region in the 'test' dataset must overlap with a region in the 'reference' one. If the value is lower than 0 or greater than 100, will be coerced to 0 or 100 respectively. Default value: \code{0}.}
+
 \item{min.bases.overlap}{Integer, greater than 0, value to indicate the minimal number of bases to consider as minimum overlap between two regions. Non integer values will be rounded at integer, while number lower that 1 will be coerced to 1. Default value: \code{1}.}
 
 \item{input.type}{String with the type of input provided to the euler function. Available values are \code{union} and \code{disjoint}. Default value: \code{union}.}
@@ -39,8 +41,6 @@ venn.overlap(
 \item{plot.quantities}{Logical value to indicate whether the quantity of each subintersection should be plotted or not. By default \code{TRUE}.}
 
 \item{stranded}{Logical value to define whether the analyses should be performed by strand: regions in one strand will be overlapped only with regions of the same strand. The strand symbols considered are '+' and '-', any other symbol will considered in a unique separated category. Default value: \code{FALSE}.}
-
-\item{min.percentage.test}{Numeric value in 0-100 to define which percentage of a region in the 'test' dataset must overlap with a region in the 'reference' one. If the value is lower than 0 or greater than 100, will be coerced to 0 or 100 respectively. Default value: \code{0}.}
 }
 \value{
 The output is the Venn Diagram in an object of class eulergram/gTree/grob/gDesc.
