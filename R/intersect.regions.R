@@ -105,7 +105,7 @@ intersect.regions =
       function(reference.regions,
                test.regions,
                min.percentage.reference,
-               min.precentage.test,
+               min.percentage.test,
                min.bases.overlap,
                sort.overlaps) {
 
@@ -128,7 +128,7 @@ intersect.regions =
 
 
         filtered.hits = total.hits[overalp.perc$perc.overlap.reference >= min.percentage.reference &
-                                     overalp.perc$perc.overlap.test >= min.precentage.test]
+                                     overalp.perc$perc.overlap.test >= min.percentage.test]
 
 
 
@@ -168,21 +168,21 @@ intersect.regions =
         overlaps.plus = find.intersections(reference.regions = reference.plus,
                                            test.regions = test.plus,
                                            min.percentage.reference = min.percentage.reference,
-                                           min.precentage.test = min.precentage.test,
+                                           min.percentage.test = min.percentage.test,
                                            min.bases.overlap = min.bases.overlap,
                                            sort.overlaps = sort.overlaps)
 
         overlaps.minus = find.intersections(reference.regions = reference.minus,
                                             test.regions = test.minus,
                                             min.percentage.reference = min.percentage.reference,
-                                            min.precentage.test = min.precentage.test,
+                                            min.percentage.test = min.percentage.test,
                                             min.bases.overlap = min.bases.overlap,
                                             sort.overlaps = sort.overlaps)
 
         overlaps.other = find.intersections(reference.regions = reference.other,
                                             test.regions = test.other,
                                             min.percentage.reference = min.percentage.reference,
-                                            min.precentage.test = min.precentage.test,
+                                            min.percentage.test = min.percentage.test,
                                             min.bases.overlap = min.bases.overlap,
                                             sort.overlaps = sort.overlaps)
 
@@ -207,7 +207,7 @@ intersect.regions =
       final.overlaps = find.intersections(reference.regions = reference.regions,
                                           test.regions = test.regions,
                                           min.percentage.reference = min.percentage.reference,
-                                          min.precentage.test = min.precentage.test,
+                                          min.percentage.test = min.percentage.test,
                                           min.bases.overlap = min.bases.overlap,
                                           sort.overlaps = sort.overlaps)
     }
@@ -224,5 +224,3 @@ intersect.regions =
       return(final.overlaps)
     }
   } # END of the function
-
-
