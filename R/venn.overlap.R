@@ -21,6 +21,7 @@
 # @import eulerr
 # @import diffloop
 # @import pryr
+# @import S4Vectors
 
 
 venn.overlap =
@@ -40,6 +41,7 @@ venn.overlap =
     ######################################################################################
     ### Required libraries
     require(pryr)
+    require(S4Vectors)
 
     # Check if Rseb is up-to-date #
     Rseb::actualize(update = F, verbose = F)

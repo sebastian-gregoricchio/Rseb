@@ -25,6 +25,7 @@
 # @import diffloop
 # @import dplyr
 # @import IRanges
+# @import S4Vectors
 
 intersect.regions =
   function(reference.regions,
@@ -41,6 +42,7 @@ intersect.regions =
     # require("GenomicRanges")
     # require(diffloop)
     require(dplyr)
+    require(S4Vectors)
 
     # Check if Rseb is up-to-date #
     Rseb::actualize(update = F, verbose = F)
@@ -135,14 +137,14 @@ intersect.regions =
         # Return Overlaps in ref, overlaps in test, and the regions not overlapping for each region list
         if (isTRUE(sort.overlaps)) {
           return(list(overlaps.reference = sort(unique(reference.regions[queryHits(filtered.hits)])),
-                      non.overlaps.reference = sort(unique(reference.regions[!(reference.regions %in% overlaps.reference)])),
+                      non.overlaps.reference = sort(unique(reference.regions[!(reference.regions %in% sort(unique(reference.regions[queryHits(filtered.hits)])))])),
                       overlaps.test = sort(unique(test.regions[subjectHits(filtered.hits)])),
-                      non.overlaps.test = sort(unique(test.regions[!(test.regions %in% overlaps.test)]))))
+                      non.overlaps.test = sort(unique(test.regions[!(test.regions %in% sort(unique(test.regions[subjectHits(filtered.hits)])))]))))
         } else{
           return(list(overlaps.reference = unique(reference.regions[queryHits(filtered.hits)]),
-                      non.overlaps.reference = unique(reference.regions[!(reference.regions %in% overlaps.reference)]),
+                      non.overlaps.reference = unique(reference.regions[!(reference.regions %in% unique(reference.regions[queryHits(filtered.hits)]))]),
                       overlaps.test = unique(test.regions[subjectHits(filtered.hits)]),
-                      non.overlaps.test = unique(test.regions[!(test.regions %in% overlaps.test)])))
+                      non.overlaps.test = unique(test.regions[!(test.regions %in% unique(test.regions[subjectHits(filtered.hits)]))])))
         }
       } # end find.intersections
 
@@ -152,7 +154,7 @@ intersect.regions =
     if (isTRUE(stranded)) {
       # Check that only at least the "+" strand is present
       if (!(("+" %in% reference.regions@strand | "-" %in% reference.regions@strand) & ("+" %in% test.regions@strand | "-" %in% test.regions@strand))) {
-        message("None of the regions provided cointain any '+' or '-' symbol in the strand column, therefore the 'stranded' option will be ignored.")
+        message("None of the regions provided contain any '+' or '-' symbol in the strand column, therefore the 'stranded' option will be ignored.")
       } else {
         # split Granges by strand
         reference.plus = reference.regions[reference.regions@strand == "+"]
