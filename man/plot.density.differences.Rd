@@ -15,8 +15,8 @@
   inverted.comparisons = F,
   stat.method = "wilcox.test",
   stat.paired = T,
-  stat.p.levels = list(cutpoints = c(0, 1e-04, 0.001, 0.01, 0.05, 1), symbols =
-    c("****", "***", "**", "*", "ns")),
+  stat.p.levels = list(cutpoints = c(0, 1e-04, 0.001, 0.01, 0.05, 1), symbols = c("****",
+    "***", "**", "*", "ns")),
   area.line.width = 0.5,
   area.fill.area = T,
   area.plot.zero.line = T,

@@ -48,9 +48,6 @@ doughnut(
 
 \item{main}{String to set the title of the plot. By default \code{NULL}.}
 }
-\value{
-
-}
 \description{
 Generation of a donut/doughnut plot (equivalent of a pie chart)
 }

@@ -11,7 +11,8 @@
   return.bed = TRUE,
   export.file.name = NULL,
   export.header = FALSE,
-  unique.regions = TRUE
+  unique.regions = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@
 \item{export.header}{Logic value to define whether the header should be exported in the sorted bed file. By default \code{FALSE}.}
 
 \item{unique.regions}{Logic value to indicate whether the output bed must contain unique regions. By default \code{TRUE}.}
+
+\item{verbose}{Logic value to indicate whether messages should be printed or not. By default \code{TRUE}.}
 }
 \value{
 If required, returns a data.frame corresponding to the sorted .bed file.

@@ -14,7 +14,8 @@ collapse.bed(
   sep = "\\t",
   return.bed = TRUE,
   export.file.name = NULL,
-  export.header = FALSE
+  export.header = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ collapse.bed(
 \item{export.file.name}{Optional: string to define the path to the file to be exported, if required. By default \code{NULL}, not exported.}
 
 \item{export.header}{Logic value to define whether the header should be exported in the sorted bed file. By default \code{FALSE}.}
+
+\item{verbose}{Logic value to indicate whether messages should be printed or not. By default \code{TRUE}.}
 }
 \value{
 If required, returns a data.frame corresponding to the collapsed .bed file.
