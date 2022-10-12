@@ -127,20 +127,38 @@ qPCR.rna.exp = function(results.file,
 
 
   # Re-shape table for replicates
-  reps_tb = data.frame()
+  #reps_tb = data.frame()
+  #for (s in levels(results$`Sample Name`)) {
+  #  for (t in unique(results$`Target Name`)) {
+  #    current_tb = dplyr::filter(.data = results,
+  #                               `Sample Name` == s,
+  #                               `Target Name` == t)
+  #
+  #    current_reps_tb = data.frame(t(data.frame(c(s, t, current_tb$CT))))
+  #    colnames(current_reps_tb) = c("Sample Name", "Target Name", paste0("rep", 1:(ncol(current_reps_tb)-2)))
+  #
+  #    reps_tb = plyr::rbind.fill(reps_tb, current_reps_tb)
+  #  }
+  #}
 
+  reps_tb = data.frame()
   for (s in levels(results$`Sample Name`)) {
     for (t in unique(results$`Target Name`)) {
-      current_tb = dplyr::filter(.data = results,
-                                 `Sample Name` == s,
-                                 `Target Name` == t)
+      current_tb = dplyr::filter(.data = results, `Sample Name` ==
+                                   s, `Target Name` == t)
 
-      current_reps_tb = data.frame(t(data.frame(c(s, t, current_tb$CT))))
-      colnames(current_reps_tb) = c("Sample Name", "Target Name", paste0("rep", 1:(ncol(current_reps_tb)-2)))
+      if (nrow(current_tb) > 0) {
+        current_reps_tb = data.frame(t(data.frame(c(s, t,
+                                                    current_tb$CT))))
+        colnames(current_reps_tb) = c("Sample Name",
+                                      "Target Name",
+                                      paste0("rep", 1:(ncol(current_reps_tb) - 2)))
 
-      reps_tb = plyr::rbind.fill(reps_tb, current_reps_tb)
+        reps_tb = plyr::rbind.fill(reps_tb, current_reps_tb)
+      }
     }
   }
+
 
   rownames(reps_tb) = NULL
   reps_tb[is.na(reps_tb)] = 0
