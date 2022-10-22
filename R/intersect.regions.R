@@ -141,9 +141,11 @@ intersect.regions =
         overlaps.test = unique(test.regions[subjectHits(filtered.hits)])
 
         overlaps.list = list(overlaps.reference = overlaps.reference,
-                             non.overlaps.reference = unique(reference.regions[!(reference.regions %in% overlaps.reference)]),
+                             #non.overlaps.reference = unique(reference.regions[!(reference.regions %in% overlaps.reference)]),
+                             non.overlaps.reference = subsetByOverlaps(reference.regions, overlaps.reference, invert = TRUE),
                              overlaps.test = overlaps.test,
-                             non.overlaps.test = unique(test.regions[!(test.regions %in% overlaps.test)]))
+                             #non.overlaps.test = unique(test.regions[!(test.regions %in% overlaps.test)])
+                             non.overlaps.test = subsetByOverlaps(test.regions, overlaps.test, invert = TRUE))
 
         if (isTRUE(sort.overlaps)) {
           overlaps.list$overlaps.reference = sort(overlaps.list$overlaps.reference)
