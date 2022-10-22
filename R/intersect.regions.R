@@ -119,15 +119,15 @@ intersect.regions =
                                            minoverlap = min.bases.overlap)
 
         # Get only the overhanging regions
-        overlaps = IRanges::pintersect(reference.regions[queryHits(total.hits)],
-                                       test.regions[subjectHits(total.hits)])
+        overlaps = IRanges::pintersect(reference.regions[S4Vectors::queryHits(total.hits)],
+                                       test.regions[S4Vectors::subjectHits(total.hits)])
 
         # Compute the fraction of overlap for a
         overalp.perc =
           cbind(data.frame(overlaps),
                 data.frame(total.hits) %>%
-                  dplyr::mutate(perc.overlap.reference = (GenomicRanges::width(overlaps) / GenomicRanges::width(reference.regions[queryHits(total.hits)]))*100,
-                                perc.overlap.test = (GenomicRanges::width(overlaps) / GenomicRanges::width(test.regions[subjectHits(total.hits)]))*100))
+                  dplyr::mutate(perc.overlap.reference = (GenomicRanges::width(overlaps) / GenomicRanges::width(reference.regions[S4Vectors::queryHits(total.hits)]))*100,
+                                perc.overlap.test = (GenomicRanges::width(overlaps) / GenomicRanges::width(test.regions[S4Vectors::subjectHits(total.hits)]))*100))
 
 
 
@@ -137,15 +137,15 @@ intersect.regions =
 
 
         # Return Overlaps in ref, overlaps in test, and the regions not overlapping for each region list
-        overlaps.reference = unique(reference.regions[queryHits(filtered.hits)])
-        overlaps.test = unique(test.regions[subjectHits(filtered.hits)])
+        overlaps.reference = unique(reference.regions[S4Vectors::queryHits(filtered.hits)])
+        overlaps.test = unique(test.regions[S4Vectors::subjectHits(filtered.hits)])
 
         overlaps.list = list(overlaps.reference = overlaps.reference,
                              #non.overlaps.reference = unique(reference.regions[!(reference.regions %in% overlaps.reference)]),
-                             non.overlaps.reference = subsetByOverlaps(reference.regions, overlaps.reference, invert = TRUE),
+                             non.overlaps.reference = IRanges::IRanges::subsetByOverlaps(reference.regions, overlaps.reference, invert = TRUE),
                              overlaps.test = overlaps.test,
                              #non.overlaps.test = unique(test.regions[!(test.regions %in% overlaps.test)])
-                             non.overlaps.test = subsetByOverlaps(test.regions, overlaps.test, invert = TRUE))
+                             non.overlaps.test = IRanges::subsetByOverlaps(test.regions, overlaps.test, invert = TRUE))
 
         if (isTRUE(sort.overlaps)) {
           overlaps.list$overlaps.reference = sort(overlaps.list$overlaps.reference)
