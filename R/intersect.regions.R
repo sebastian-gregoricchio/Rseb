@@ -142,7 +142,7 @@ intersect.regions =
 
         overlaps.list = list(overlaps.reference = overlaps.reference,
                              #non.overlaps.reference = unique(reference.regions[!(reference.regions %in% overlaps.reference)]),
-                             non.overlaps.reference = IRanges::IRanges::subsetByOverlaps(reference.regions, overlaps.reference, invert = TRUE),
+                             non.overlaps.reference = IRanges::subsetByOverlaps(reference.regions, overlaps.reference, invert = TRUE),
                              overlaps.test = overlaps.test,
                              #non.overlaps.test = unique(test.regions[!(test.regions %in% overlaps.test)])
                              non.overlaps.test = IRanges::subsetByOverlaps(test.regions, overlaps.test, invert = TRUE))
