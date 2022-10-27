@@ -22,6 +22,9 @@ floating.ceiling = function(num,
   if (abs(num) < 1) {
     num = num * 10
     digits = digits - 1
+    lower.one = TRUE
+  } else {
+    lower.one = FALSE
   }
 
   # Avoiding negative digits and calculating the number length
@@ -35,7 +38,7 @@ floating.ceiling = function(num,
   rounded.num[num == 0] = 0
 
 
-  if (abs(num/10) < 1) {
+  if (lower.one == T) {
     return(rounded.num/10)}
   else {
     return(rounded.num)}

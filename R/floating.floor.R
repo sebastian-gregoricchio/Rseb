@@ -25,6 +25,9 @@ floating.floor = function(num,
   if (abs(num) < 1) {
     num = num * 10
     digits = digits - 1
+    lower.one = TRUE
+  } else {
+    lower.one = FALSE
   }
 
   # Handle for digits 0 digits, equivalent of normal floor
@@ -34,7 +37,7 @@ floating.floor = function(num,
   # Handle the num = 0 case
   rounded.num[num == 0] = 0
 
-  if (abs(num/10) < 1) {
+  if (lower.one == T) {
     return(rounded.num/10)}
   else {
     return(rounded.num)}
