@@ -18,6 +18,12 @@ floating.ceiling = function(num,
   # Check that digits is an integer
   if (digits != round(digits)) {return(warning("The 'digits' parameter must be an integer."))}
 
+  # Considering the abs(numbers) < 1
+  if (abs(num) < 1) {
+    num = num * 10
+    digits = digits - 1
+  }
+
   # Avoiding negative digits and calculating the number length
   digits = nchar(as.character(trunc(abs(num)))) + abs(digits)
 
@@ -28,6 +34,10 @@ floating.ceiling = function(num,
   # Handle the num = 0 case
   rounded.num[num == 0] = 0
 
-  return(rounded.num)
+
+  if (abs(num/10) < 1) {
+    return(rounded.num/10)}
+  else {
+    return(rounded.num)}
 
 } # End function
