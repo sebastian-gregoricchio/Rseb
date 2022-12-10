@@ -5,14 +5,16 @@
 #' @param return.session Logic value to define if to save the session info. By default \code{FALSE}.
 #' @param print.versions Logic value to define if to print the session and version info. By default \code{TRUE}.
 #' @param return.versions Logic value to define if to save package versions info. By default \code{FALSE}.
+#' @param session.file If a string to a path is provided, a .txt file with session and versions info will be exported. Default \code{NULL}, no exported files.
 #'
 #' @return If \code{return.session} and/or \code{return.versions} \code{TRUE} a list with these informations is returned. Otherwise nothing is returned.
 #'
 #' @export pkg.version
 
-pkg.version = function(return.session = F,
-                       print.versions = T,
-                       return.versions = F) {
+pkg.version = function(return.session = FALSE,
+                       print.versions = TRUE,
+                       return.versions = FALSE,
+                       session.file = NULL) {
 
   #-----------------------------#
   # Check if Rseb is up-to-date #
@@ -50,6 +52,28 @@ pkg.version = function(return.session = F,
       return(versions$session)} else if (return.session == F & return.versions == T) {
         return(versions$versions)} else {return(versions)}
   }
+
+
+
+  # Export sessionInfo file if required
+  if (!is.null(session.file)) {
+    session.title = paste("### Session info:", Sys.time(), "###")
+
+    write(x = paste0(rep("#", nchar(session.title)), collapse = ""), file = session.file, append = F)
+    write(x = session.title, file = session.file, append = T)
+    write(x = paste0(paste0(rep("#", nchar(session.title)), collapse = ""), "\n"), file = session.file, append = T)
+
+    write(x = "### SESSION INFO\n", file = session.file, append = T)
+    capture.output(versions$session, file = session.file, append = T)
+    write(x = "\n\n\n", file = session.file, append = T)
+
+    write(x = paste0(rep("#", 150), collapse = ""), file = session.file, append = T)
+    write(x = "\n", file = session.file, append = T)
+    write(x = "### VERSIONS\n", file = session.file, append = T)
+    write(x = "\n", file = session.file, append = T)
+    capture.output(print(versions$versions), file = session.file, append = T)
+  }
+
 
   # Detach Rseb if it was not already attached previously
   if (was.attached == F) {detach("package:Rseb", unload = TRUE)}
