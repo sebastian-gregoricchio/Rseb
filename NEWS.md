@@ -7,6 +7,13 @@ title: "changeLog"
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
+#### [v0.3.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.2) - December 10<sup>th</sup> 2022
+* New functions added: `evaluate.heterogeneity`, `incucyte`, `read.computeMatrix.file`
+* Updated the dependencies to be compatible with new functions: *scales*, *grDevices*, *R.utils*
+* Added the possibility to export a file with the session info in the function `pkg.version`
+* Bug fixing for abs(number) < 1 in `floating.floor` and `floating.ceiling`
+
+
 #### [v0.3.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.1) - October 15<sup>th</sup> 2022
 * New functions added: `intersect.regions`, `venn.overlap` and `closest.regions`
 * Updated the dependencies to be compatible with `intersect.regions` and `venn.overlap`: *eulerr*, *IRanges* and *pryr*
