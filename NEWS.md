@@ -7,18 +7,19 @@ title: "changeLog"
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
-#### [v0.3.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.2) - December 10<sup>th</sup> 2022
-* New functions added: `evaluate.heterogeneity`, `incucyte`, `read.computeMatrix.file`
-* Updated the dependencies to be compatible with new functions: *scales*, *grDevices*, *R.utils*
+#### [v0.3.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.2) - January 14<sup>th</sup> 2023
+* Update of `evaluate.heterogeneity` to enable the log1p signal in the heatmap and avoid scientific annotation of the rank numbers.
+
+<br />
+
+#### [v0.3.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.1) - December 10<sup>th</sup> 2022
+* New functions added: `evaluate.heterogeneity`, `incucyte`, `read.computeMatrix.file`, `intersect.regions`, `venn.overlap` and `closest.regions`
+* Updated the dependencies to be compatible with new functions: *scales*, *grDevices*, *R.utils*, *eulerr*, *IRanges* and *pryr*
 * Added the possibility to export a file with the session info in the function `pkg.version`
-* Bug fixing for abs(number) < 1 in `floating.floor` and `floating.ceiling`
-
-
-#### [v0.3.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.1) - October 15<sup>th</sup> 2022
-* New functions added: `intersect.regions`, `venn.overlap` and `closest.regions`
-* Updated the dependencies to be compatible with `intersect.regions` and `venn.overlap`: *eulerr*, *IRanges* and *pryr*
+* Bug fixing for *abs(number) < 1* in `floating.floor` and `floating.ceiling`
 * Optimized alignment of the plot for `plot.density.differences`, `plot.density.profile`, `plot.density.profile.smooth` and `plot.density.summary`
 
+<br />
 
 #### [v0.3.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.0) - August 15<sup>th</sup> 2022
 * Improvement of `sort.bed` usage: a) removed redundant "export.bed" option (now it is sufficient to add a file name in the "export.file.name" parameter if exporting is wished), b) added the "unique.regions" option, c) minor bug fixed in `sort.bed` for input class check
@@ -118,7 +119,7 @@ title: "changeLog"
 <br />
 
 #### [v0.1.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.1.0) - January 5<sup>th</sup> 2021
-First releasing
+First release.
 
 
 
