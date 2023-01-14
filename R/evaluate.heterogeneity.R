@@ -11,8 +11,9 @@
 #' @param distribution.line.type Line type of the distribution plot. Default: \code{1}.
 #' @param distribution.n.vertical.divisions Number of sectors in which divide the distribution plot (vertical lines will be plotted). Default: \code{NULL} (no divisions).
 #' @param distribution.as.percentage Logical value to define whether the distribution plot should show percentage of sample coverage rather than number of samples. Default: \code{FALSE}.
-#' @param heatmap.color Color to use for the heatmaps; a gradient from this color to white will be used. Default: \code{"#b21a1a"} (bordeaux/dark red).
+#' @param heatmap.color Color to use for the heatmaps; a gradient from this color to white will be used. Default: \code{"#1c30a3"} (dark blue).
 #' @param heatmap.zMax Maximum of the heatmap scale. Default: \code{NA}.
+#' @param heatmap.log1p.scale Logic value to define whether the heatmap scale should display log1p values. Default: \code{TRUE}.
 #' @param bar.color Color to use for the barplot showing the fraction of reference peaks present in each sample. Default is to use the 'distribution.line.color'.
 #' @param widths.proportion Two-elements numeric vector to be passed to \code{plot_grid} rel_width.
 #' @param heights.proportion Two-elements numeric vector to be passed to \code{plot_grid} rel_height.
@@ -53,8 +54,9 @@ evaluate.heterogeneity = function(bigWig.list,
                                   distribution.line.type = 1,
                                   distribution.n.vertical.divisions = NULL,
                                   distribution.as.percentage = F,
-                                  heatmap.color = "#b21a1a",
+                                  heatmap.color = "#1c30a3",
                                   heatmap.zMax = NA,
+                                  heatmap.log1p.scale = TRUE,
                                   bar.color = distribution.line.color,
                                   widths.proportion = c(0.25,1),
                                   heights.proportion = c(1,1),
@@ -62,6 +64,11 @@ evaluate.heterogeneity = function(bigWig.list,
                                   min.percentage.test = 0,
                                   min.bases.overlap = 1,
                                   multiBigWigSummary.path = "multiBigWigSummary") {
+
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
 
   require(IRanges)
   require(GenomicRanges)
@@ -260,15 +267,33 @@ evaluate.heterogeneity = function(bigWig.list,
 
 
   peak.signal.heatmap =
-    ggplot(scores.heatmap,
+    ggplot(data = scores.heatmap,
            aes(x = rank,
                y = sample,
                fill = signal)) +
-    geom_tile(na.rm = T) +
-    scale_fill_gradient(low = "white",
-                        high = heatmap.color,
-                        limits = c(0, heatmap.zMax),
-                        na.value = heatmap.color) +
+    geom_tile(na.rm = T)
+
+  if (heatmap.log1p.scale == TRUE) {
+    peak.signal.heatmap =
+      peak.signal.heatmap +
+      scale_fill_gradient(name = "log1p(signal)",
+                          low = "white",
+                          high = heatmap.color,
+                          limits = c(0, heatmap.zMax),
+                          na.value = heatmap.color,
+                          trans = "log1p")
+  } else {
+    peak.signal.heatmap =
+      peak.signal.heatmap +
+      scale_fill_gradient(name = "Signal",
+                          low = "white",
+                          high = heatmap.color,
+                          limits = c(0, heatmap.zMax),
+                          na.value = heatmap.color)
+  }
+
+  peak.signal.heatmap =
+    peak.signal.heatmap +
     ylab(NULL) +
     scale_y_discrete(position = "right") +
     scale_x_continuous(breaks = scales::pretty_breaks()) +
@@ -290,7 +315,8 @@ evaluate.heterogeneity = function(bigWig.list,
 
   peak.signal.heatmap =
     peak.signal.heatmap +
-    scale_x_continuous(breaks = heatmap.rank.breaks)
+    scale_x_continuous(breaks = heatmap.rank.breaks,
+                       labels = scales::comma)
 
 
 
