@@ -7,8 +7,9 @@ title: "changeLog"
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
-#### [v0.3.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.2) - January 14<sup>th</sup> 2023
-* Update of `evaluate.heterogeneity` to enable the log1p signal in the heatmap and avoid scientific annotation of the rank numbers.
+#### [v0.3.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.2) - March 1<sup>st</sup> 2023
+* Update of `evaluate.heterogeneity` to enable the log1p signal in the heatmap and avoid scientific annotation of the rank numbers
+* Minor bug-fixing in the `evaluate.heterogeneity`
 
 <br />
 
