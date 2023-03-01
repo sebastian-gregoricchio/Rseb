@@ -177,8 +177,8 @@ evaluate.heterogeneity = function(bigWig.list,
   colnames(score.matrix)[1] = "seqnames"
 
   score.matrix =
-    dplyr::left_join(x = score.matrix %>% dplyr::mutate(average.score = rowMeans(as.matrix(score.matrix[,-c(1:3)]), na.rm = T)),
-                     y = overlaps.counts.table[,c(1:3,ncol(overlaps.counts.table))],
+    dplyr::left_join(x = data.frame(score.matrix %>% dplyr::mutate(average.score = rowMeans(as.matrix(score.matrix[,-c(1:3)]), na.rm = T))) %>% dplyr::mutate(seqnames = as.character(seqnames)),
+                     y = overlaps.counts.table[,c(1:3,ncol(overlaps.counts.table))] %>% dplyr::mutate(seqnames = as.character(seqnames)),
                      by = c("seqnames", "start", "end")) %>%
     dplyr::arrange(desc(fraction.samples), desc(average.score)) %>%
     dplyr::filter(average.score > 0)
