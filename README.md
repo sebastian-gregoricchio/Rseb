@@ -122,4 +122,4 @@ This package is under a [GNU General Public License (version 3)](https://sebasti
 <br />
 
 #### Contributors
-[![contributors](https://badges.pufler.dev/contributors/sebastian-gregoricchio/Rseb?size=50&padding=5&bots=true)](https://sebastian-gregoricchio.github.io/)
+[![contributors](https://contrib.rocks/image?repo=sebastian-gregoricchio/Rseb)](https://sebastian-gregoricchio.github.io/)
