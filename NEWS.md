@@ -10,6 +10,8 @@ title: "changeLog"
 #### [v0.3.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.2) - March 1<sup>st</sup> 2023
 * Update of `evaluate.heterogeneity` to enable the log1p signal in the heatmap and avoid scientific annotation of the rank numbers
 * Minor bug-fixing in the `evaluate.heterogeneity`
+* Added new function `plot.gsea`
+* Dependencies update to include `enrichplot` and `RColorBrewer` required for `plot.gsea`
 
 <br />
 
