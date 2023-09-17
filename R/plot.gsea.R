@@ -253,8 +253,10 @@ plot.gsea =
     gradient.df = data.frame(ymin = min(info$ymin),
                               ymax = min(info$ymin) * 0.5, #calculated on bottom half, so use 2*wanted fraction
                               xmin = xmin,
-                              xmax = xmin + as.numeric(table(inv)[as.character(unique(inv))]) - 1,
+                              xmax = xmin + as.numeric(table(inv)[as.character(unique(inv))]),
                               col = col[unique(inv)])
+
+    gradient.df$xmax[nrow(gradient.df)] = max(info$x)
 
 
     geneset.panel =
