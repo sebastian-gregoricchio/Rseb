@@ -179,7 +179,7 @@ plot.gsea =
       annotate(geom = "text",
                x = +Inf,
                y = +Inf,
-               label = deparse(bquote(italic("q =")~.(signif(results$qvalues[results$ID == gene.set], digits = 3)))),
+               label = deparse(bquote(italic("q =")~.(signif(results[results$ID == gene.set,grep("q.*val", colnames(results))], digits = 3)))),
                #label = paste0("q = ", signif(results$qvalues[results$ID == gene.set], digits = 3)),
                hjust = 1,
                vjust = 4+enrichment.annotations.vjust.offset,
