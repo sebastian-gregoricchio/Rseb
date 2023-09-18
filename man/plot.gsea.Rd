@@ -7,8 +7,8 @@
 \method{plot}{gsea}(
   gsea.results,
   geneset.id = NULL,
-  erinchment.geom = "line",
-  erinchment.color = "green",
+  enrichment.geom = "line",
+  enrichment.color = "green",
   enrichment.geom.size = 1,
   enrichment.plot.zero.line = FALSE,
   enrichment.zero.line.color = "gray",
@@ -32,9 +32,9 @@
 
 \item{geneset.id}{Numeric value or a string identifying the Nth geneSet (numeric) or a specific id (string) if geneSet in the result table. Default value: \code{NULL}, which returns the ordered list of available geneSets.}
 
-\item{erinchment.geom}{String indicating the type of graph to use to plot the enrichment scores. Possible options: 'line', 'lines', 'dot', 'dots', 'point', 'points' (case insensitive). Default: \code{'line'}.}
+\item{enrichment.geom}{String indicating the type of graph to use to plot the enrichment scores. Possible options: 'line', 'lines', 'dot', 'dots', 'point', 'points' (case insensitive). Default: \code{'line'}.}
 
-\item{erinchment.color}{String indicating any R-supported color to be used for the enrichment score plot. Default: \code{'green'}.}
+\item{enrichment.color}{String indicating any R-supported color to be used for the enrichment score plot. Default: \code{'green'}.}
 
 \item{enrichment.geom.size}{Numeric value indicating the size of the line, or dots, used in the enrichment score plot. Default: \code{1}.}
 
