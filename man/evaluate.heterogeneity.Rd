@@ -14,8 +14,9 @@ evaluate.heterogeneity(
   distribution.line.type = 1,
   distribution.n.vertical.divisions = NULL,
   distribution.as.percentage = F,
-  heatmap.color = "#b21a1a",
+  heatmap.color = "#1c30a3",
   heatmap.zMax = NA,
+  heatmap.log1p.scale = TRUE,
   bar.color = distribution.line.color,
   widths.proportion = c(0.25, 1),
   heights.proportion = c(1, 1),
@@ -44,9 +45,11 @@ evaluate.heterogeneity(
 
 \item{distribution.as.percentage}{Logical value to define whether the distribution plot should show percentage of sample coverage rather than number of samples. Default: \code{FALSE}.}
 
-\item{heatmap.color}{Color to use for the heatmaps; a gradient from this color to white will be used. Default: \code{"#b21a1a"} (bordeaux/dark red).}
+\item{heatmap.color}{Color to use for the heatmaps; a gradient from this color to white will be used. Default: \code{"#1c30a3"} (dark blue).}
 
 \item{heatmap.zMax}{Maximum of the heatmap scale. Default: \code{NA}.}
+
+\item{heatmap.log1p.scale}{Logic value to define whether the heatmap scale should display log1p values. Default: \code{TRUE}.}
 
 \item{bar.color}{Color to use for the barplot showing the fraction of reference peaks present in each sample. Default is to use the 'distribution.line.color'.}
 
@@ -69,7 +72,8 @@ The function returns a list containing:
                          \item \code{sample.id}: vector with the labels of the samples
                          \item \code{bigWig.file}: string vector with the path to each bigwig file
                          \item \code{bed.file}: list of peaks associated to each sample
-                         \item \code{n.peaks}}: vector with number of peaks in each sample
+                         \item \code{n.peaks}: vector with number of peaks in each sample
+                         }
   \item \code{count.matrix}: data.frame with presence (1) or absence (0) of each peak per each sample;
   \item \code{score.matrix}: data.frame with average score at each peak per each sample;
   \item \code{plot.list}: list of single separated plots: counts.distribution, fraction.peaks.per.sample, scores.heatmap;
