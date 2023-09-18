@@ -4,8 +4,8 @@
 #'
 #' @param gsea.results A \code{gseaResult} object as generate by \href{https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html}{clusterprofiler}.
 #' @param geneset.id Numeric value or a string identifying the Nth geneSet (numeric) or a specific id (string) if geneSet in the result table. Default value: \code{NULL}, which returns the ordered list of available geneSets.
-#' @param erinchment.geom String indicating the type of graph to use to plot the enrichment scores. Possible options: 'line', 'lines', 'dot', 'dots', 'point', 'points' (case insensitive). Default: \code{'line'}.
-#' @param erinchment.color String indicating any R-supported color to be used for the enrichment score plot. Default: \code{'green'}.
+#' @param enrichment.geom String indicating the type of graph to use to plot the enrichment scores. Possible options: 'line', 'lines', 'dot', 'dots', 'point', 'points' (case insensitive). Default: \code{'line'}.
+#' @param enrichment.color String indicating any R-supported color to be used for the enrichment score plot. Default: \code{'green'}.
 #' @param enrichment.geom.size Numeric value indicating the size of the line, or dots, used in the enrichment score plot. Default: \code{1}.
 #' @param enrichment.plot.zero.line Logical value to indicated whether to plot an horizontal line at 0 in the enrichment score plot. Default: \code{FALSE}.
 #' @param enrichment.zero.line.color String indicating any R-supported color to be used for the 0-line in the enrichment score plot (active when \code{enrichment.plot.zero.line = TRUE}). Default: \code{'gray'}.
@@ -52,8 +52,8 @@
 plot.gsea =
   function(gsea.results,
            geneset.id = NULL,
-           erinchment.geom = "line",
-           erinchment.color = "green",
+           enrichment.geom = "line",
+           enrichment.color = "green",
            enrichment.geom.size = 1,
            enrichment.plot.zero.line = FALSE,
            enrichment.zero.line.color = "gray",
@@ -108,8 +108,8 @@ plot.gsea =
 
 
     # Check graphic parameters
-    if (!(tolower(erinchment.geom) %in% c("line", "lines", "dot", "dots", "point", "points"))) {
-      return(warning("The 'erinchment.geom' must be one among: 'line', 'lines', 'dot', 'dots', 'point', 'points'."))
+    if (!(tolower(enrichment.geom) %in% c("line", "lines", "dot", "dots", "point", "points"))) {
+      return(warning("The 'enrichment.geom' must be one among: 'line', 'lines', 'dot', 'dots', 'point', 'points'."))
     }
 
 
@@ -133,19 +133,19 @@ plot.gsea =
 
 
     # Enrichment panel
-    if (erinchment.geom %in% c("line", "lines")) {
+    if (enrichment.geom %in% c("line", "lines")) {
       enrichment.panel =
         ggplot(data = info,
                aes(x = x,
                    y = runningScore)) +
-        geom_line(color = erinchment.color,
+        geom_line(color = enrichment.color,
                   linewidth = enrichment.geom.size)
     } else {
       enrichment.panel =
         ggplot(data = info,
                aes(x = x,
                    y = runningScore)) +
-        geom_point(color = erinchment.color,
+        geom_point(color = enrichment.color,
                    size = enrichment.geom.size)
     }
 
