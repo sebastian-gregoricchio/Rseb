@@ -17,7 +17,7 @@
 #' @param table.font.size Numeric value to indicate the font size to use in the stat table plot. Default: \code{8}.
 #' @param title.position String indicating the position of the title: 'left', 'center', 'right'. Default: \code{'center'}.
 #' @param title String indicating the title to use. Default: \code{NULL} (no title).
-#' @param combined.plot.height.rations Numeric vector with 4 values used to define the 'real heights' of each panel. The order corresponds to: enrichment score panel, geneset panel (all together), rank panel, stat table panel. Default \code{c(1, 0.4, 0.6, 0.5)}.
+#' @param combined.plot.height.ratios Numeric vector with 4 values used to define the 'real heights' of each panel. The order corresponds to: enrichment score panel, geneset panel (all together), rank panel, stat table panel. Default \code{c(1, 0.4, 0.6, 0.5)}.
 #' @param image.file.name String indicating the full path for the export of a pdf file of the combined plot. Default: \code{NULL}, no plot will be exported.
 #' @param image.width Numeric value to indicate the width (in inches) to use for the exported pdf file. Active only when \code{image.file.name} is not \code{NULL}. Default: \code{9}.
 #' @param image.height Numeric value to indicate the height (in inches) t use for the exported pdf file. Active only when \code{image.file.name} is not \code{NULL}. Default: \code{6}.
@@ -65,7 +65,7 @@ plot.multi.gsea =
            table.font.size = 8,
            title.position = "center",
            title = NULL,
-           combined.plot.height.rations = c(1, 0.4, 0.6, 0.5),
+           combined.plot.height.ratios = c(1, 0.4, 0.6, 0.5),
            image.file.name = NULL,
            image.width = 9,
            image.height = 6,
@@ -249,10 +249,10 @@ plot.multi.gsea =
                          ncol = 1,
                          align = "v",
                          axis = "tblr",
-                         rel_heights = c(combined.plot.height.rations[1],
-                                         rep(combined.plot.height.rations[2]/(length(all.set.panels)), length(all.set.panels)),
-                                         combined.plot.height.rations[3],
-                                         combined.plot.height.rations[4]))
+                         rel_heights = c(combined.plot.height.ratios[1],
+                                         rep(combined.plot.height.ratios[2]/(length(all.set.panels)), length(all.set.panels)),
+                                         combined.plot.height.ratios[3],
+                                         combined.plot.height.ratios[4]))
 
 
     # Export image if required
