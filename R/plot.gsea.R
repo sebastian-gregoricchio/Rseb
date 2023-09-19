@@ -113,8 +113,10 @@ plot.gsea =
     }
 
 
-    if (is.na(title)) {
-      title = gene.set
+    if (!is.null(title)) {
+      if (is.na(title)) {
+        title = gene.set
+      }
     }
 
 
