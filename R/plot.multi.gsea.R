@@ -125,7 +125,7 @@ plot.multi.gsea =
 
     if (!is.null(geneset.colors)) {
       if (length(geneset.colors) >= length(gene.set.list)) {
-        if (!is.null(names(geneset.colors))) {
+        if (is.null(names(geneset.colors))) {
           set.colors = geneset.colors[1:length(gene.set.list)]
         } else {
           set.colors = geneset.colors[geneset.id.list]
