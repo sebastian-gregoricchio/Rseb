@@ -100,7 +100,8 @@ incucyte =
       group.order = unique(metadata$group)
     } else {
       if (length(unique((unique(metadata$group) %in% group.order))) > 1) {
-        return(warning(paste0("In the group.order there groups/samples missing if compared to the metadata provided.")))
+        return(warning(paste0("In the group.order there are groups/samples missing if compared to the metadata provided:\n",
+                              paste(sort(unique(metadata$group))[!(sort(unique(metadata$group)) %in% sort(group.order))], collapse = ", "),".")))
       }
     }
 
@@ -150,7 +151,7 @@ incucyte =
       if ("list" %in% class(comparisons)) {
         for (i in 1:length(comparisons)) {
           if (length(unique((comparisons[[i]] %in% unique(metadata$group)))) > 1) {
-            return(warning(paste0("The element #",i,"of the comparison list contains comparisons between groups not present among the groups provided.")))
+            return(warning(paste0("The element #",i," of the comparison list contains comparisons between groups not present among the groups provided.")))
           }
           comparisons[[i]] = unique(comparisons[[i]])
           names(comparisons)[i] = paste(comparisons[[i]], collapse="_")
@@ -161,7 +162,7 @@ incucyte =
       } else {
         for (i in 1:length(comparisons)) {
           if (length(unique((comparisons[i] %in% unique(metadata$group)))) > 1) {
-            return(warning(paste0("The element #",i,"of the comparison list contains comparisons between groups not present among the groups provided.")))
+            return(warning(paste0("The element #",i," of the comparison list contains comparisons between groups not present among the groups provided.")))
           }
         }
         comparisons = list(unique(metadata$group), comparisons)
@@ -174,7 +175,7 @@ incucyte =
     # Importing data
     if ("character" %in% class(raw.data)) {
       raw.data = data.table::fread(raw.data, blank.lines.skip = T, skip = skip.head.lines.in.data)
-    } else if (!("data.table" %in% class(metadata))) {
+    } else if (!("data.table" %in% class(raw.data))) {
       return(warning("The metadata table must be a data.frame or a path to a table."))
     }
 
