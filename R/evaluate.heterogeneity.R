@@ -175,10 +175,14 @@ evaluate.heterogeneity = function(bigWig.list,
   score.matrix = data.table::fread("~/temp_matrix.txt")
   colnames(score.matrix) = gsub("#|'", "", colnames(score.matrix))
   colnames(score.matrix)[1] = "seqnames"
+  score.matrix[Rseb::is.nan_df(score.matrix)] = 0
 
   score.matrix =
-    dplyr::left_join(x = data.frame(score.matrix %>% dplyr::mutate(average.score = rowMeans(as.matrix(score.matrix[,-c(1:3)]), na.rm = T))) %>% dplyr::mutate(seqnames = as.character(seqnames)),
-                     y = overlaps.counts.table[,c(1:3,ncol(overlaps.counts.table))] %>% dplyr::mutate(seqnames = as.character(seqnames)),
+    dplyr::left_join(x = data.frame(score.matrix %>%
+                                      dplyr::mutate(average.score = rowMeans(as.matrix(score.matrix[,-c(1:3)]), na.rm = T))) %>%
+                       dplyr::mutate(seqnames = as.character(gsub("chr","",seqnames))),
+                     y = overlaps.counts.table[,c(1:3,ncol(overlaps.counts.table))] %>%
+                       dplyr::mutate(seqnames = as.character(gsub("chr","",seqnames))),
                      by = c("seqnames", "start", "end")) %>%
     dplyr::arrange(desc(fraction.samples), desc(average.score)) %>%
     dplyr::filter(average.score > 0)
