@@ -140,7 +140,7 @@ volcano = function(log2FC_data,
            aes(x = FC,
                y = -log10(padj),
                col = DE_status)) +
-    geom_point(size = point_size) +
+    geom_point(size = point_size, stroke = NA) +
     ggtitle(label = title,
             subtitle = sub_title) +
     scale_color_manual(legend_title,
