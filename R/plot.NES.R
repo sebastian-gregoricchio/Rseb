@@ -31,6 +31,12 @@ plot.NES = function(gsea.object,
                     axes.text.size = 10,
                     title = "NES enrichments") {
 
+  #-----------------------------#
+  # Check if Rseb is up-to-date #
+  Rseb::actualize(update = F, verbose = F)   #
+  #-----------------------------#
+
+
   # libraries
   require(dplyr)
   require(ggplot2)
