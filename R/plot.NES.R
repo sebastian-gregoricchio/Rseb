@@ -10,7 +10,7 @@
 #' @param string.pattern.to.remove String with a regular expression of a pattern to be removed from the set names. Default: \code{"HALLMARK|GOBP"}.
 #' @param alpha.range Numeric vector of length 2 indicating minimum and maximum value for the transparency. Individual values must be a number between 0 and 1. Default: \code{c(0.3, 1)}.
 #' @param add.counts Logic value to indicate whether add labels with the set size counts. Default: \code{"TRUE"}.
-#' @param perc.bleeding.x Numeric value indicating the percentage of the full x.axis range to add on the left on the right. Useful when labels are falling outside for the x-max. Default: \code{8} (%).
+#' @param perc.bleeding.x Numeric value indicating the percentage of the full x.axis range to add on the left on the right. Useful when labels are falling outside for the x-max. Default: \code{8} (\%).
 #' @param axes.text.size Numeric value indicating the font size of the axis text. Default: \code{10}.
 #' @param title String indicating the title of the plot. Default: \code{"NES enrichments"}.
 #'
