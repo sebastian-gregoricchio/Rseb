@@ -7,6 +7,14 @@ title: "changeLog"
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
+#### [v0.3.3](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.3) - January 28<sup>th</sup> 2024
+* Bug fixing in `incucyte` function
+* Added functions `plot.multi.gsea`, `plot.NES`
+* Solved issue for incompatibility between files with and without 'chr' in `evaluate.heterogeneity` functions
+* Dot strokes automatically removed in the `volcano` function in order to reduce the plot size for publications
+
+<br />
+
 #### [v0.3.2](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.2) - September 18<sup>th</sup> 2023
 * Update of `evaluate.heterogeneity` to enable the log1p signal in the heatmap and avoid scientific annotation of the rank numbers
 * Minor bug-fixing in the `evaluate.heterogeneity`
