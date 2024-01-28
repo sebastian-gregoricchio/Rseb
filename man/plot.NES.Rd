@@ -35,7 +35,7 @@
 
 \item{add.counts}{Logic value to indicate whether add labels with the set size counts. Default: \code{"TRUE"}.}
 
-\item{perc.bleeding.x}{Numeric value indicating the percentage of the full x.axis range to add on the left on the right. Useful when labels are falling outside for the x-max. Default: \code{8} (%).}
+\item{perc.bleeding.x}{Numeric value indicating the percentage of the full x.axis range to add on the left on the right. Useful when labels are falling outside for the x-max. Default: \code{8} (\%).}
 
 \item{axes.text.size}{Numeric value indicating the font size of the axis text. Default: \code{10}.}
 
