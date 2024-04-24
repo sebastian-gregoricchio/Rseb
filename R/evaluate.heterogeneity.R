@@ -366,14 +366,13 @@ evaluate.heterogeneity = function(bigWig.list,
 
 
   # Assembly of the multiplot
-  multiplot = cowplot::plot_grid(plotlist = list(NULL,
-                                                 peak.presence.distribution,
-                                                 fraction.peaks.per.sample,
-                                                 peak.signal.heatmap),
-                                 rel_widths = widths.proportion,
-                                 rel_heights = heights.proportion,
-                                 align = "hv",
-                                 axis = "lrtb")
+  multiplot = patchwork::wrap_plots(list(patchwork::plot_spacer(),
+                                         peak.presence.distribution,
+                                         fraction.peaks.per.sample,
+                                         peak.signal.heatmap),
+                                    ncol = 2,
+                                    widths = widths.proportion,
+                                    heights = heights.proportion)
 
 
   # Remove temporary files
