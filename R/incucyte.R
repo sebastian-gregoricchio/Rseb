@@ -85,7 +85,7 @@ incucyte =
 
     # reading metadata
     if ("character" %in% class(metadata)) {
-      metadata = data.frame(data.table::fread(metadata, blank.lines.skip = T))
+      metadata = data.table::fread(metadata, blank.lines.skip = T, data.table = F)
     } else if (!("data.frame" %in% class(metadata))) {
       return(warning("The metadata table must be a data.frame or a path to a table."))
     }
@@ -174,9 +174,9 @@ incucyte =
 
     # Importing data
     if ("character" %in% class(raw.data)) {
-      raw.data = data.table::fread(raw.data, blank.lines.skip = T, skip = skip.head.lines.in.data)
-    } else if (!("data.table" %in% class(raw.data))) {
-      return(warning("The metadata table must be a data.frame or a path to a table."))
+      raw.data = data.table::fread(raw.data, blank.lines.skip = T, skip = skip.head.lines.in.data, data.table = F)
+    } else if (!("data.frame" %in% class(raw.data))) {
+      return(warning("The raw.data table must be a data.frame or a path to a table."))
     }
 
     raw.data = dplyr::mutate(raw.data,
@@ -185,7 +185,7 @@ incucyte =
                                                      replacement = ".",
                                                      x = x)}))
 
-    raw.data = dplyr::mutate(raw.data, across(2:ncol(raw.data), as.numeric))
+    raw.data = dplyr::mutate(raw.data, across(1:ncol(raw.data), as.numeric))
 
 
 
@@ -195,17 +195,17 @@ incucyte =
     analyzed.tb = data.frame()
     for (i in 1:length(groups)) {
       ids = (dplyr::filter(metadata, group %in% groups[i]))$well.ID
-      subset.tb = as.data.frame(raw.data)[,c(1:2,grep(paste(ids,collapse = "|"), colnames(raw.data)))]
+      subset.tb = as.data.frame(raw.data)[,c(1,grep(paste0(paste(ids,collapse = "$|"),"$"), colnames(raw.data)))]
       subset.tb =
         subset.tb %>%
         dplyr::mutate(group = groups[i],
-                      n = ncol(subset.tb)-2,
-                      mean = rowMeans(as.matrix(subset.tb[3:ncol(subset.tb)]), na.rm = T),
-                      SD = matrixStats::rowSds(as.matrix(subset.tb[3:ncol(subset.tb)]), na.rm = T)) %>%
+                      n = ncol(subset.tb)-1,
+                      mean = rowMeans(as.matrix(subset.tb[,2:ncol(subset.tb)]), na.rm = T),
+                      SD = matrixStats::rowSds(as.matrix(subset.tb[2:ncol(subset.tb)]), na.rm = T)) %>%
         dplyr::mutate(SEM = SD / sqrt(n))
 
       analyzed.tb = rbind(analyzed.tb,
-                          subset.tb[,c(1:2, (ncol(subset.tb)-4):ncol(subset.tb))])
+                          subset.tb[,c(1, (ncol(subset.tb)-4):ncol(subset.tb))])
     }
 
 
@@ -216,56 +216,56 @@ incucyte =
     if (tolower(normalization.method) == "none") {
       normalized.tab.all = analyzed.tb
 
-    #DIVISION.FIRST.VALUE
+      #DIVISION.FIRST.VALUE
     } else if (tolower(normalization.method) == "division") {
       raw.data.divided =
         dplyr::filter(raw.data, Elapsed >= start.hour) %>%
         dplyr::arrange(Elapsed)
 
       # division by the minimum value of each column
-      first.value = unlist(raw.data.divided[1,3:ncol(raw.data.divided)])
-      raw.data.divided[,3:ncol(raw.data.divided)] = data.frame(sweep(as.matrix(raw.data.divided[,3:ncol(raw.data.divided)]),
+      first.value = unlist(raw.data.divided[1,2:ncol(raw.data.divided)])
+      raw.data.divided[,2:ncol(raw.data.divided)] = data.frame(sweep(as.matrix(raw.data.divided[,2:ncol(raw.data.divided)]),
                                                                      2, first.value, FUN="/"))
 
       for (i in 1:length(groups)) {
         ids = (dplyr::filter(metadata, group %in% groups[i]))$well.ID
-        subset.tb = as.data.frame(raw.data.divided)[,c(1:2,grep(paste(ids,collapse = "|"), colnames(raw.data.divided)))]
+        subset.tb = as.data.frame(raw.data.divided)[,c(1,grep(paste0(paste(ids,collapse = "$|"),"$"), colnames(raw.data.divided)))]
         subset.tb =
           subset.tb %>%
           dplyr::mutate(group = groups[i],
-                        n = ncol(subset.tb)-2,
-                        mean = rowMeans(as.matrix(subset.tb[3:ncol(subset.tb)]), na.rm = T),
-                        SD = matrixStats::rowSds(as.matrix(subset.tb[3:ncol(subset.tb)]), na.rm = T)) %>%
+                        n = ncol(subset.tb)-1,
+                        mean = rowMeans(as.matrix(subset.tb[,2:ncol(subset.tb)]), na.rm = T),
+                        SD = matrixStats::rowSds(as.matrix(subset.tb[2:ncol(subset.tb)]), na.rm = T)) %>%
           dplyr::mutate(SEM = SD / sqrt(n))
 
         normalized.tab.all = rbind(normalized.tab.all,
-                                   subset.tb[,c(1:2, (ncol(subset.tb)-4):ncol(subset.tb))])
+                                   subset.tb[,c(1, (ncol(subset.tb)-4):ncol(subset.tb))])
       }
 
-    #SUBSTRACTION
+      #SUBSTRACTION
     } else if (tolower(normalization.method) == "subtraction") {
       raw.data.subtraction =
         dplyr::filter(raw.data, Elapsed >= start.hour) %>%
         dplyr::arrange(Elapsed)
 
       # division by the minimum value of each column
-      first.value = unlist(raw.data.subtraction[1,3:ncol(raw.data.subtraction)])
-      raw.data.subtraction[,3:ncol(raw.data.subtraction)] = data.frame(sweep(as.matrix(raw.data.subtraction[,3:ncol(raw.data.subtraction)])+1,
+      first.value = unlist(raw.data.subtraction[1,2:ncol(raw.data.subtraction)])
+      raw.data.subtraction[,3:ncol(raw.data.subtraction)] = data.frame(sweep(as.matrix(raw.data.subtraction[,2:ncol(raw.data.subtraction)])+1,
                                                                              2, first.value, FUN="-"))
 
       for (i in 1:length(groups)) {
         ids = (dplyr::filter(metadata, group %in% groups[i]))$well.ID
-        subset.tb = as.data.frame(raw.data.subtraction)[,c(1:2,grep(paste(ids,collapse = "|"), colnames(raw.data.subtraction)))]
+        subset.tb = as.data.frame(raw.data.subtraction)[,c(1,grep(paste0(paste(ids,collapse = "$|"),"$"), colnames(raw.data.subtraction)))]
         subset.tb =
           subset.tb %>%
           dplyr::mutate(group = groups[i],
-                        n = ncol(subset.tb)-2,
-                        mean = rowMeans(as.matrix(subset.tb[3:ncol(subset.tb)]), na.rm = T),
-                        SD = matrixStats::rowSds(as.matrix(subset.tb[3:ncol(subset.tb)]), na.rm = T)) %>%
+                        n = ncol(subset.tb)-1,
+                        mean = rowMeans(as.matrix(subset.tb[,2:ncol(subset.tb)]), na.rm = T),
+                        SD = matrixStats::rowSds(as.matrix(subset.tb[2:ncol(subset.tb)]), na.rm = T)) %>%
           dplyr::mutate(SEM = SD / sqrt(n))
 
         normalized.tab.all = rbind(normalized.tab.all,
-                                   subset.tb[,c(1:2, (ncol(subset.tb)-4):ncol(subset.tb))])
+                                   subset.tb[,c(1, (ncol(subset.tb)-4):ncol(subset.tb))])
       }
     }
 
@@ -279,7 +279,7 @@ incucyte =
     } else {
       normalized.tab.all = dplyr::select(normalized.tab.all, -SEM)
     }
-    colnames(normalized.tab.all)[6] = "error"
+    colnames(normalized.tab.all)[5] = "error"
 
 
 
@@ -288,7 +288,7 @@ incucyte =
 
     for (i in 1:length(comparisons)) {
 
-      groups.to.use = if ("all" %in%comparisons[[i]]) {unique(normalized.tab.all$group)} else {comparisons[[i]]}
+      groups.to.use = if ("all" %in% comparisons[[i]]) {unique(normalized.tab.all$group)} else {comparisons[[i]]}
 
       normalized.tb = dplyr::filter(normalized.tab.all, group %in% groups.to.use)
 
@@ -317,7 +317,8 @@ incucyte =
         comparison.plots[[i]] =
           comparison.plots[[i]] +
           geom_point(size = point.size,
-                     show.legend = show.legend) +
+                     show.legend = show.legend,
+                     stroke = NA) +
           scale_color_manual(values = color.vector)
       }
 
@@ -368,7 +369,7 @@ incucyte =
 
 
     # Export results
-    colnames(normalized.tab.all)[6] = toupper(error)
+    colnames(normalized.tab.all)[5] = toupper(error)
 
     return(list(metadata = dplyr::left_join(metadata,
                                             dplyr::mutate(data.frame(color.vector, stringsAsFactors = F),
