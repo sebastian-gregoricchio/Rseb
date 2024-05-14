@@ -11,6 +11,7 @@ title: "changeLog"
 * Improved the multiplot visualization of the output from `evaluate.heterogeneity` function.
 * Added possibility of sample clustering for `evaluate.heterogeneity` function.
 * Updated the dependencies to be compatible with new functions/features: *patchwork*, *ggh4x*, *Hmisc*.
+* Bug fixed in the `incucyte` function.
 
 <br />
 
