@@ -41,36 +41,34 @@ DE.status = function(log2FC, # log2(FC)
 
 
   # Calculating the thresholds in log
-  Fc = log2(FC_threshold)
+  FC.th = log2(FC_threshold)
   FcNS_left = log2(FC_NoResp_left)
 
   if (is.null(FC_NoResp_rigth)) {
     FcNS_rigth = -FcNS_left} else {
       FcNS_rigth = log2(FC_NoResp_rigth)}
 
-  # Build a data.frame containing the input and an empty column for the DE status
-  df = data.frame(FC_col = log2FC,
-                  padj_col = p.value.adjusted,
-                  UP.DOWN = null.label,
-                  stringsAsFactors = F)
 
-  # Definition of the 4 status: UP, DOWN, NoResp, NULL
-  for (i in 1:nrow(df)) {
-    if (!is.na(df$FC_col[i])) {
-      if (df$FC_col[i] >= Fc & df$padj_col[i] <= p.value_threshold & !(is.na(df$padj_col[i]))) {
-        df$UP.DOWN[i] = high.FC.status.label} else {
+  # Define signif status function
+  status =
+    function(FC, p) {
+      ifelse(p < p.value_threshold,
+             yes = ifelse(abs(FC) >= FC.th,
+                          yes = ifelse(sign(FC) == 1,
+                                       yes = high.FC.status.label,
+                                       no = low.FC.status.label),
+                          no = null.label),
+             no = ifelse(FC >= FcNS_left & FC <= FcNS_rigth,
+                         yes = unresponsive.label,
+                         no = null.label))
+    }
 
-          if (df$FC_col[i] <= -Fc & df$padj_col[i] <= p.value_threshold & !(is.na(df$padj_col[i]))) {
-            df$UP.DOWN[i] = low.FC.status.label} else {
-
-              if ((FcNS_left <= df$FC_col[i]) & (df$FC_col[i] <= FcNS_rigth) & ((df$padj_col[i] > p.value_threshold) | (is.na(df$padj_col[i])))) {
-                df$UP.DOWN[i] = unresponsive.label} else {
-
-                  df$UP.DOWN[i] = null.label}
-            }
-        }
-    } # end is.na for FC
-  } # end FOR loop
+  # Define the label for each FC x Padj combination
+  diff.status =
+    unlist(purrr::pmap(.l = list(FC = log2FC,
+                                 p = p.value.adjusted),
+                       .f = function(FC,p){status(FC,p)}))
 
   # Returns the vector of the DE status
-  return(df$UP.DOWN)}
+  return(diff.status)
+} # END function
