@@ -69,10 +69,10 @@ plot.NES = function(gsea.object,
            aes(x = NES,
                y = alias,
                fill = dataset)) +
-    geom_bar(aes(alpha = -log10(p.adjust)),
-             stat = "identity",
-             show.legend = T,
-             width = 0.8) +
+    ggplot2::geom_bar(aes(alpha = -log10(p.adjust)),
+                      stat = "identity",
+                      show.legend = T,
+                      width = 0.8) +
     scale_alpha_continuous(range = alpha.range) +
     scale_fill_manual(values = NES.colors, drop = F) +
     ylab(NULL) +
