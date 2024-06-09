@@ -233,6 +233,9 @@ plot.gsea =
       scale_x_continuous(expand = c(0,0),
                          limits = range(info$x)) +
       scale_y_continuous(expand = c(0,0)) +
+      geom_vline(xintercept = results$rank[results$ID == gene.set],
+                 linetype = "dotted",
+                 color = rank.max.color) +
       xlab(NULL) +
       ylab(NULL) +
       theme_classic() +
@@ -253,10 +256,10 @@ plot.gsea =
 
     xmin = which(!duplicated(inv))
     gradient.df = data.frame(ymin = min(info$ymin),
-                              ymax = min(info$ymin) * 0.5, #calculated on bottom half, so use 2*wanted fraction
-                              xmin = xmin,
-                              xmax = xmin + as.numeric(table(inv)[as.character(unique(inv))]),
-                              col = col[unique(inv)])
+                             ymax = min(info$ymin) * 0.5, #calculated on bottom half, so use 2*wanted fraction
+                             xmin = xmin,
+                             xmax = xmin + as.numeric(table(inv)[as.character(unique(inv))]),
+                             col = col[unique(inv)])
 
     gradient.df$xmax[nrow(gradient.df)] = max(info$x)
 
@@ -280,6 +283,7 @@ plot.gsea =
     ## compute 0-cross
     info$abs = abs(info$geneList)
     zero.cross = info$x[info$abs == min(info$abs)]
+    if (length(zero.cross) > 1) {zero.cross = zero.cross[ceiling(length(zero.cross) /2)]}
     max.rank = results$rank[results$ID == gene.set]
     hjust.rank = ifelse(test = max.rank < (nrow(info)/5),
                         yes = -0.1,
@@ -311,11 +315,11 @@ plot.gsea =
                vjust = -0.5,
                color = rank.max.color) +
       annotate(geom = "text",
-              x = zero.cross,
-              y = 0,
-              label = paste0("Zero score at ", zero.cross),
-              hjust = 0.5,
-              vjust = -1) +
+               x = zero.cross,
+               y = 0,
+               label = paste0("Zero score at ", zero.cross),
+               hjust = 0.5,
+               vjust = -1) +
       theme(axis.text = element_text(color = "black"),
             axis.ticks = element_line(color = "black"),
             plot.margin = margin(c(0,0,0,0)))
@@ -324,10 +328,9 @@ plot.gsea =
 
     # COMBINING the plots
     combined.plot =
-      cowplot::plot_grid(plotlist = list(enrichment.panel, geneset.panel, rank.panel),
-                         ncol = 1,
-                         align = "v",
-                         rel_heights = c(1,0.3,0.6))
+      patchwork::wrap_plots(enrichment.panel, geneset.panel, rank.panel,
+                            ncol = 1,
+                            heights = c(1,0.3,0.6))
 
 
     # Export image if required
