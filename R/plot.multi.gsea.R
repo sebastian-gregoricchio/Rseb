@@ -245,14 +245,12 @@ plot.multi.gsea =
 
     # COMBINING the plots
     combined.plot =
-      cowplot::plot_grid(plotlist = Rseb::combine.lists(list(list(enrichment.panel), all.set.panels, list(rank.panel, stat.tb.plot))),
-                         ncol = 1,
-                         align = "v",
-                         axis = "tblr",
-                         rel_heights = c(combined.plot.height.ratios[1],
-                                         rep(combined.plot.height.ratios[2]/(length(all.set.panels)), length(all.set.panels)),
-                                         combined.plot.height.ratios[3],
-                                         combined.plot.height.ratios[4]))
+      patchwork::wrap_plots(plotlist = Rseb::combine.lists(list(list(enrichment.panel), all.set.panels, list(rank.panel, stat.tb.plot))),
+                            ncol = 1,
+                            heights = c(combined.plot.height.ratios[1],
+                                        rep(combined.plot.height.ratios[2]/(length(all.set.panels)), length(all.set.panels)),
+                                        combined.plot.height.ratios[3],
+                                        combined.plot.height.ratios[4]))
 
 
     # Export image if required
