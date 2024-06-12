@@ -203,7 +203,7 @@ plot.gsea =
             axis.line.x = element_blank(),
             axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
-            plot.margin = margin(c(0,0,0,0)),
+            plot.margin = ggplot2::margin(c(0,0,0,0)),
             plot.title = element_text(hjust = title.position))
 
     if (enrichment.plot.zero.line == TRUE) {
@@ -242,7 +242,7 @@ plot.gsea =
       theme(axis.text = element_blank(),
             axis.ticks = element_blank(),
             axis.line.x = element_blank(),
-            plot.margin = margin(c(0,0,0,0)))
+            plot.margin = ggplot2::margin(c(0,0,0,0)))
 
 
 
@@ -274,7 +274,7 @@ plot.gsea =
                     fill = I(col)),
                 alpha = 0.85,
                 inherit.aes = FALSE) +
-      theme(plot.margin = margin(c(0,0,0,0)))
+      theme(plot.margin = ggplot2::margin(c(0,0,0,0)))
 
 
 
@@ -322,7 +322,7 @@ plot.gsea =
                vjust = -1) +
       theme(axis.text = element_text(color = "black"),
             axis.ticks = element_line(color = "black"),
-            plot.margin = margin(c(0,0,0,0)))
+            plot.margin = ggplot2::margin(c(0,0,0,0)))
 
 
 
