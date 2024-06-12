@@ -7,11 +7,14 @@ title: "changeLog"
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
-#### [v0.3.4](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.4) - April 24<sup>th</sup> 2024
+#### [v0.3.4](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.4) - June 12<sup>th</sup> 2024
 * Improved the multiplot visualization of the output from `evaluate.heterogeneity` function.
 * Added possibility of sample clustering for `evaluate.heterogeneity` function.
 * Updated the dependencies to be compatible with new functions/features: *patchwork*, *ggh4x*, *Hmisc*.
 * Bug fixed in the `incucyte` function.
+* Performance optimized for `DE.status` function
+* Bug fixed in ggplot2 function calling in `plot.NES`
+* Bug fixed in `plot.gsea` and `plot.multi.gsea`
 
 <br />
 
