@@ -205,7 +205,7 @@ plot.multi.gsea =
             axis.line.x = element_blank(),
             axis.text.x = element_blank(),
             axis.ticks.x = element_blank(),
-            plot.margin = margin(c(0,0,0,0)),
+            plot.margin = ggplot2::margin(c(0,0,0,0)),
             plot.title = element_text(hjust = title.position))
 
     if (enrichment.plot.zero.line == TRUE) {
