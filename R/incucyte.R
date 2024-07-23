@@ -250,7 +250,7 @@ incucyte =
 
       # division by the minimum value of each column
       first.value = unlist(raw.data.subtraction[1,2:ncol(raw.data.subtraction)])
-      raw.data.subtraction[,3:ncol(raw.data.subtraction)] = data.frame(sweep(as.matrix(raw.data.subtraction[,2:ncol(raw.data.subtraction)])+1,
+      raw.data.subtraction[,2:ncol(raw.data.subtraction)] = data.frame(sweep(as.matrix(raw.data.subtraction[,2:ncol(raw.data.subtraction)])+1,
                                                                              2, first.value, FUN="-"))
 
       for (i in 1:length(groups)) {
