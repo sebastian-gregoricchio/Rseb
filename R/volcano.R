@@ -147,7 +147,8 @@ volcano = function(log2FC_data,
                        values = c(left_color,
                                   right_color,
                                   unresponsive_color,
-                                  null_color)) +
+                                  null_color),
+                      drop = F) +
     xlab(x_label) +
     ylab(y_label) +
     theme_classic() +
