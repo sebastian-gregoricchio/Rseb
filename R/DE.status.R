@@ -51,17 +51,21 @@ DE.status = function(log2FC, # log2(FC)
 
   # Define signif status function
   status =
-    function(FC, p) {
+  function(FC, p) {
+    status =
       ifelse(p < p.value_threshold,
-             yes = ifelse(abs(FC) >= FC.th,
-                          yes = ifelse(sign(FC) == 1,
-                                       yes = high.FC.status.label,
-                                       no = low.FC.status.label),
-                          no = null.label),
-             no = ifelse(FC >= FcNS_left & FC <= FcNS_rigth,
-                         yes = unresponsive.label,
-                         no = null.label))
-    }
+           yes = ifelse(abs(FC) >= FC.th,
+                        yes = ifelse(sign(FC) == 1,
+                                     yes = high.FC.status.label,
+                                     no = low.FC.status.label),
+                        no = null.label),
+           no = ifelse(FC >= FcNS_left & FC <= FcNS_rigth,
+                       yes = unresponsive.label,
+                       no = null.label))
+
+    if (status == NA) {status = null.label}
+    return(status)
+  }
 
   # Define the label for each FC x Padj combination
   diff.status =
