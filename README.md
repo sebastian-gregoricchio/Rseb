@@ -1,5 +1,6 @@
 ![release](https://img.shields.io/github/v/release/sebastian-gregoricchio/Rseb)
 [![license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://sebastian-gregoricchio.github.io/Rseb/LICENSE.md/LICENSE)
+[![DOI](https://zenodo.org/badge/321398522.svg)](https://zenodo.org/doi/10.5281/zenodo.13645872)
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 <!-- ![update](https://badges.pufler.dev/updated/sebastian-gregoricchio/Rseb)
 ![visits](https://badges.pufler.dev/visits/sebastian-gregoricchio/Rseb) -->
