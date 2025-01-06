@@ -116,7 +116,7 @@ incucyte =
       names(color.vector) = unique(metadata$group)
     } else if (is.null(colors) & ncol(metadata) == 3){
       color.tb = unique(metadata[,2:3])
-      color.vector = color.tb[,3]
+      color.vector = color.tb[,2]
       names(color.vector) = color.tb[,2]
     } else if (!is.null(colors)) {
       if (ncol(metadata) == 3) {
