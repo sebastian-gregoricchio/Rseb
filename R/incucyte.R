@@ -117,7 +117,7 @@ incucyte =
     } else if (is.null(colors) & ncol(metadata) == 3){
       color.tb = unique(metadata[,2:3])
       color.vector = color.tb[,2]
-      names(color.vector) = color.tb[,2]
+      names(color.vector) = color.tb[,1]
     } else if (!is.null(colors)) {
       if (ncol(metadata) == 3) {
         message("Color list is provided but other colors are defined in the metadata table. Only the first set will be used.")
