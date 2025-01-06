@@ -7,6 +7,12 @@ title: "changeLog"
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
+#### [v0.3.5](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.5) - January 06<sup>th</sup> 2025
+* Bug fixing in the `incucyte` function when color column is provided in the metadata.
+
+
+<br />
+
 #### [v0.3.4](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/0.3.4) - August 03<sup>rd</sup> 2024
 * Improved the multiplot visualization of the output from `evaluate.heterogeneity` function.
 * Added possibility of sample clustering for `evaluate.heterogeneity` function.
