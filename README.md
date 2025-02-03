@@ -44,25 +44,31 @@ Gregoricchio S. *et al.*, *Nucleic Acids Research* (2022)
 
 
 ## Dependencies/Requirements
-### Bioconductor libraries
-
-Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package.
-However, if you prefer to manually install `Bioconductor` and required packages proceed with the `Bioconductor` installation:
-
+### Unavailble libraries
+Some functions require packages that are noy available anymore on Bioconductor (namely `SUSHI` and `diffloop`).
+These can be installed (in the following order) as indicated below:
 
 ```r
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install()
+# Install devtools from CRAN
+install.packages("devtools")
+
+# Or the development version from GitHub:
+## install.packages("devtools")
+## devtools::install_github("r-lib/devtools")
+
+# Install SUSHI package
+devtools::install_github("https://github.com/PhanstielLab/Sushi",
+			 build_manual = FALSE,
+                         build_vignettes = FALSE)
+
+# Install diffloop package
+devtools::install_github("https://github.com/aryeelab/diffloop",
+			 build_manual = FALSE,
+                         build_vignettes = FALSE)
 ```
 
-The required Biocondutor packages are: `Biostrings`, `biomaRt`, `diffloop`, `GO.db`, `rtracklayer`, `GenomicRanges`, `AnnotationFilter`, `EnsDb.Hsapiens.v75`, `EnsDb.Hsapiens.v86`, `EnsDb.Mmusculus.v79`.
-To install it manually proceed with:
 
 
-```r
-BiocManager::install(c("Biostrings", "biomaRt", "diffloop", "GO.db", "rtracklayer", "GenomicRanges", "AnnotationFilter", "EnsDb.Hsapiens.v75", "EnsDb.Hsapiens.v86", "EnsDb.Mmusculus.v79"))
-```
 <br />
 
 ### deepTools
@@ -85,7 +91,7 @@ Certain functions of this package require that `bedtools` is installed on your s
 
 <br />
 
-## Installation
+## Installation of `Rseb`
 ```r
 # Install devtools from CRAN
 install.packages("devtools")
