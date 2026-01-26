@@ -49,22 +49,18 @@ Some functions require packages that are noy available anymore on Bioconductor (
 These can be installed (in the following order) as indicated below:
 
 ```r
-# Install devtools from CRAN
-install.packages("devtools")
-
-# Or the development version from GitHub:
-## install.packages("devtools")
-## devtools::install_github("r-lib/devtools")
+# Install remotes from CRAN
+if (!require("remotes")) install.packages("remotes")
 
 # Install SUSHI package
-devtools::install_github("https://github.com/PhanstielLab/Sushi",
-			 build_manual = FALSE,
-                         build_vignettes = FALSE)
+remotes::install_github("https://github.com/PhanstielLab/Sushi",
+			            build_manual = FALSE,
+                        build_vignettes = FALSE)
 
 # Install diffloop package
-devtools::install_github("https://github.com/aryeelab/diffloop",
-			 build_manual = FALSE,
-                         build_vignettes = FALSE)
+remotes::install_github("https://github.com/aryeelab/diffloop",
+			            build_manual = FALSE,
+                        build_vignettes = FALSE)
 ```
 
 
@@ -93,17 +89,13 @@ Certain functions of this package require that `bedtools` is installed on your s
 
 ## Installation of `Rseb`
 ```r
-# Install devtools from CRAN
-install.packages("devtools")
-
-# Or the development version from GitHub:
-## install.packages("devtools")
-## devtools::install_github("r-lib/devtools")
+# Install remotes from CRAN
+if (!require("remotes")) install.packages("remotes")
 
 # Install the Rseb package
-devtools::install_github("sebastian-gregoricchio/Rseb",
-			 build_manual = TRUE,
-                         build_vignettes = TRUE)
+remotes::install_github("sebastian-gregoricchio/Rseb",
+			            build_manual = TRUE,
+                        build_vignettes = TRUE)
 ```
 <br />
 
@@ -130,3 +122,4 @@ This package is under a [GNU General Public License (version 3)](https://sebasti
 
 #### Contributors
 [![contributors](https://contrib.rocks/image?repo=sebastian-gregoricchio/Rseb)](https://sebastian-gregoricchio.github.io/)
+
