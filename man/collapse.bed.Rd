@@ -4,7 +4,7 @@
 \alias{collapse.bed}
 \title{Merger of overlapping peaks in a provided .bed file.}
 \usage{
-collapse.bed(
+\method{collapse}{bed}(
   bed,
   maximal.distance = 0,
   keep.strandness = FALSE,

@@ -55,18 +55,18 @@
 #'
 #' @details To know more about the deepTools's function \code{computeMatrix} see the package manual at the following link: \cr \url{https://deeptools.readthedocs.io/en/develop/content/tools/computeMatrix.html}.
 #'
-#' @export plot.density.profile.smooth
+#' @import dplyr
+#' @import ggplot2
+#' @importFrom data.table fread
+#' @importFrom stringr str_split
+#' @importFrom robustbase colMedians
+#' @importFrom matrixStats colSds
+#' @importFrom purrr reduce
+#' @importFrom cowplot plot_grid
+#' @importFrom tools toTitleCase
+#' @importFrom labeling extended
 #'
-# @import dplyr
-# @import ggplot2
-# @importFrom data.table fread
-# @importFrom stringr str_split
-# @importFrom robustbase colMedians
-# @importFrom matrixStats colSds
-# @importFrom purrr reduce
-# @importFrom cowplot plot_grid
-# @importFrom tools toTitleCase
-# @importFrom labeling extended
+#' @export plot.density.profile.smooth
 
 plot.density.profile.smooth = function(
   matrix.file,
@@ -103,22 +103,6 @@ plot.density.profile.smooth = function(
   ## ------------------------- BEGIN OF THE FUNCTION ------------------------ ##
   ##############################################################################
 
-  # Load all libraries
-  require(dplyr)
-  require(ggplot2)
-  # require(data.table)
-  # require(stringr)
-  # require(robustbase)
-  # require(matrixStats)
-  # require(purrr)
-  # require(cowplot)
-  # require(tools)
-  # require(labeling)
-
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)
-
-  ##############################################################################
   # Define deprecated values
   error.type = "sem"
   plot.error = F
@@ -128,11 +112,11 @@ plot.density.profile.smooth = function(
   ## Convert and check x.lim and y.lim and title
   ### Check that the parameters are vectors or lists
   if (!is.null(x.lim) & !(class(x.lim) %in% c("numeric", "list"))) {
-    return(warning("The 'x.lim' parameter must be a vector or list of numeric vectors c(min, max) or NULL. \nTo set just one boundary replace a number with NA."))
+    stop("The 'x.lim' parameter must be a vector or list of numeric vectors c(min, max) or NULL. \nTo set just one boundary replace a number with NA.")
   }
 
   if (!is.null(y.lim) & !(class(y.lim) %in% c("numeric", "list"))) {
-    return(warning("The 'y.lim' parameter must be a vector or list of numeric vectors c(min, max) or NULL. \nTo set just one boundary replace a number with NA."))
+    stop("The 'y.lim' parameter must be a vector or list of numeric vectors c(min, max) or NULL. \nTo set just one boundary replace a number with NA.")
   }
 
 
@@ -142,32 +126,32 @@ plot.density.profile.smooth = function(
 
 
   ### Check x.lab and y.lab class
-  if (!is.null(title) & class(title) != "character") {return(warning("The 'title' parameter must be a single string or a string vector."))}
-  if (!is.null(x.lab) & class(x.lab) != "character") {return(warning("The 'x.lab' parameter must be a single string or a string vector."))}
-  if (!is.null(y.lab) & class(y.lab) != "character") {return(warning("The 'y.lab' parameter must be a single string or a string vector."))}
+  if (!is.null(title) & class(title) != "character") {stop("The 'title' parameter must be a single string or a string vector.")}
+  if (!is.null(x.lab) & class(x.lab) != "character") {stop("The 'x.lab' parameter must be a single string or a string vector.")}
+  if (!is.null(y.lab) & class(y.lab) != "character") {stop("The 'y.lab' parameter must be a single string or a string vector.")}
 
 
   ### Check the size and type of each element in the lists
   if (!is.null(x.lim)) {
     for (i in 1:length(x.lim)) {
       if (length(x.lim[[i]]) != 2 | class(x.lim[[i]]) != "numeric") {
-        return(warning("One ore more vectors of the 'x.lim' list do not have exactly 2 elements and/or are not numeric vectors."))}
+        stop("One ore more vectors of the 'x.lim' list do not have exactly 2 elements and/or are not numeric vectors.")}
     }
   }
 
   if (!is.null(y.lim)) {
     for (i in 1:length(y.lim)) {
       if (length(y.lim[[i]]) != 2 | class(y.lim[[i]]) != "numeric") {
-        return(warning("One ore more vectors of the 'y.lim' list do not have exactly 2 elements and/or are not numeric vectors."))}
+        stop("One ore more vectors of the 'y.lim' list do not have exactly 2 elements and/or are not numeric vectors.")}
     }
   }
 
   ### Check title vector
-  if (!is.null(title) & class(title) != "character") {return(warning("The 'title' parameter must be a string vector or NULL."))}
+  if (!is.null(title) & class(title) != "character") {stop("The 'title' parameter must be a string vector or NULL.")}
 
 
   ### Check that the signal method is allowed
-  if (class(signal.type) != "character" | !(signal.type %in% c("mean", "median", "sum")) | length(signal.type) != 1) {return(warning("The 'siganl.type' parameter must be one among [mean, median, sum]."))}
+  if (class(signal.type) != "character" | !(signal.type %in% c("mean", "median", "sum")) | length(signal.type) != 1) {stop("The 'siganl.type' parameter must be one among [mean, median, sum].")}
 
 
   #############################################################################
@@ -278,7 +262,7 @@ plot.density.profile.smooth = function(
     metadata = matrix.file$metadata
     matrix.data = matrix.file$matrix.data
   } else {
-    return(warning("The 'matrix.file' must be a single string indicating a full path to a matrix.gz file generated by deepTools/computeMatrix or by Rseb::computeMatrix.deeptools(), or a list generated by the function Rseb::read.computeMatrix.file."))
+    stop("The 'matrix.file' must be a single string indicating a full path to a matrix.gz file generated by deepTools/computeMatrix or by Rseb::computeMatrix.deeptools(), or a list generated by the function Rseb::read.computeMatrix.file.")
   }
 
   # Generate metadata variables
@@ -302,7 +286,7 @@ plot.density.profile.smooth = function(
       message(paste("The parameter 'missing.data.as.zero' set in this function as ", as.character(missing.data.as.zero),
                     ", differs from the automatic obtained from the matrix file which is set as ", as.character(missing.data.as.zero.automatic),
                     ".\nMissing data will be treated as set in this function: 'missing.data.as.zero = ", as.character(missing.data.as.zero), "'.", sep = ""))}
-  } else {return(warning("The parameter 'missing.data.as.zero' must be a logical value or NULL."))}
+  } else {stop("The parameter 'missing.data.as.zero' must be a logical value or NULL.")}
 
   is.nan.data.frame = function(data.frame) do.call(cbind, lapply(data.frame, is.nan))
 
@@ -460,14 +444,14 @@ plot.density.profile.smooth = function(
         score = current.table$mean} else if (signal.type == "median") {
           score = current.table$median} else if (signal.type == "sum") {
             score = current.table$sum} else {
-              return(warning("The signal.type must be one among 'mean', 'median', 'sum'."))
+              stop("The signal.type must be one among 'mean', 'median', 'sum'.")
             }
 
       # Define which value to use for error
       if (error.type == "sem") {
         error = current.table$sem} else if (error.type == "sd") {
           error = current.table$sd} else {
-            return(warning("The error.type must be one between 'sem' or 'sd'."))
+            stop("The error.type must be one between 'sem' or 'sd'.")
           }
 
       # Plot saving in the list
@@ -547,14 +531,14 @@ plot.density.profile.smooth = function(
         score = current.table$mean} else if (signal.type == "median") {
           score = current.table$median} else if (signal.type == "sum") {
             score = current.table$sum} else {
-              return(warning("The signal.type must be one among 'mean', 'median', 'sum'"))
+              stop("The signal.type must be one among 'mean', 'median', 'sum'")
             }
 
       # Define which value to use for error
       if (error.type == "sem") {
         error = current.table$sem} else if (error.type == "sd") {
           error = current.table$sd} else {
-            return(warning("The error.type must be one between 'sem' or 'sd'"))
+            stop("The error.type must be one between 'sem' or 'sd'")
           }
 
       # Plot saving in the list

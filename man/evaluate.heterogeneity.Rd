@@ -13,7 +13,7 @@ evaluate.heterogeneity(
   distribution.line.size = 1,
   distribution.line.type = 1,
   distribution.n.vertical.divisions = NULL,
-  distribution.as.percentage = F,
+  distribution.as.percentage = FALSE,
   heatmap.color = "#1c30a3",
   heatmap.zMax = NA,
   heatmap.log1p.scale = TRUE,
@@ -23,6 +23,9 @@ evaluate.heterogeneity(
   min.percentage.reference = 0,
   min.percentage.test = 0,
   min.bases.overlap = 1,
+  cluster.samples = TRUE,
+  correlation.method = "pearson",
+  cluster.method = "complete",
   multiBigWigSummary.path = "multiBigWigSummary"
 )
 }
@@ -62,6 +65,12 @@ evaluate.heterogeneity(
 \item{min.percentage.test}{Numeric value within 0-100 to define which percentage of 'sample' datasets must overlap with a region in the 'reference' one. If the value is lower than 0 or greater than 100, will be coerced to 0 or 100 respectively. Default value: \code{0}.}
 
 \item{min.bases.overlap}{Integer, greater than 0, value to indicate the minimal number of bases to consider as minimum overlap between two regions. Non integer values will be rounded at integer, while number lower that 1 will be coerced to 1. Default value: \code{1}.}
+
+\item{cluster.samples}{Logic value to indicate whether samples should be clustered depending on their signal correlation at the peaks. Default: \code{TRUE}.}
+
+\item{correlation.method}{String indicating the method to use for the correlation. One among: 'pearson', 'spearman'. default: \code{"pearson"}.}
+
+\item{cluster.method}{String indicating the clustering method to use. The value should be (an unambiguous abbreviation of) one among: 'ward.D', 'ward.D2', 'single', 'complete', 'average' (= UPGMA), 'mcquitty' (= WPGMA), 'median' (= WPGMC) or 'centroid' (= UPGMC). Default: \code{"complete"}.}
 
 \item{multiBigWigSummary.path}{Path/command to run deeptools multiBigWigSummary tool. Default: \code{"multiBigWigSummary"}.}
 }

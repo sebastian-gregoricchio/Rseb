@@ -39,7 +39,19 @@
 #'   \item \code{multiplot}: the multiplot generated from the plot.list.
 #'  }
 #'
-#'
+#' @import IRanges
+#' @import GenomicRanges
+#' @import dplyr
+#' @import ggplot2
+#' @import scales
+#' @import patchwork
+#' @import Hmisc
+#' @importFrom data.table fread
+#' @import legendry
+#' @import ggdendro
+#' @importFrom reshape2 melt
+#' @importFrom colorspace lighten
+#' 
 #' @details To know more about the deepTools's function \code{multiBigwigSummary} see the package manual at the following link: \cr \url{https://deeptools.readthedocs.io/en/develop/content/tools/multiBigwigSummary.html}.
 #'
 #' @export evaluate.heterogeneity
@@ -71,24 +83,11 @@ evaluate.heterogeneity = function(bigWig.list,
                                   cluster.method = "complete",
                                   multiBigWigSummary.path = "multiBigWigSummary") {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-  require(IRanges)
-  require(GenomicRanges)
-  require(dplyr)
-  require(ggplot2)
-  #require(scales)
-  #require(patchwork)
-  #require(ggh4x)
-  #require(Hmisc)
-
-
+  
+  
   # Check the length of the variables
   if (length(unique(c(length(unique(bigWig.list)), length(unique(peak.list)), length(unique(labels))))) != 1) {
-    return(warning("The length of elements in 'bigWig.list', 'peak.list' and 'labels' does not correpond."))
+    stop("The length of elements in 'bigWig.list', 'peak.list' and 'labels' does not correpond.")
   }
 
 
@@ -127,7 +126,7 @@ evaluate.heterogeneity = function(bigWig.list,
     } else if ("GRanges" %in% class(reference.peaks)) {
       all.peaks.merge = IRanges::reduce(reference.peaks)
     } else {
-      return(warning("The 'reference.peaks' cannot be read. Accepted formats: 'GRanges', 'character' (path), 'data.frame'/'data.table'"))
+      stop("The 'reference.peaks' cannot be read. Accepted formats: 'GRanges', 'character' (path), 'data.frame'/'data.table'")
     }
   }
 
@@ -259,13 +258,13 @@ evaluate.heterogeneity = function(bigWig.list,
     geom_line(color = distribution.line.color,
               linewidth = distribution.line.size,
               linetype = distribution.line.type,
-              show.legend = F) +
+              show.legend = FALSE) +
     ylab(ifelse(distribution.as.percentage, yes = "% Samples", no = "Sample number")) +
     xlab(NULL) +
     scale_y_continuous(breaks = scales::pretty_breaks(),
                        limits = c(0,
                                   ifelse(distribution.as.percentage, yes = 100, no = length(labels)))) +
-    coord_cartesian(expand = F) +
+    coord_cartesian(expand = FALSE) +
     theme_classic() +
     theme(axis.text.x = element_blank(),
           axis.text.y = element_text(color = "#000000"),
@@ -284,7 +283,7 @@ evaluate.heterogeneity = function(bigWig.list,
            aes(x = rank,
                y = sample,
                fill = signal)) +
-    geom_tile(na.rm = T)
+    geom_tile(na.rm = TRUE)
 
   if (heatmap.log1p.scale == TRUE) {
     peak.signal.heatmap =
@@ -343,7 +342,7 @@ evaluate.heterogeneity = function(bigWig.list,
 
     peak.signal.heatmap =
       peak.signal.heatmap +
-      ggh4x::scale_y_dendrogram(hclust = clust, position = "right")
+      legendry::scale_y_dendro(clust = clust, position = "right")
   } else {
     peak.signal.heatmap =
       peak.signal.heatmap +

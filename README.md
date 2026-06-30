@@ -44,29 +44,6 @@ Gregoricchio S. *et al.*, *Nucleic Acids Research* (2022)
 
 
 ## Dependencies/Requirements
-### Unavailble libraries
-Some functions require packages that are noy available anymore on Bioconductor (namely `SUSHI` and `diffloop`).
-These can be installed (in the following order) as indicated below:
-
-```r
-# Install remotes from CRAN
-if (!require("remotes")) install.packages("remotes")
-
-# Install SUSHI package
-remotes::install_github("https://github.com/PhanstielLab/Sushi",
-			            build_manual = FALSE,
-                        build_vignettes = FALSE)
-
-# Install diffloop package
-remotes::install_github("https://github.com/aryeelab/diffloop",
-			            build_manual = FALSE,
-                        build_vignettes = FALSE)
-```
-
-
-
-<br />
-
 ### deepTools
 Certain functions of this package require that `deeptools` is installed on your system. For more information see the [deepTools](https://deeptools.readthedocs.io/en/develop/content/installation.html) installation page.
 * **Installation via `conda`**: `conda install -c bioconda deeptools`

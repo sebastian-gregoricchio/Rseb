@@ -14,14 +14,15 @@
 #' @param plot.quantities Logical value to indicate whether the quantity of each subintersection should be plotted or not. By default \code{TRUE}.
 #' @param stranded Logical value to define whether the analyses should be performed by strand: regions in one strand will be overlapped only with regions of the same strand. The strand symbols considered are '+' and '-', any other symbol will considered in a unique separated category. Default value: \code{FALSE}.
 #'
+#' @importFrom GenomicRanges makeGRangesFromDataFrame
+#' @importFrom rtracklayer import.bed
+#' @importFrom eulerr euler
+#' @import S4Vectors
+#' @importFrom GenomeInfoDb seqlevels
+#' 
 #' @return The output is the Venn Diagram in an object of class eulergram/gTree/grob/gDesc.
 #'
 #' @export venn.overlap
-
-# @import eulerr
-# @import diffloop
-# @import pryr
-# @import S4Vectors
 
 
 venn.overlap =
@@ -36,17 +37,6 @@ venn.overlap =
            shape.type = "ellipse",
            plot.quantities = TRUE,
            stranded = FALSE) {
-
-
-    ######################################################################################
-    ### Required libraries
-    require(pryr)
-    require(S4Vectors)
-
-    # Check if Rseb is up-to-date #
-    Rseb::actualize(update = F, verbose = F)
-    ######################################################################################
-
 
 
     # Defining import/reading function
@@ -64,9 +54,10 @@ venn.overlap =
       } else if ("GRanges" %in% class(x)) {
         x = x
       } else {
-        return(return(warning("The format of One of the regions provided is a non recognized. Formats allowed:\n   - 'data.frame' in at least BED3 format;\n   - 'characther' string with the full path to a .bed file;\n   - 'GRanges' bed object.")))
+        stop("The format of One of the regions provided is a non recognized. Formats allowed:\n   - 'data.frame' in at least BED3 format;\n   - 'characther' string with the full path to a .bed file;\n   - 'GRanges' bed object.")
       }
-      return(unique(diffloop::addchr(diffloop::rmchr(x))))
+      GenomeInfoDb::seqlevels(x) = paste0("chr", gsub("^chr", "", GenomeInfoDb::seqlevels(x)))
+      return(unique(x))
     } # end read.regions
 
 
@@ -74,7 +65,7 @@ venn.overlap =
     if ("list" %in% class(region.list)) {
       region.list = lapply(region.list, function(x){return(read.regions(x))})
     } else {
-      return(warning("The 'region.list' must be a list."))
+      stop("The 'region.list' must be a list.")
     }
 
 
@@ -146,10 +137,12 @@ venn.overlap =
     euler.mat = eulerr::euler(overalps, input = input.type, shape.type = shape.type)
 
     # Plotting the venn
-    venn.plot %<a-% plot(euler.mat,
-                         quantities = plot.quantities,
-                         fill = colors,
-                         alpha = color.transparency)
+    makeActiveBinding("venn.plot",
+                      function() plot(euler.mat,
+                                      quantities = plot.quantities,
+                                      fill = colors,
+                                      alpha = color.transparency),
+                      environment())
 
 
     # Return the plot

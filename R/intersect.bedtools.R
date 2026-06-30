@@ -1,8 +1,6 @@
-#' @title Intersect two or more bed files (by \code{bedtools intersect} function).
-#'
+#' @title intersect.bedtools
 #'
 #' @description This function runs a command line that uses \code{bedtools intersect} to intersect one or more .bed files.
-#'
 #'
 #' @param a A single string defining the BAM/BED/GFF/VCF file "A". Each feature in A is compared to B in search of overlaps. Use "stdin" if passing A with a UNIX pipe.
 #' @param b A character vector with one or more BAM/BED/GFF/VCF file(s) "B". It could be also a single string containing wildcard (*) character(s).
@@ -59,6 +57,8 @@
 #'
 #' @details To know more about the \code{bedtools intersect} function see the package manual at the following link: \cr \url{https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html}.
 #'
+#' @importFrom data.table fread
+#' 
 #' @export intersect.bedtools
 #'
 # @importFrom data.table fread
@@ -112,11 +112,7 @@ intersect.bedtools =
     run.command = TRUE
   ) {
 
-    #-----------------------------#
-    # Check if Rseb is up-to-date #
-    Rseb::actualize(update = F, verbose = F)   #
-    #-----------------------------#
-
+    
     ######################################################################################
     # Create function to add single quote to string variables
     add.quotes = function(x) {return(sapply(x, function(x){paste("'", x, "'", sep = "")}, USE.NAMES = F))}

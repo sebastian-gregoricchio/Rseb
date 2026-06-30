@@ -37,32 +37,14 @@ doi: https://doi.org/10.1093/nar/gkac613
 
 
 ## Dependencies/Requirements
-### Bioconductor libraries
-Some functions of this package require `Bioconductor` libraries. These functions should install automatically with the package.
-However, if you prefer to manually install `Bioconductor` and required packages proceed with the `Bioconductor` installation:
-
-```r
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install()
-```
-
-The required Biocondutor packages are: `Biostrings`, `biomaRt`, `diffloop`, `GO.db`, `rtracklayer`, `GenomicRanges`, `AnnotationFilter`, `EnsDb.Hsapiens.v75`, `EnsDb.Hsapiens.v86`, `EnsDb.Mmusculus.v79`.
-To install it manually proceed with:
-
-```r
-BiocManager::install(c("Biostrings", "biomaRt", "diffloop", "GO.db", "rtracklayer", "GenomicRanges", "AnnotationFilter", "EnsDb.Hsapiens.v75", "EnsDb.Hsapiens.v86", "EnsDb.Mmusculus.v79"))
-```
-<br />
-
-#### deepTools
+### deepTools
 Certain functions of this package require that `deeptools` is installed on your system. For more information see the [deepTools](https://deeptools.readthedocs.io/en/develop/content/installation.html) installation page.
 * **Installation via `conda`**: `conda install -c bioconda deeptools`
 * **Command line installation using `pip`**: `pip install deeptools`, All python requirements should be automatically installed.
 
 <br />
 
-#### bedTools
+### bedTools
 Certain functions of this package require that `bedtools` is installed on your system. For more information see the [bedTools](https://bedtools.readthedocs.io/en/latest/content/installation.html) installation page.
 * **Installation via `conda`**: `conda install -c bioconda bedtools`
 * **Command line installation**:
@@ -76,16 +58,13 @@ Certain functions of this package require that `bedtools` is installed on your s
 ## Installation
 ```r
 # Install devtools from CRAN
-install.packages("devtools")
+install.packages("remotes")
 
-# Or the development version from GitHub:
-## install.packages("devtools")
-## devtools::install_github("r-lib/devtools")
 
 # Install the Rseb package
-devtools::install_github("sebastian-gregoricchio/Rseb",
-			 build_manual = TRUE,
-                         build_vignettes = TRUE)
+remotes::install_github("sebastian-gregoricchio/Rseb",
+			                  build_manual = TRUE,
+                        build_vignettes = TRUE)
 ```
 <br />
 

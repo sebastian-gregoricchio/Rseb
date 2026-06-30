@@ -1,10 +1,6 @@
-#' @title Score matrix NGS data builder at specific regions (by \code{deeptools/computeMatrix} function).
+#' @title computeMatrix.deeptools
 #'
-#'
-#'
-#' @description  This function runs a command line that uses \code{deeptools} to calculate scores per genome regions and to prepare an intermediate file that can be used with \link{plot.density.profile} and \link{plot.density.summary}. Typically, the genome regions are genes, but any other regions defined in a BED file can be used. computeMatrix accepts multiple score files (bigWig format) and multiple regions files (BED format). This tool can also be used to filter and sort regions according to their score.
-#'
-#'
+#' @description This function runs a command line that uses \code{deeptools} to calculate scores per genome regions and to prepare an intermediate file that can be used with \link{plot.density.profile} and \link{plot.density.summary}. Typically, the genome regions are genes, but any other regions defined in a BED file can be used. computeMatrix accepts multiple score files (bigWig format) and multiple regions files (BED format). This tool can also be used to filter and sort regions according to their score.
 #'
 #' @param mode The type of matrix computation. Allowed values are "reference-point" or "scale-region". No default. \itemize{
 #'   \item \code{reference-point}: \cr Reference-point refers to a position within a BED region (e.g., the starting point). In this mode, only those genomicpositions before (upstream) and/or after (downstream) of the reference point will be plotted;
@@ -154,10 +150,6 @@ computeMatrix.deeptools =
     verbose = FALSE
   ) {
 
-    #-----------------------------#
-    # Check if Rseb is up-to-date #
-    Rseb::actualize(update = F, verbose = F)   #
-    #-----------------------------#
 
     ######################################################################################
     # Create function to add single quote to string variables

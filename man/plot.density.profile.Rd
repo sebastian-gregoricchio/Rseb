@@ -129,5 +129,5 @@ plot.density.profile(
   n.row.multiplot = 1, multiplot.export.file = "/path.to/multiplot.pdf",
   real.width.single.plot = 2.5, real.height.single.plot = 3,
   print.multiplot = FALSE)
-
+  
 }

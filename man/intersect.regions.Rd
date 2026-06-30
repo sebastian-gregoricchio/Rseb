@@ -4,7 +4,7 @@
 \alias{intersect.regions}
 \title{Genomic regions overlapper}
 \usage{
-intersect.regions(
+\method{intersect}{regions}(
   reference.regions,
   test.regions,
   min.percentage.reference = 0,
@@ -35,10 +35,10 @@ intersect.regions(
 \value{
 The function returns a list of data.frames/GRanges objects containing:
 \itemize{
-  \item \code{overlaps.reference}: XX;
-  \item \code{non.overlaps.reference}: XXX;
-  \item \code{overlaps.testt}: VV;
-  \item \code{non.overlaps.test}: XX.
+  \item \code{overlaps.reference}: regions from the reference overlapping with the test;
+  \item \code{non.overlaps.reference}: regions from the reference not overlapping with the test;
+  \item \code{overlaps.test}: regions from the test overlapping with the reference;
+  \item \code{non.overlaps.test}: regions from the test not overlapping with the reference.
  }
 }
 \description{

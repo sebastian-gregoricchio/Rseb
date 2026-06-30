@@ -8,6 +8,11 @@
 #' @param reverse.score A logical value to indicate whether the score order should be inverted. Default \code{TRUE}.
 #'
 #' @return The output is a numeric vector containing the score for each base at a given position.
+#' 
+#' @import rtracklayer
+#' @importFrom GenomeInfoDb seqlevels
+#' @import IRanges
+#' @import GenomicRanges
 #'
 #' @export get.single.base.score.bw
 #'
@@ -19,20 +24,13 @@ get.single.base.score.bw =
            missing.data.as.zero = TRUE,
            reverse.score = FALSE) {
 
-    # -------------------------------------------------------------------------------------
-    ### LIBRARIES
-    require(rtracklayer)
-    require(GenomicRanges)
-    require(IRanges)
-    # -------------------------------------------------------------------------------------
-
-
+    
     ### Check genomic region and generate a bed file
-    if (class(region) != "character") {return(warning("The genomic region must be a string in the format 'chr1:12345-67890', where the end position must be greater than the start position and the window must have a length > 1."))}
+    if (class(region) != "character") {stop("The genomic region must be a string in the format 'chr1:12345-67890', where the end position must be greater than the start position and the window must have a length > 1.")}
     region = gsub(pattern = "[,]", replacement = "", x = region)
     region = gsub(pattern = "[-]|[+]|[:]", replacement = "_", x = region)
     region = strsplit(region, "_")[[1]]
-    if (region[3] <= region[2]) {return(warning("The genomic region must be a string in the format 'chr1:12345-67890', where the end position must be greater than the start position and the window must have a length > 1."))}
+    if (region[3] <= region[2]) {stop("The genomic region must be a string in the format 'chr1:12345-67890', where the end position must be greater than the start position and the window must have a length > 1.")}
     region = GRanges(seqnames = region[1], ranges = IRanges(start = as.numeric(region[2]), end = as.numeric(region[3])))
 
 
@@ -42,7 +40,7 @@ get.single.base.score.bw =
     if (suppressWarnings(inherits(try(rtracklayer::import(BigWigFile(bigWig), selection = region, as = 'NumericList')[[1]],
                                       silent = TRUE),
                                   "try-error"))) { # it is TRUE when it does not work due to chromosome names in the bigWig != bed
-      region = diffloop::rmchr(region)
+      GenomeInfoDb::seqlevels(region) = gsub("^chr", "", GenomeInfoDb::seqlevels(region))
     }
 
     score = rtracklayer::import(BigWigFile(bigWig), selection = region, as = 'NumericList')[[1]]

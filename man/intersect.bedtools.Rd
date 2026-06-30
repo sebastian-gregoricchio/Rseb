@@ -2,9 +2,9 @@
 % Please edit documentation in R/intersect.bedtools.R
 \name{intersect.bedtools}
 \alias{intersect.bedtools}
-\title{Intersect two or more bed files (by \code{bedtools intersect} function).}
+\title{intersect.bedtools}
 \usage{
-intersect.bedtools(
+\method{intersect}{bedtools}(
   a,
   b,
   outputFileName = paste(getwd(), "intersected.bed", sep = "/"),

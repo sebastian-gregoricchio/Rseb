@@ -22,6 +22,12 @@
 #' @param binning.operation A single string to define the type of statistic that should be used over the bin size range. The options are: "mean", "median", "sum". By default \code{"mean"}.
 #' @param stranded Logical value to indicate whether the strand of the region should be taken into account. When \code{TRUE}, the order of the bigWig score for the given region will be reversed. Default \code{FALSE}.
 #'
+#' @importFrom GenomeInfoDb seqlevels
+#' @import dplyr
+#' @importFrom purrr pmap
+#' @importFrom robustbase rowMedians
+#' @importFrom parallel detectCores
+#'
 #' @return The function returns a named list containing:
 #' \itemize{
 #'   \item \code{metadata} data.frame with the parameters used to build the matrix;
@@ -48,9 +54,6 @@ density.matrix = function(mode,
                           binning.operation = "mean",
                           stranded = FALSE) { # BEGIN FUNCTION
 
-  ##########################################################################################
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)
 
   ##########################################################################################
   # CHECK PARAMETERS
@@ -82,28 +85,28 @@ density.matrix = function(mode,
 
   # Reference point
   if (!(tolower(mode) %in% c("reference-point", "scale-regions"))) {
-    return(warning("The mode must be one among 'reference-point' and 'scale-regions'."))
+    stop("The mode must be one among 'reference-point' and 'scale-regions'.")
   }
 
   # Check bin.size compatibility
   if (mode == "reference-point") {
-    if ((upstream+downstream) %% bin.size != 0) {return(warning("The region size (upstream + downstream) must be multiple of the bin.size"))}
+    if ((upstream+downstream) %% bin.size != 0) {stop("The region size (upstream + downstream) must be multiple of the bin.size")}
   } else {
-    if (upstream %% bin.size != 0) {return(warning("The upstream region size must be multiple of the bin.size"))}
-    if (downstream %% bin.size != 0) {return(warning("The downstream region size must be multiple of the bin.size"))}
-    if (body.length %% bin.size != 0) {return(warning("The body.length region size must be multiple of the bin.size"))}
+    if (upstream %% bin.size != 0) {stop("The upstream region size must be multiple of the bin.size")}
+    if (downstream %% bin.size != 0) {stop("The downstream region size must be multiple of the bin.size")}
+    if (body.length %% bin.size != 0) {stop("The body.length region size must be multiple of the bin.size")}
   }
 
   # Reference-point
   if (!(tolower(reference.point) %in% c("tss", "tes", "center")) | length(reference.point) > 1) {
-    return(warning("The reference.point must be one among 'TSS', 'TES', 'center'. Default: 'center'."))
+    stop("The reference.point must be one among 'TSS', 'TES', 'center'. Default: 'center'.")
   }
 
   # Reference-point-labels
   if (is.null(reference.point.label)) {
     reference.point.label = reference.point
   } else if (length(reference.point.label) > 1) {
-    return(warning("The reference point label must be a single string."))
+    stop("The reference point label must be a single string.")
   }
 
   # Set ranges as positive values
@@ -116,7 +119,7 @@ density.matrix = function(mode,
 
   # Binning.operation check
   if (!(tolower(binning.operation) %in% c("mean", "median", "sum"))) {
-    return(warning("The reference.point must be one among 'mean', 'median', 'sum'. Default: 'mean'."))
+    stop("The reference.point must be one among 'mean', 'median', 'sum'. Default: 'mean'.")
   }
 
 
@@ -214,6 +217,11 @@ density.matrix = function(mode,
 
   ###########
   get.single.base.scores = function(bigWig, regions, missing.data.as.zero) {
+    rmchr = function(gr) {
+      GenomeInfoDb::seqlevels(gr) = gsub("^chr", "", GenomeInfoDb::seqlevels(gr))
+      return(gr)
+    }
+    
     require(rtracklayer)
 
     score_list = list()
@@ -223,7 +231,7 @@ density.matrix = function(mode,
       if (suppressWarnings(inherits(try(import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]],
                        silent = TRUE),
                    "try-error"))) { # it is TRUE when it does not work due to chromosome names in the bigWig != bed
-        regions[i] = diffloop::rmchr(regions[i])
+        regions[i] = rmchr(regions[i])
       }
 
       score_list[[i]] = import(BigWigFile(bigWig), selection = regions[i], as = 'NumericList')[[1]]

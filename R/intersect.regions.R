@@ -11,21 +11,21 @@
 #' @param stranded A logical value to define whether the analyses should be performed by strand: regions in one strand will be overlapped only with regions of the same strand. The strand symbols considered are '+' and '-', any other symbol will considered in a unique separated category. Default value: \code{FALSE}.
 #' @param return.as.data.frame Logical value to define whether the output list should contain data.frames instead of GRanges objects. Default value: \code{TRUE}.
 #'
+#' @import dplyr
+#' @import S4Vectors
+#' @import GenomicRanges
+#' @import IRanges
+#' @importFrom GenomeInfoDb seqlevels
+#'
 #' @return The function returns a list of data.frames/GRanges objects containing:
 #' \itemize{
-#'   \item \code{overlaps.reference}: XX;
-#'   \item \code{non.overlaps.reference}: XXX;
-#'   \item \code{overlaps.testt}: VV;
-#'   \item \code{non.overlaps.test}: XX.
+#'   \item \code{overlaps.reference}: regions from the reference overlapping with the test;
+#'   \item \code{non.overlaps.reference}: regions from the reference not overlapping with the test;
+#'   \item \code{overlaps.test}: regions from the test overlapping with the reference;
+#'   \item \code{non.overlaps.test}: regions from the test not overlapping with the reference.
 #'  }
 #'
 #' @export intersect.regions
-
-# @import GenomicRanges
-# @import diffloop
-# @import dplyr
-# @import IRanges
-# @import S4Vectors
 
 intersect.regions =
   function(reference.regions,
@@ -37,20 +37,7 @@ intersect.regions =
            stranded = FALSE,
            return.as.data.frame = TRUE) {
 
-    ######################################################################################
-    ### Required libraries
-    # require("GenomicRanges")
-    # require(diffloop)
-    require(dplyr)
-    require(S4Vectors)
-    require(GenomicRanges)
-    require(IRanges)
-
-    # Check if Rseb is up-to-date #
-    Rseb::actualize(update = F, verbose = F)
-    ######################################################################################
-
-
+   
     ### Check of the thresholds
     if (min.percentage.reference < 0) {min.percentage.reference = 0}
     if (min.percentage.reference > 100) {min.percentage.reference = 100}
@@ -78,9 +65,10 @@ intersect.regions =
       } else if ("GRanges" %in% class(x)) {
         x = x
       } else {
-        return(return(warning("The format of One of the regions provided is a non recognized. Formats allowed:\n   - 'data.frame' in at least BED3 format;\n   - 'characther' string with the full path to a .bed file;\n   - 'GRanges' bed object.")))
+        stop("The format of One of the regions provided is a non recognized. Formats allowed:\n   - 'data.frame' in at least BED3 format;\n   - 'characther' string with the full path to a .bed file;\n   - 'GRanges' bed object.")
       }
-      return(unique(diffloop::addchr(diffloop::rmchr(x))))
+      GenomeInfoDb::seqlevels(x) = paste0("chr", gsub("^chr", "", GenomeInfoDb::seqlevels(x)))
+      return(unique(x))
     } # end read.regions
 
 

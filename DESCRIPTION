@@ -1,7 +1,7 @@
 Package: Rseb
 Type: Package
 Title: An R-package for NGS data managing and visualization
-Version: 0.3.3
+Version: 1.0.0
 Author: Sebastian Gregoricchio
 Maintainer: Sebastian Gregoricchio <sebastian.gregoricchio@gmail.com>
 Description: An R-package for daily tasks required to handle biological data as well as avoid re-coding of small functions for quick but necessary data managing.
@@ -9,17 +9,65 @@ License: GNU GENERAL PUBLIC LICENSE version 3
 Depends:
 	R (>= 4.0.0)
 Imports:
-	BiocManager, AnnotationFilter, Biostrings, biomaRt, colorspace, diffloop, enrichplot, EnsDb.Hsapiens.v75, EnsDb.Hsapiens.v86, EnsDb.Mmusculus.v79, GenomicRanges, GO.db, IRanges, RColorBrewer, rtracklayer, S4Vectors, cowplot, data.table, eulerr, ggplot2 (>= 3.3.3), ggbio, ggforce, ggh4x, ggrepel, ggpubr, ggpmisc, grDevices, Hmisc, matrixStats, jpeg, patchwork, plyr, pryr, dplyr, tidyr, purrr, readxl, robustbase, R.utils, scales, stringr, tools, devtools, rvcheck, curl, prettydoc, knitr, rmarkdown, stats, openssl
+	BiocManager,
+	AnnotationFilter,
+	Biostrings,
+	biomaRt,
+	colorspace,
+	enrichplot,
+	EnsDb.Hsapiens.v75,
+	EnsDb.Hsapiens.v86,
+	EnsDb.Mmusculus.v79,
+	GenomeInfoDb,
+	GenomicRanges,
+	GO.db,
+	IRanges,
+	legendry,
+	RColorBrewer,
+	rtracklayer,
+	S4Vectors,
+	cowplot,
+	data.table,
+	eulerr,
+	ggplot2 (>= 3.3.3),
+	ggbio,
+	ggdendro,
+	ggforce,
+	ggrepel,
+	ggpubr,
+	ggpmisc,
+	grDevices,
+	Hmisc,
+	matrixStats,
+	jpeg,
+	patchwork,
+	plyr,
+	dplyr,
+	tidyr,
+	purrr,
+	readxl,
+	robustbase,
+	R.utils,
+	scales,
+	stringr,
+	tools,
+	rvcheck,
+	curl,
+	prettydoc,
+	knitr,
+	rmarkdown,
+	stats,
+	openssl
+Suggests:
+  remotes
 biocViews:
-Remotes:
-	PhanstielLab/Sushi,
-	aryeelab/diffloop
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+LazyDataCompression: xz
 VignetteBuilder: knitr
 URL:
 	https://sebastian-gregoricchio.github.io/Rseb/
 	https://github.com/sebastian-gregoricchio/Rseb/
 	https://sebastian-gregoricchio.github.io/
 BugReports: https://github.com/sebastian-gregoricchio/Rseb/issues
+Config/roxygen2/version: 8.0.0

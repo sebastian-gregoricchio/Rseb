@@ -2,7 +2,7 @@
 % Please edit documentation in R/computeMatrix.deeptools.R
 \name{computeMatrix.deeptools}
 \alias{computeMatrix.deeptools}
-\title{Score matrix NGS data builder at specific regions (by \code{deeptools/computeMatrix} function).}
+\title{computeMatrix.deeptools}
 \usage{
 computeMatrix.deeptools(
   mode,
