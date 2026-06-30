@@ -86,19 +86,19 @@ genomic.tracks =
     genomic.region = gsub(pattern = "[,]", replacement = "", x = genomic.region)
     genomic.region = gsub(pattern = "[-]|[+]|[:]", replacement = "_", x = genomic.region)
     genomic.region = strsplit(genomic.region, "_")[[1]]
-    if (genomic.region[3] <= genomic.region[2]) {return(warning("The genomic region to be shown must be in the format chr1:12345-67890, where the end position must be greater than the start position and the window must have a length > 1."))}
+    if (genomic.region[3] <= genomic.region[2]) {stop("The genomic region to be shown must be in the format chr1:12345-67890, where the end position must be greater than the start position and the window must have a length > 1.")}
 
 
     ### Genome check
     if (class(genome) == "character") {
       genome = tolower(genome)
-      if ((!(genome %in% c("hg19", "hg38", "mm10")))) {return(warning("Genome not recognized. The supported genomes are: 'Hg19', 'Hg38', 'Mm10'. Alternatively a manually build EnsDB file can be provided (see: https://bioconductor.org/packages/release/bioc/vignettes/ensembldb/inst/doc/ensembldb.html#102_building_annotation_packages)."))}
+      if ((!(genome %in% c("hg19", "hg38", "mm10")))) {stop("Genome not recognized. The supported genomes are: 'Hg19', 'Hg38', 'Mm10'. Alternatively a manually build EnsDB file can be provided (see: https://bioconductor.org/packages/release/bioc/vignettes/ensembldb/inst/doc/ensembldb.html#102_building_annotation_packages).")}
       if (genome == "hg19") {ensdb = EnsDb.Hsapiens.v75::EnsDb.Hsapiens.v75}
       if (genome == "hg38") {ensdb = EnsDb.Hsapiens.v86::EnsDb.Hsapiens.v86}
       if (genome == "mm10") {ensdb = EnsDb.Mmusculus.v79::EnsDb.Mmusculus.v79}
     } else if ("EnsDb" %in% class(genome)) {
       ensdb = genome
-    } else {return(warning("Genome not recognized. The supported genomes are: 'Hg19', 'Hg38', 'Mm10'. Alternatively a manually build EnsDB file can be provided (see: https://bioconductor.org/packages/release/bioc/vignettes/ensembldb/inst/doc/ensembldb.html#102_building_annotation_packages)."))}
+    } else {stop("Genome not recognized. The supported genomes are: 'Hg19', 'Hg38', 'Mm10'. Alternatively a manually build EnsDB file can be provided (see: https://bioconductor.org/packages/release/bioc/vignettes/ensembldb/inst/doc/ensembldb.html#102_building_annotation_packages).")}
 
 
     ### Auto-identification of the tracks format

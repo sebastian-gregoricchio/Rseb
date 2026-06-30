@@ -45,7 +45,7 @@ uniform.y.axis = function(
 
 
   # Re-define the limits
-  if (length(y.min) != 1 | length(y.max) != 1) {return(warning("The 'y.min' and 'y.max' parameters must be either a unique logical or numeric value."))}
+  if (length(y.min) != 1 | length(y.max) != 1) {stop("The 'y.min' and 'y.max' parameters must be either a unique logical or numeric value.")}
 
   if (is.na(y.min) | is.numeric(y.min) | is.null(y.min)) {
     new_y.min = y.min} else if (y.min == TRUE) {

@@ -13,7 +13,7 @@ floating.floor = function(num,
                           digits = 1) {
 
   # Check that digits is an integer
-  if (digits != round(digits)) {return(warning("The 'digits' parameter must be an integer."))}
+  if (digits != round(digits)) {stop("The 'digits' parameter must be an integer.")}
 
   # Avoiding negative digits and calculating the number length
   digits = nchar(as.character(trunc(abs(num)))) + abs(digits)

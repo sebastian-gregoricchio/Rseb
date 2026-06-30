@@ -34,7 +34,7 @@ DE.status = function(log2FC, # log2(FC)
   
   # Check the unresponsive thresholds
   if (is.null(FC_NoResp_left) & is.null(FC_NoResp_rigth)) {
-    return(warning("'FC_NoResp_left' and 'FC_NoResp_rigth' parameters can't be both NULL."))
+    stop("'FC_NoResp_left' and 'FC_NoResp_rigth' parameters can't be both NULL.")
   }
 
 

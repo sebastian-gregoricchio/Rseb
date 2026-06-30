@@ -44,7 +44,7 @@ closest.regions = function(reference.regions,
     reference.regions.sorted = Rseb::sort.bed(reference.regions, return.bed = T)
     if (collapse.regions == T) {reference.regions.sorted = Rseb::collapse.bed(reference.regions.sorted, return.bed = T)}
   } else {
-    return(warning("The 'reference.regions' option must be either a character vector with the full path to the a bed file to load or a data.frames in at least BED3 format."))
+    stop("The 'reference.regions' option must be either a character vector with the full path to the a bed file to load or a data.frames in at least BED3 format.")
   }
 
   colnames(reference.regions.sorted)[1:3] = c("chr", "start", "end")

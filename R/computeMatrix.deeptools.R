@@ -166,7 +166,7 @@ computeMatrix.deeptools =
 
     ###### Check and save the mode of computation
     if (!(mode %in% c("reference-point", "scale-regions"))) {
-      return(warning("The mode for the computation of the matrix must be one among: 'reference-point', 'scale-regions'."))
+      stop("The mode for the computation of the matrix must be one among: 'reference-point', 'scale-regions'.")
     } else {command = paste(command, mode)}
 
 

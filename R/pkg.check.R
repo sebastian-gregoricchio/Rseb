@@ -40,14 +40,14 @@ pkg.check = function(package,
     # Install packages from CRAN
     if (!require(package, character.only = TRUE)) {
       install.packages(package)
-      if(!require(package, character.only = TRUE)) return(warning((paste(package,"package not found."))))}
+      if(!require(package, character.only = TRUE)) stop(paste(package,"package not found."))}
 
   } else {
 
     # Install packages from bioconductor
     if (!require(package, character.only = TRUE)) {
       BiocManager::install(package)
-      if(!require(package, character.only = TRUE)) return(warning((paste(package,"package not found."))))}
+      if(!require(package, character.only = TRUE)) stop(paste(package,"package not found."))}
   }
 
 

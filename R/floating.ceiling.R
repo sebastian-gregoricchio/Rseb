@@ -13,7 +13,7 @@ floating.ceiling = function(num,
                             digits = 1) {
 
   # Check that digits is an integer
-  if (digits != round(digits)) {return(warning("The 'digits' parameter must be an integer."))}
+  if (digits != round(digits)) {stop("The 'digits' parameter must be an integer.")}
 
   # Considering the abs(numbers) < 1
   if (abs(num) < 1) {

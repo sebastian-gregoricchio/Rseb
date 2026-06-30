@@ -69,16 +69,17 @@
 #'
 #' @export plot.density.summary
 #'
-# @import dplyr
-# @import ggplot2
-# @importFrom data.table fread
-# @importFrom ggpubr compare_means stat_compare_means
-# @importFrom stringr str_split
-# @importFrom robustbase colMedians
-# @importFrom matrixStats colSds
-# @importFrom purrr reduce
-# @importFrom cowplot plot_grid
-# @importFrom tools toTitleCase
+#' @import dplyr
+#' @import ggplot2
+#' @importFrom data.table fread
+#' @importFrom ggpubr compare_means stat_compare_means
+#' @importFrom stringr str_split
+#' @importFrom robustbase colMedians
+#' @importFrom matrixStats colSds
+#' @importFrom purrr reduce
+#' @importFrom purrr pmap
+#' @importFrom cowplot plot_grid
+#' @importFrom tools toTitleCase
 
 plot.density.summary = function(
   matrix.file,
@@ -129,26 +130,10 @@ plot.density.summary = function(
   ## ------------------------- BEGIN OF THE FUNCTION ------------------------ ##
   ##############################################################################
 
-  # Load all libraries
-  require(dplyr)
-  require(ggplot2)
-  # require(ggpubr)
-  # require(data.table)
-  # require(stringr)
-  # require(robustbase)
-  # require(matrixStats)
-  # require(purrr)
-  # require(cowplot)
-  # require(tools)
-
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)
-
-  ##############################################################################
   ## Convert and check y.lim and title
   ### Check that the parameters are vectors or lists
   if (!is.null(y.lim) & !(class(y.lim) %in% c("numeric", "list"))) {
-    return(warning("The 'y.lim' parameter must be a vector or list of numeric vectors c(min, max) or NULL. \nTo set just one boundary replace a number with NA."))
+    stop("The 'y.lim' parameter must be a vector or list of numeric vectors c(min, max) or NULL. \nTo set just one boundary replace a number with NA.")
   }
 
 
@@ -157,46 +142,46 @@ plot.density.summary = function(
 
 
   ### Check x.lab and y.lab class
-  if (!is.null(title) & class(title) != "character") {return(warning("The 'title' parameter must be a single string or a string vector."))}
-  if (!is.null(x.lab) & class(x.lab) != "character") {return(warning("The 'x.lab' parameter must be a single string or a string vector."))}
-  if (!is.null(y.lab) & class(y.lab) != "character") {return(warning("The 'y.lab' parameter must be a single string or a string vector."))}
+  if (!is.null(title) & class(title) != "character") {stop("The 'title' parameter must be a single string or a string vector.")}
+  if (!is.null(x.lab) & class(x.lab) != "character") {stop("The 'x.lab' parameter must be a single string or a string vector.")}
+  if (!is.null(y.lab) & class(y.lab) != "character") {stop("The 'y.lab' parameter must be a single string or a string vector.")}
 
 
   ### Check the size and type of each element in the lists
   if (!is.null(y.lim)) {
     for (i in 1:length(y.lim)) {
       if (length(y.lim[[i]]) != 2 | class(y.lim[[i]]) != "numeric") {
-        return(warning("One ore more vectors of the 'y.lim' list do not have exactly 2 elements and/or are not numeric vectors."))}
+        stop("One ore more vectors of the 'y.lim' list do not have exactly 2 elements and/or are not numeric vectors.")}
     }
   }
 
   ### Check title vector
-  if (!is.null(title) & class(title) != "character") {return(warning("The 'title' parameter must be a string vector or NULL."))}
+  if (!is.null(title) & class(title) != "character") {stop("The 'title' parameter must be a string vector or NULL.")}
 
 
   ### Check that the signal method is allowed
-  if (class(signal.type) != "character" | !(signal.type %in% c("mean", "median", "sum")) | length(signal.type) != 1) {return(warning("The 'siganl.type' parameter must be one among [mean, median, sum]."))}
+  if (class(signal.type) != "character" | !(signal.type %in% c("mean", "median", "sum")) | length(signal.type) != 1) {stop("The 'siganl.type' parameter must be one among [mean, median, sum].")}
 
   ### Check colors
-  if (!Rseb::is.color(mean.color) | length(mean.color) != 1) {return(warning("The 'mean.color' parameter must be a single R-supported color string."))}
-  if (F %in% Rseb::is.color(colors)) {return(warning("The 'colors' parameter must be a single string or a vector of strings including R-supported colors."))}
+  if (!Rseb::is.color(mean.color) | length(mean.color) != 1) {stop("The 'mean.color' parameter must be a single R-supported color string.")}
+  if (F %in% Rseb::is.color(colors)) {stop("The 'colors' parameter must be a single string or a vector of strings including R-supported colors.")}
 
   ### Check errors parameters
   if (length(error.type == 1)) {
     if (!(error.type %in% c("sem", "sd", "none"))) {
-      return(warning("The 'error.type' must be one among 'sem' or 'sd'."))
+      stop("The 'error.type' must be one among 'sem' or 'sd'.")
     }
-  } else {return(warning("The 'error.type' must be a single string among 'sem' or 'sd'."))}
+  } else {stop("The 'error.type' must be a single string among 'sem' or 'sd'.")}
 
   if (length(mean.error.type == 1)) {
     if (!(mean.error.type %in% c("se", "sd", "none"))) {
-      return(warning("The 'mean.error.type' must be one among 'se', 'sd' or 'none'."))
+      stop("The 'mean.error.type' must be one among 'se', 'sd' or 'none'.")
     }
-  } else {return(warning("The 'mean.error.type' must be a single string among 'se', 'sd' or 'none'."))}
+  } else {stop("The 'mean.error.type' must be a single string among 'se', 'sd' or 'none'.")}
 
   # Check stat.method
   if (!(stat.method %in% c("t.test", "wilcox.test")) | length(stat.method) != 1 | class(stat.method) != "character") {
-    return(warning("The 'stat.method' parameter must be one among 't.test' and 'wilcox.test'")) }
+    stop("The 'stat.method' parameter must be one among 't.test' and 'wilcox.test'") }
 
   ##############################################################################
   # Import/read the matrix.gz file
@@ -208,7 +193,7 @@ plot.density.summary = function(
     metadata = matrix.file$metadata
     matrix.data = matrix.file$matrix.data
   } else {
-    return(warning("The 'matrix.file' must be a single string indicating a full path to a matrix.gz file generated by deepTools/computeMatrix or by Rseb::computeMatrix.deeptools(), or a list generated by the function Rseb::read.computeMatrix.file."))
+    stop("The 'matrix.file' must be a single string indicating a full path to a matrix.gz file generated by deepTools/computeMatrix or by Rseb::computeMatrix.deeptools(), or a list generated by the function Rseb::read.computeMatrix.file.")
   }
 
   # Generate metadata variables
@@ -232,7 +217,7 @@ plot.density.summary = function(
       message(paste("The parameter 'missing.data.as.zero' set in this function as ", as.character(missing.data.as.zero),
                     ", differs from the automatic obtained from the matrix file which is set as ", as.character(missing.data.as.zero.automatic),
                     ".\nMissing data will be treated as set in this function: 'missing.data.as.zero = ", as.character(missing.data.as.zero), "'.", sep = ""))}
-  } else {return(warning("The parameter 'missing.data.as.zero' must be a logical value or NULL."))}
+  } else {stop("The parameter 'missing.data.as.zero' must be a logical value or NULL.")}
 
   is.nan.data.frame = function(data.frame) do.call(cbind, lapply(data.frame, is.nan))
 
@@ -785,7 +770,7 @@ plot.density.summary = function(
     score = summary_table$mean.by.region} else if (signal.type == "median") {
       score = summary_table$median.by.region} else if (signal.type == "sum") {
         score = summary_table$sum.by.region} else {
-          return(warning("The signal.type must be one among 'mean', 'median', 'sum'."))
+          stop("The signal.type must be one among 'mean', 'median', 'sum'.")
         }
 
   # Define which value to use for error
@@ -795,7 +780,7 @@ plot.density.summary = function(
         error = summary_table$sd.by.region}
     } else if (error.type == "none") {
       error = summary_table$sem.by.region
-    } else {return(warning("The error.type must be one between 'sem' or 'sd'."))}
+    } else {stop("The error.type must be one between 'sem' or 'sd'.")}
 
 
   # Add a column with the values to be used as generic variable name
