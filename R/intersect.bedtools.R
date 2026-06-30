@@ -125,8 +125,8 @@ intersect.bedtools =
 
 
     ###### Check 'a' and 'b' input files
-    if (length(a) != 1) {return(warning("Only one A input bed is allowed."))}
-    if (class(a) != "character" | class(b) != "character") {return(warning("The A and B bed inputs must be strings, or a string vector for B input, with the full path to the input files."))}
+    if (length(a) != 1) {stop("Only one A input bed is allowed.")}
+    if (class(a) != "character" | class(b) != "character") {stop("The A and B bed inputs must be strings, or a string vector for B input, with the full path to the input files.")}
 
 
     ###### BAM parameters
@@ -139,7 +139,7 @@ intersect.bedtools =
       } else if (ubam == F & bed == T) {
         command = paste(command, "-bed")
         } else if (ubam == T & bed == T) {
-          return(warning("The parameters 'ubam' and 'bed' cannot be TRUE simultaneously."))
+          stop("The parameters 'ubam' and 'bed' cannot be TRUE simultaneously.")
         }
     } else { # when abam == FALSE
       command = paste(command,

@@ -29,6 +29,12 @@
 #'   \item \code{foldChange.plots}: a named list of plots, one for each housekeeping gene and one for the foldChange mean of all housekeeping normalization, showing the FoldChange expression over the reference Sample (facet_wrapped by gene).
 #'  }
 #'
+#' @import dplyr
+#' @import ggplot2
+#' @importFrom readxl read_excel
+#' @importFrom plyr rbind.fill
+#' @importFrom matrixStats rowSds
+#'
 #'
 #' @export qPCR.rna.exp
 
@@ -50,15 +56,6 @@ qPCR.rna.exp = function(results.file,
                         samples.order = NULL,
                         ignore.reps.errors = FALSE) {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-  # Libraries
-  require(dplyr)
-  require(ggplot2)
-
   # Reading the file
   if ("character" %in% class(results.file)) {
     results =
@@ -79,8 +76,8 @@ qPCR.rna.exp = function(results.file,
   # Check reference sample
   if (!is.null(reference.sample) | (length(reference.sample) > 1)) {
     if (!(reference.sample %in% results$`Sample Name`)) {
-      return(warning(paste0("The 'reference.sample' must be among the sample_IDs present in your file -> ",
-                            paste(unique(results$`Sample Name`), collapse = ", "))))
+      stop(paste0("The 'reference.sample' must be among the sample_IDs present in your file -> ",
+                  paste(unique(results$`Sample Name`), collapse = ", ")))
     }
   } else {reference.sample = as.character(results$`Sample Name`[[1]])}
 
@@ -121,8 +118,8 @@ qPCR.rna.exp = function(results.file,
 
   # Check housekeeping genes
   if (F %in% (housekeeping.genes %in% results$`Target Name`) | is.null(housekeeping.genes)) {
-    return(warning(paste0("The 'housekeeping.genes' must be among the targets present in your file -> ",
-                          paste(unique(results$`Target Name`), collapse = ", "))))
+    stop(paste0("The 'housekeeping.genes' must be among the targets present in your file -> ",
+                paste(unique(results$`Target Name`), collapse = ", ")))
   }
 
 

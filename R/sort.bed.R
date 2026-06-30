@@ -17,7 +17,7 @@
 #'
 #' @export sort.bed
 #'
-# @import dplyr
+#' @import dplyr
 
 
 sort.bed = function(bed,
@@ -29,12 +29,6 @@ sort.bed = function(bed,
                     unique.regions = TRUE,
                     verbose = TRUE) {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-  require(dplyr)
 
   if (class(bed)[1] == "character") {
     bed = read.delim(file = bed,
@@ -79,7 +73,7 @@ sort.bed = function(bed,
 
   # Check rows
   if (nrow(sorted.bed) != nrow(bed)) {
-    return(warning("Something went wrong: the number of rows of the original bed is not the same of the sorted file (before duplicates removal)."))
+    stop("Something went wrong: the number of rows of the original bed is not the same of the sorted file (before duplicates removal).")
   }
 
   # Export if required

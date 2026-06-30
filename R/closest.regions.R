@@ -12,6 +12,9 @@
 #'
 #' @return The function returns a data.frame composed of a triplicated chr-start-end-name table for reference.region, upstream.region and downstream.region, respectively.
 #'
+#' @importFrom data.table fread
+#' @import dplyr
+#'
 #' @export closest.regions
 #'
 # @import data.table
@@ -24,14 +27,10 @@ closest.regions = function(reference.regions,
                            collapse.regions = FALSE,
                            verbose = TRUE) {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)
-  #-----------------------------#
-
+  
   # Check execution
   if (is.null(export.table.file) & isFALSE(return.table)) {
-    return(warning("The parameters 'export.table.file' and 'return.table' are NULL and FALSE respectively.\nIn this way the output won't be saved. The execution is therefore interrupted."))
+    stop("The parameters 'export.table.file' and 'return.table' are NULL and FALSE respectively.\nIn this way the output won't be saved. The execution is therefore interrupted.")
   }
 
 
@@ -72,7 +71,7 @@ closest.regions = function(reference.regions,
       }
     }
   } else {
-    return(warning("The 'target.regions' option must be either a character vector with the full path to the bed files to load or a list of data.frames."))
+    stop("The 'target.regions' option must be either a character vector with the full path to the bed files to load or a list of data.frames.")
   }
 
   ## Assign names to target.regions
@@ -199,7 +198,7 @@ closest.regions = function(reference.regions,
   } # FOR end
 
   if (nrow(final.table) != nrow(reference.regions.sorted)) {
-    return(warning("Something went wrong: the number of regions in the resulting table is different from the original reference one."))
+    stop("Something went wrong: the number of regions in the resulting table is different from the original reference one.")
   }
 
 

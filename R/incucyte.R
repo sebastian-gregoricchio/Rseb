@@ -23,6 +23,12 @@
 #' @param colors A vector indicating the color to use for each group (any R color format is accepted). Default: \code{NULL} (random colors are generated).
 #' @param skip.head.lines.in.data Number of lines to be skipped at the beginning of the raw.data file. Default: \code{1}.
 #'
+#' @import dplyr
+#' @import ggplot2
+#' @importFrom data.table fread
+#' @importFrom grDevices colors
+#' @importFrom cowplot plot_grid
+#' @importFrom matrixStats rowSds
 #'
 #' @return The function returns a list containing:
 #' \itemize{
@@ -60,21 +66,12 @@ incucyte =
            colors = NULL,
            skip.head.lines.in.data = 1) {
 
-    #-----------------------------#
-    # Check if Rseb is up-to-date #
-    Rseb::actualize(update = F, verbose = F)
-    #-----------------------------#
-
-    # Libraries
-    require(dplyr)
-    require(ggplot2)
-
 
     # Check normalization method
     norm.methods = c("none", "division", "subtraction")
     if (!(tolower(normalization.method) %in% norm.methods)) {
-      return(warning(paste0("Normalization method not supported. Possibile choices: '",
-                            paste(norm.methods, collapse = "', '"), "'.")))
+      stop(paste0("Normalization method not supported. Possibile choices: '",
+                  paste(norm.methods, collapse = "', '"), "'."))
     }
 
 
@@ -87,7 +84,7 @@ incucyte =
     if ("character" %in% class(metadata)) {
       metadata = data.table::fread(metadata, blank.lines.skip = T, data.table = F)
     } else if (!("data.frame" %in% class(metadata))) {
-      return(warning("The metadata table must be a data.frame or a path to a table."))
+      stop("The metadata table must be a data.frame or a path to a table.")
     }
 
     if (ncol(metadata) > 3) {metadata = metadata[,1:3]}
@@ -100,8 +97,8 @@ incucyte =
       group.order = unique(metadata$group)
     } else {
       if (length(unique((unique(metadata$group) %in% group.order))) > 1) {
-        return(warning(paste0("In the group.order there are groups/samples missing if compared to the metadata provided:\n",
-                              paste(sort(unique(metadata$group))[!(sort(unique(metadata$group)) %in% sort(group.order))], collapse = ", "),".")))
+        stop(paste0("In the group.order there are groups/samples missing if compared to the metadata provided:\n",
+                    paste(sort(unique(metadata$group))[!(sort(unique(metadata$group)) %in% sort(group.order))], collapse = ", "),"."))
       }
     }
 
@@ -125,7 +122,7 @@ incucyte =
       if (is.null(names(colors))) {
         names(colors) = group.order
       } else if (length(unique(unique(metadata[,2]) %in% names(colors))) > 1) {
-        return(warning("The names provided in the color list do not include all the samples/groups indicated.\n"))
+        stop("The names provided in the color list do not include all the samples/groups indicated.\n")
       }
       color.vector = colors
     }
@@ -137,7 +134,7 @@ incucyte =
       if (is.null(names(line.type))) {
         names(line.type) = group.order
       } else if (length(unique(unique(metadata[,2]) %in% names(line.type))) > 1) {
-        return(warning("The names provided in the line.type list do not include all the samples/groups indicated.\n"))
+        stop("The names provided in the line.type list do not include all the samples/groups indicated.\n")
       }
     } else if (length(line.type) == 1) {
       line.type = rep(line.type, length(group.order))
@@ -151,7 +148,7 @@ incucyte =
       if ("list" %in% class(comparisons)) {
         for (i in 1:length(comparisons)) {
           if (length(unique((comparisons[[i]] %in% unique(metadata$group)))) > 1) {
-            return(warning(paste0("The element #",i," of the comparison list contains comparisons between groups not present among the groups provided.")))
+            stop(paste0("The element #",i," of the comparison list contains comparisons between groups not present among the groups provided."))
           }
           comparisons[[i]] = unique(comparisons[[i]])
           names(comparisons)[i] = paste(comparisons[[i]], collapse="_")
@@ -162,7 +159,7 @@ incucyte =
       } else {
         for (i in 1:length(comparisons)) {
           if (length(unique((comparisons[i] %in% unique(metadata$group)))) > 1) {
-            return(warning(paste0("The element #",i," of the comparison list contains comparisons between groups not present among the groups provided.")))
+            stop(paste0("The element #",i," of the comparison list contains comparisons between groups not present among the groups provided."))
           }
         }
         comparisons = list(unique(metadata$group), comparisons)
@@ -176,7 +173,7 @@ incucyte =
     if ("character" %in% class(raw.data)) {
       raw.data = data.table::fread(raw.data, blank.lines.skip = T, skip = skip.head.lines.in.data, data.table = F)
     } else if (!("data.frame" %in% class(raw.data))) {
-      return(warning("The raw.data table must be a data.frame or a path to a table."))
+      stop("The raw.data table must be a data.frame or a path to a table.")
     }
 
     raw.data = dplyr::mutate(raw.data,

@@ -12,13 +12,8 @@
 
 is.color = function(x) {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
   # Check x class
-  if (class(x) != "character") {return(warning("The input must be a string vector."))}
+  if (class(x) != "character") {stop("The input must be a string vector.")}
 
   return(sapply(x,
                 function(X) {

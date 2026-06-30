@@ -40,11 +40,6 @@ restriction.sites.to.bed = function(
 
 {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
   # Sorting the positions vector
   cut_positions = sort(cut_positions, decreasing = FALSE)
 

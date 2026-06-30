@@ -25,7 +25,11 @@
 #'
 #' @return Either a ggplot-object with the final combined plot, or a list with the three panels separated and the combined plot: \code{list(enrichment.panel, geneset.panel, rank.panel, combined.plot)}.
 #'
-#'
+#' @import ggplot2
+#' @import enrichplot
+#' @importFrom patchwork wrap_plots
+#' @importFrom RColorBrewer brewer.pal
+#' 
 #' @examples
 #' data(geneList, package = "DOSE")
 #'
@@ -72,16 +76,6 @@ plot.gsea =
            return.all.objects = FALSE) {
 
 
-    #----------------------------------------#
-    # Check if Rseb is up-to-date            #
-    Rseb::actualize(update = F, verbose = F) #
-    #----------------------------------------#
-
-
-    # Libraries
-    require(ggplot2)
-
-
     # collect results
     results = data.frame(gsea.results@result)
 
@@ -90,26 +84,23 @@ plot.gsea =
     if (is.numeric(geneset.id)) {
       if (geneset.id <= nrow(results) & geneset.id > 0) {gene.set = results$ID[geneset.id]
       } else {
-        warning("The genset.id must be a string or a numeric value among the ones above.")
         print(data.frame(gene.set.ID = results$ID))
-        return(invisible())
+        stop("The genset.id must be a string or a numeric value among the ones above.")
       }
     } else if (is.character(geneset.id)) {
       if (geneset.id %in% results$ID) {gene.set = geneset.id
       } else {
-        warning("The genset.id must be a string or a numeric value among the ones above.")
         print(data.frame(gene.set.ID = results$ID))
-        return(invisible())}
+        stop("The genset.id must be a string or a numeric value among the ones above.")}
     } else {
-      warning("The genset.id must be a string or a numeric value among the ones above.")
       print(data.frame(gene.set.ID = results$ID))
-      return(invisible())
+      stop("The genset.id must be a string or a numeric value among the ones above.")
     }
 
 
     # Check graphic parameters
     if (!(tolower(enrichment.geom) %in% c("line", "lines", "dot", "dots", "point", "points"))) {
-      return(warning("The 'enrichment.geom' must be one among: 'line', 'lines', 'dot', 'dots', 'point', 'points'."))
+      stop("The 'enrichment.geom' must be one among: 'line', 'lines', 'dot', 'dots', 'point', 'points'.")
     }
 
 

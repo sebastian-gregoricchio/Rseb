@@ -8,6 +8,8 @@
 #' @param ticks.each Numeric value to define every how much should be placed a tick. By default \code{NULL}, ticks will be placed automatically.
 #' @param digits A single integer indicating the maximum number of digits required for the rounding of the axis values. By default \code{1}.
 #'
+#' @import ggplot2
+#'
 #' @return Returns a plot list (or a single plot when only one input plot is provided) equivalent to the input list provided by the user in which the Y-axis of all the plots will be uniformed.
 #'
 #' @export uniform.y.axis
@@ -21,24 +23,14 @@ uniform.y.axis = function(
 
 { # BEGIN function -----------------------------------------------------------------------
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
+  
   # Check list length
   if (!("list" %in% class(plot.list))) {
     if ("ggplot" %in% class(plot.list) | "gg" %in% class(plot.list)) {
       plot.list = list(plot.list)
     }  else {
-      return(warning("The 'plot.list' parameter must be a ggplot object or a list of ggplot objects."))}
+      stop("The 'plot.list' parameter must be a ggplot object or a list of ggplot objects.")}
   }
-
-
-
-  # Load required libraries
-  require(ggplot2)
-
 
 
   # Get current Y ranges

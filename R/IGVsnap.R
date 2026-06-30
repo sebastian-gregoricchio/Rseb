@@ -19,6 +19,8 @@
 #' @param exit Logical value to indicate whether exit IGV after image capture ended. By default \code{FALSE}.
 #'
 #' @return Exports a .txt file ready-to-use on IGV.
+#' 
+#' @import dplyr
 #'
 #' @details To run the script on IGV: Tools > Run Batch Script... > choose the .txt output file from this function. \cr For more info on how batch tasks work on IGV see: \cr \url{https://software.broadinstitute.org/software/igv/PortCommands}.
 #'
@@ -45,11 +47,6 @@ IGVsnap = function(loci_vector,
                    delay.interval = 10,
                    session = NULL,
                    exit = FALSE) {
-
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
 
   # check parameters
     help_message = c(
@@ -98,7 +95,6 @@ IGVsnap = function(loci_vector,
                      dataset = dataset)
 
     # loading gene list
-    require(dplyr)
     gene_positions = getBM(mart = genome, # mart object, see "useMart" function
                            attributes = c("chromosome_name", "start_position", "end_position", "strand", "external_gene_name"), # columns in output
                            filters = "external_gene_name", # select only certain values,

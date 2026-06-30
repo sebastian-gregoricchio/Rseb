@@ -41,11 +41,18 @@
 #'   \item \code{multi.track.plot}: the assembled multi.track labelled plot.
 #'  }
 #'
+#' @import dplyr
+#' @import ggbio
+#' @import ggforce
+#' @import ggplot2
+#' @import GenomicRanges
+#' @importFrom data.table fread
+#' @importFrom AnnotationFilter GRangesFilter
+#' @importFrom cowplot plot_grid
 #'
 #' @export genomic.tracks
-#'
-#'
-#'
+
+
 genomic.tracks =
   function(
     tracks,
@@ -72,23 +79,8 @@ genomic.tracks =
     height.ratios = NULL,
     width.ratios = c(1,5)) {
 
-    #-----------------------------#
-    # Check if Rseb is up-to-date #
-    Rseb::actualize(update = F, verbose = F)   #
-    #-----------------------------#
-
-
-    ################### LIBRARIES ###################
-    require(dplyr)
-    require(ggbio)
-    require(ggforce)
-    require(ggplot2)
-    require(GenomicRanges)
-    #################################################
-
-
-
-
+    
+    
     # General controls and check of inputs
     ### Check genomic region and generate a bed file
     genomic.region = gsub(pattern = "[,]", replacement = "", x = genomic.region)
@@ -115,7 +107,7 @@ genomic.tracks =
                              if (grepl("[.]bigwig$|[.]bw$|[.]bigWig$", x, ignore.case = T)) {return("bigWig")
                              } else if (grepl("[.]bed$|[.]bd$|[.]narrowPeak$|[.]broadPeak$", x, ignore.case = T)) {return("bed")
                              } else if (grepl("[.]bedpe$", x, ignore.case = T)) {return("arcs")
-                             } else {return(return(warning(paste0("The format of the track file '", x, "' is not recognized. Available formats are: .bw|bigWig|bw, .bed|bd|narrowPeak|broadPeak, .bedpe."))))}
+                             } else {stop(paste0("The format of the track file '", x, "' is not recognized. Available formats are: .bw|bigWig|bw, .bed|bd|narrowPeak|broadPeak, .bedpe."))}
                            },
                            USE.NAMES = F)
 
@@ -124,7 +116,7 @@ genomic.tracks =
     ### Track labels
     if (!is.null(track.labels)) {
       if (length(track.labels)!=1 & ((length(track.labels) < length(tracks)) | (length(track.labels) > length(tracks)))) {
-        return(warning("The number of track labels does not correspond to the number of tracks provided."))}
+        stop("The number of track labels does not correspond to the number of tracks provided.")}
     } else if (is.null(track.labels)) {
       track.labels = gsub(pattern = "[.].*$", replacement = "", x = basename(tracks))
     }
@@ -146,7 +138,7 @@ genomic.tracks =
       track.colors = "black" }
 
     if (F %in% Rseb::is.color(track.colors)) {
-      return(warning(paste0("The following track.colors values are not colors: ", paste(track.colors[!Rseb::is.color(track.colors)], collapse = ", "), ".")))}
+      stop(paste0("The following track.colors values are not colors: ", paste(track.colors[!Rseb::is.color(track.colors)], collapse = ", "), "."))}
 
 
     ### Arcs direction
@@ -154,7 +146,7 @@ genomic.tracks =
       arcs.direction = ifelse(test = tolower(arcs.direction) == "up",
                               yes = 1,
                               no = -1)
-    } else {return(warning("The arcs direction must be 'up' or 'down'."))}
+    } else {stop("The arcs direction must be 'up' or 'down'.")}
 
 
 

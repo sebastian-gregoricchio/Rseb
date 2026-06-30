@@ -42,8 +42,8 @@
 #'
 #' @export volcano
 #'
-# @import ggplot2
-# @import ggrepel
+#' @import ggplot2
+#' @import ggrepel
 
 volcano = function(log2FC_data,
                         padj_data,
@@ -108,13 +108,8 @@ volcano = function(log2FC_data,
                         font_family = "Helvetica",
                         font_size = 12) {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
   if (length(log2FC_data) != length(padj_data)) {
-    return(warning("ERROR: length(log2FC_data) is different from length(padj_data)."))
+    stop("The length(log2FC_data) is different from length(padj_data).")
   }
 
   # Generate a table containing the data and their status
@@ -134,7 +129,6 @@ volcano = function(log2FC_data,
                      ID = names)
 
   # create the plot
-  require(ggplot2)
   p =
     ggplot(table,
            aes(x = FC,

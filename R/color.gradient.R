@@ -15,23 +15,18 @@ color.gradient = function(values,
                           colors = c("blue", "white", "red"),
                           bins = 100) {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-  # Check values class
+    # Check values class
   if (class(values) %in% c("numeric", "integer")) {
-    if (is.character(values)) {return(warning("The 'values' input must be a numeric vector."))}
-  } else {return(warning("The 'values' input must be a numeric vector."))}
+    if (is.character(values)) {stop("The 'values' input must be a numeric vector.")}
+  } else {stop("The 'values' input must be a numeric vector.")}
 
 
   # Check colors
-  if (class(colors) != "character") {return(warning("The 'colors' parameter must be a vector of strings containing colors values in any R-supported format."))}
-  if (F %in% Rseb::is.color(colors)) {return(warning("The 'colors' parameter must be a vector of strings containing colors values in any R-supported format."))}
+  if (class(colors) != "character") {stop("The 'colors' parameter must be a vector of strings containing colors values in any R-supported format.")}
+  if (F %in% Rseb::is.color(colors)) {stop("The 'colors' parameter must be a vector of strings containing colors values in any R-supported format.")}
 
   # Check steps
-  if (!is.atomic(bins) | !is.numeric(bins)) {return(warning("The 'bins' value must be a single integer."))}
+  if (!is.atomic(bins) | !is.numeric(bins)) {stop("The 'bins' value must be a single integer.")}
 
 
   # Convert NA and NaN values to 0

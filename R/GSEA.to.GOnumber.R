@@ -14,8 +14,8 @@
 #'
 #' @export GSEA.to.GOnumber
 #'
-# @import GO.db
-# @import dplyr
+#' @import GO.db
+#' @import dplyr
 
 
 GSEA.to.GOnumber = function(input_terms,
@@ -23,11 +23,6 @@ GSEA.to.GOnumber = function(input_terms,
                             return_table = T,
                             export_table = F,
                             output_file_name = paste(getwd(), "GO_numbers_table.tsv", sep ="/")) {
-
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
 
   # Let's check if you have the required libraries
   if (!requireNamespace("BiocManager", quietly = TRUE))

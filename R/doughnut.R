@@ -17,7 +17,9 @@
 #' @param border Logic value to define whether plot the border of the sectors. By default \code{FALSE}.
 #' @param lty Numeric value to define the type of line for the borders. By default \code{NULL}.
 #' @param main String to set the title of the plot. By default \code{NULL}.
-#'
+#' 
+#' @importFrom grid grid.newpage
+#' 
 #' @return Prints the plot
 #'
 #' @examples
@@ -41,11 +43,6 @@ doughnut =
             main = NULL,
             ...)
   {
-
-    #-----------------------------#
-    # Check if Rseb is up-to-date #
-    Rseb::actualize(update = F, verbose = F)   #
-    #-----------------------------#
 
     ### Open a null PDF to record the file
     grid::grid.newpage()

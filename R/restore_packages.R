@@ -10,12 +10,7 @@
 
 
 restore_packages = function(rda_file) { #BEGIN
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-
+  
   load(rda_file) #creates a variable called 'installedpackages'
 
   #obtain the list of not already installed packages
@@ -70,8 +65,7 @@ restore_packages = function(rda_file) { #BEGIN
 
   # print not installed packages if present
   if (length(still.to.install) != 0) {
-    warnings("It has not been possible to install the following packages")
-    return(still.to.install)}
+    stop("It has not been possible to install the following packages")}
   else {
     message("All packages have been restored and updated!")}
 } #END

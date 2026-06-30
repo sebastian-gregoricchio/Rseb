@@ -7,6 +7,8 @@
 #' @param organism String to define de organism, e.g. \code{mmusculus}, \code{hsapiens}, etc. By default \code{mmusculus}.
 #'
 #' @return A string vector with the corresponding gene_symbols.
+#' 
+#' @import biomaRt
 #'
 #' @examples
 #' gene_symbols =
@@ -20,13 +22,6 @@
 get.gene.name = function(ensembl.id,
                          type = "gene",
                          organism = "mmusculus") { # gene or transcript
-
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-  require(biomaRt)
 
   dataset = paste(organism, "_gene_ensembl", sep = "")
 

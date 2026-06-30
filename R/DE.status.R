@@ -13,6 +13,8 @@
 #' @param unresponsive.label String to define the label indicating the unresponsive genes identified as \code{FC_NoResp_left < FoldChange < FC_NoResp_rigth} and \code{p.value > p.value.threshold}.
 #' @param null.label String to define the label indicating the null genes.
 #'
+#' @importFrom purrr pmap
+#'
 #' @return It returns a vector containing the differential expression status for each original value in the same order used in the input.
 #'
 #' @export DE.status
@@ -29,11 +31,7 @@ DE.status = function(log2FC, # log2(FC)
                      unresponsive.label = "NoResp",
                      null.label = "NULL") {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
+  
   # Check the unresponsive thresholds
   if (is.null(FC_NoResp_left) & is.null(FC_NoResp_rigth)) {
     return(warning("'FC_NoResp_left' and 'FC_NoResp_rigth' parameters can't be both NULL."))

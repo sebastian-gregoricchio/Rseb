@@ -10,6 +10,8 @@
 #'
 #' @examples
 #' data.summary(data = mtcars, variable = "mpg", group.names = "disp")
+#' 
+#' @importFrom plyr ddply
 #'
 #' @export data.summary
 #'
@@ -19,11 +21,6 @@
 data.summary = function(data,
                         variable,
                         group.names){
-
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
 
   summary_func = function(x, col){
     c(mean = mean(x[[col]], na.rm=TRUE),

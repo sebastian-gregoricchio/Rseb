@@ -14,18 +14,13 @@
 #'  }
 #'  This list can be passed as it is to the function \link{plot.density.profile}.
 #'
-# @import dplyr
-# @importFrom data.table fread
-# @importFrom stringr str_split
-# @importFrom tidyr separate
+#' @import dplyr
+#' @importFrom data.table fread
+#' @importFrom stringr str_split
+#' @importFrom tidyr separate
 
 
 read.computeMatrix.file = function(matrix.file) {
-
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
 
   # Matrix file check
   if (class(matrix.file) != "character" | length(matrix.file)  != 1 | !grepl(".gz$", matrix.file[1])) {

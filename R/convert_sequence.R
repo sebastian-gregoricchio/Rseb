@@ -8,24 +8,20 @@
 #'
 #' @return It returns a string with the converted sequence.
 #'
+#' @import Biostrings
+#'
 #' @examples
 #' convert_sequence(sequence = "AATTTCCCGTCGAT",
 #'                  mode = "reverse",
 #'                  nucleic.acid = "DNA")
 #'
 #' @export convert_sequence
-#'
-# @import Biostrings
 
 convert_sequence = function(sequence = NULL,
                             mode = "not specified",
                             nucleic.acid = "DNA") {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
+ 
   ###### Install required packages  ######
   pkg = "Biostrings"
   if (!require(pkg, character.only = TRUE)) {
@@ -35,23 +31,23 @@ convert_sequence = function(sequence = NULL,
 
   ###### Parameters check ######
   if (class(sequence) != "character" | is.null(sequence)) {
-    return(warning("The sequence must be a string of class <character>"))
+    stop("The sequence must be a string of class <character>")
   }
 
   if (mode == "not specified" | !(mode %in% c("revComp", "RC", "rc", "reverseComplement",
                                               "rev", "R", "r", "reverse",
                                               "comp", "C", "c", "complement")) |
       class(mode) != "character") {
-    return(warning(c("\n Transformation mode is not available or not specified. \n \n",
-                     "Possible choices: \n",
-                     "- Reverse complement = revComp | RC | rc | reverseComplement \n",
-                     "- Reverse            = rev     | R  | r  | reverse \n",
-                     "- Complement         = comp    | C  | c  | complement")))
-    }
+    stop(c("\n Transformation mode is not available or not specified. \n \n",
+           "Possible choices: \n",
+           "- Reverse complement = revComp | RC | rc | reverseComplement \n",
+           "- Reverse            = rev     | R  | r  | reverse \n",
+           "- Complement         = comp    | C  | c  | complement"))
+  }
 
   if (!(nucleic.acid %in% c("DNA", "dna", "RNA", "rna")) | class(nucleic.acid) != "character") {
-    return(warning(c("Nucleic acid type not recognized. \n \n",
-                     "Possible choices: DNA, dna | RNA, rna")))
+    stop(c("Nucleic acid type not recognized. \n \n",
+           "Possible choices: DNA, dna | RNA, rna"))
   }
 
   ######################################################

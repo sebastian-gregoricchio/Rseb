@@ -29,12 +29,8 @@ pStars = function(p.value,
                   three = 0.001,
                   four = 0.0001) {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
 
-  if (length(p.value) > 1) {return(warning("The 'p.value' parameter must a single numeric value."))}
+  if (length(p.value) > 1) {stop("The 'p.value' parameter must a single numeric value.")}
 
   if (one > two & one > three & one > four &
       two > three & two > four &
@@ -53,5 +49,5 @@ pStars = function(p.value,
             }
         }
     }
-  } else {return(warning("Limits must be in descending order, i.e. 0.05 > 0.01 > 0.001 > 0.0001"))}
+  } else {stop("Limits must be in descending order, i.e. 0.05 > 0.01 > 0.001 > 0.0001")}
 }

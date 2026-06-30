@@ -9,6 +9,12 @@
 #' @param ignore.header.error Logical value to indicate whether the error of sample_label reassignment in the header should be ignored. The plotted labels can be changed during the plotting.
 #' @param verbose Logical value to indicate whether the final message should be printed. By default \code{TRUE}.
 #'
+#' @importFrom stringr str_split
+#' @import dplyr
+#' @importFrom data.table fread
+#' @importFrom data.table fwrite
+#' @importFrom R.utils gzip
+#'
 #' @return The output is a computeMatrix file (.gz format) with the samples chucks re-shuffled to be in the order provided by the user.
 #' 
 #' @export reorder.samples.computeMatrix
@@ -22,23 +28,13 @@ reorder.samples.computeMatrix =
            ignore.header.error = FALSE,
            verbose = TRUE) {
     
-    ######################################################################################
-    ### Required libraries
-    # require(data.table)
-    # require(stringr)
-    require(dplyr)
-    
-    # Check if Rseb is up-to-date #
-    Rseb::actualize(update = F, verbose = F)
-    ######################################################################################
-    
     
     ######## Check whether the matrix file exits and whether I can write in the output folder
     
     if (!file.exists(matrix.file)) {
-      return(warning("The matrix file provided does not exists."))
+      stop("The matrix file provided does not exists.")
     } else if (file.access(dirname(reordered.matrix.path), 2)[[1]] == -1) {
-      return(warning("The user does not own writing permissions for the output folder. The output matrix can't be exported in the location provided."))
+      stop("The user does not own writing permissions for the output folder. The output matrix can't be exported in the location provided.")
     }
     
   
@@ -63,14 +59,12 @@ reorder.samples.computeMatrix =
           sort(unique(new.sample.order %in% sample_names))[1] == F) {
         
         original_order = paste0(paste(paste0("   ",1:length(sample_names), "."), sample_names), collapse = "\n")
-        warning("The labels in the new.sample.order are not corresponding to the sample labels of the current matrix:\n",
-                original_order)
-        return(sample_names)
+        stop("The labels in the new.sample.order are not corresponding to the sample labels of the current matrix:\n",
+             original_order)
       }
     } else {
-      warning("Now new.sample.order provided. The current order is:\n",
-              original_order)
-      return(sample_names)
+      stop("Now new.sample.order provided. The current order is:\n",
+           original_order)
     }
     
     
@@ -108,7 +102,7 @@ reorder.samples.computeMatrix =
     }
     
     if (ncol(reordered.matrix) != ncol(matrix$matrix.data)){
-      return(warning("Something went wrong and the number of original columns in the matrix does not correspond with the number of columns of the reordered one!!!"))
+      stop("Something went wrong and the number of original columns in the matrix does not correspond with the number of columns of the reordered one!!!")
     }
     
     
@@ -120,7 +114,7 @@ reorder.samples.computeMatrix =
                       fixed = T)
     
     if (nchar(original.header) != nchar(new.header) & isFALSE(ignore.header.error)){
-      return(warning("Something went wrong with the replacement of the names in the header replacement!\nYou can ignore this by setting 'ignore.header.error = TRUE'."))
+      stop("Something went wrong with the replacement of the names in the header replacement!\nYou can ignore this by setting 'ignore.header.error = TRUE'.")
     }
     
     

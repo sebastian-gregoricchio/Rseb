@@ -15,6 +15,9 @@
 #' @param verbose Logic value to indicate whether messages should be printed or not. By default \code{TRUE}.
 #'
 #' @return If required, returns a data.frame corresponding to the collapsed .bed file.
+#' 
+#' @import dplyr
+#' @importFrom purrr reduce
 #'
 #' @details The function pre-sorts the bed and keeps only unique rows and only up to 6 columns (chr, start, end, name, score, strand). \cr The names of the regions (if available) of merged regions corresponds to the concatenation of all original region's name. \cr To get more information about the bed file format see the following page: \cr \url{https://genome.ucsc.edu/FAQ/FAQformat.html#format1}.
 #'
@@ -35,22 +38,14 @@ collapse.bed = function(bed,
                         export.header = FALSE,
                         verbose = TRUE) {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-
+ 
   ### -------------------------------------------------------------------------------- ###
   ###                                Libraries & Controls                              ###
   ### -------------------------------------------------------------------------------- ###
-  # Load libraries
-  require(dplyr)
-
 
   # Check scoreoperation
   if (!(score.operation %in% c("mean", "median", "sum"))) {
-    return(warning("The 'score.operation' parameter must be one among: 'mean', 'median', 'sum'. Default value = 'mean'."))
+    stop("The 'score.operation' parameter must be one among: 'mean', 'median', 'sum'. Default value = 'mean'.")
   }
 
 
@@ -100,7 +95,7 @@ collapse.bed = function(bed,
 
   # Check that END.position > START.position
   if (length((unique((sorted.bed$end - sorted.bed$start) < 0))) > 1) {
-    return(warning("The input bed file contains regions in which the END boundary position is lower than the START one. Collapsing interrupted with no output."))
+    stop("The input bed file contains regions in which the END boundary position is lower than the START one. Collapsing interrupted with no output.")
   }
   ### -------------------------------------------------------------------------------- ###
 

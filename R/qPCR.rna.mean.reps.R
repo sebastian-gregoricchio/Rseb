@@ -10,7 +10,10 @@
 #' @param fix.y.axis Logic value indicating whether the y-axis of the plots should be kept fixed among all the genes. By default \code{FALSE}.
 #' @param text.size Numeric value to indicate the size of the text for the number above the bars. Default \code{3}.
 #' @param x.labels.rotation Numeric value indicating the degrees of x-axis's labels rotation. By default \code{45}.
-
+#' 
+#' @import dplyr
+#' @import ggplot2
+#' @importFrom colorspace darken
 #'
 #' @return The function returns a list containing:
 #' \itemize{
@@ -33,16 +36,6 @@ qPCR.rna.mean.reps = function(
   fix.y.axis = FALSE,
   text.size = 3,
   x.labels.rotation = 45) {
-
-
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-  # libraries
-  require(dplyr)
-  require(ggplot2)
 
 
   # Check plot color

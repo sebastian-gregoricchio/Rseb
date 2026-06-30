@@ -21,11 +21,6 @@
 move.df.col = function (data.frame,
                          move.command) {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
   move.command = lapply(strsplit(strsplit(move.command, ";")[[1]],
                                  ",|\\s+"), function(x) x[x != ""])
 

@@ -19,7 +19,9 @@
 #' @param print_plot Logic value to define whether to print the plot once generated or not. By default \code{FALSE}.
 #' @param line_width Numeric value to define the line width for all the plots. By default 1.,
 #' @param variance_opacity Numeric value to define the alpha/transparency of the error/variance. By default 0.25. Parameter considered only when \code{variance = TRUE)}.
-#'
+#' 
+#' @import ggplot2
+#' 
 #' @return Returns a plot in ggplot2 format.
 #'
 #' @export density_plot
@@ -46,12 +48,7 @@ density_plot = function(
   line_width = 1,
   variance_opacity = 0.25) { # BEGIN
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-
+ 
   # Create a matrix
   matrix =
     data.frame(sample = samples,
@@ -81,7 +78,6 @@ density_plot = function(
   line_type = scaling(line_type, n_samples)
   colors = scaling(colors, n_samples)
 
-  require(ggplot2)
 
   # building the plot
   plot =

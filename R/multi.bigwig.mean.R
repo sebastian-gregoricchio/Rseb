@@ -14,6 +14,9 @@
 #'
 #' @return A list of vectors with the commands used to run \code{bigwigCompare} at each step. Each element is one group ID.
 #'
+#' @import dplyr
+#' @importFrom tools file_path_as_absolute
+#'
 #' @details For details on \code{bigwigCompare} visit: \url{https://deeptools.readthedocs.io/en/develop/content/tools/bigwigCompare.html}
 #'
 #' @export multi.bigwig.mean
@@ -37,7 +40,7 @@ multi.bigwig.mean =
     } else if ("data.frame" %in% class(sample.config)) {
       config = data.frame(sample.config)
     } else {
-      return(warning("The 'sample.config' must be either a data.frame or the path to a table."))
+      stop("The 'sample.config' must be either a data.frame or the path to a table.")
     }
     colnames(config)[1:2] = c("file", "group")
     config = dplyr::mutate(config, file = sapply(config$file, tools::file_path_as_absolute))

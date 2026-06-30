@@ -14,6 +14,9 @@
 #' @param axes.text.size Numeric value indicating the font size of the axis text. Default: \code{10}.
 #' @param title String indicating the title of the plot. Default: \code{"NES enrichments"}.
 #'
+#' @import dplyr
+#' @import ggplot2
+#'
 #' @return A ggplot object.
 #'
 #' @export plot.NES
@@ -30,16 +33,6 @@ plot.NES = function(gsea.object,
                     perc.bleeding.x = 8,
                     axes.text.size = 10,
                     title = "NES enrichments") {
-
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-
-  # libraries
-  require(dplyr)
-  require(ggplot2)
 
 
   # extract results and clean

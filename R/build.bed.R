@@ -73,11 +73,6 @@ build.bed = function(
 
   # -------------------------------------------------------------------------- #
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
   # Check size of vectors for bed generation
   ##############################################################################
   row.number = length(chr)
@@ -102,17 +97,17 @@ build.bed = function(
     param.check(blockStarts, row.number)
   )
 
-  if (length(unique(length.check)) > 1) {return(warning(paste("The expected number of elements in each colmun/parameter must be", row.number, "or 1.")))}
+  if (length(unique(length.check)) > 1) {stop(paste("The expected number of elements in each colmun/parameter must be", row.number, "or 1."))}
 
 
   # Check that START is before END and force if required
   if (-1 %in% sign(end - start) & force.generation == F) {
-   return(warning("At least one value in END vector is lower than the relative START value. If you want to force the bed generation set the parameter 'force.generation' as TRUE."))
+   stop("At least one value in END vector is lower than the relative START value. If you want to force the bed generation set the parameter 'force.generation' as TRUE.")
   }
 
   # Check that that scores are between 0 and 1000
   if (-1 %in% sign(1000 - score) & force.generation == F) {
-    return(warning("At least one value in SCORE vector is grater than 1000 (allowed values between 0-1000). If you want to force the bed generation set the parameter 'force.generation' as TRUE."))
+    stop("At least one value in SCORE vector is grater than 1000 (allowed values between 0-1000). If you want to force the bed generation set the parameter 'force.generation' as TRUE.")
   }
 
   # Convert non-RGB colors (if required)
@@ -135,12 +130,12 @@ build.bed = function(
   # Check blocks
   blocks.check = c(!is.null(blockCount), !is.null(blockSizes), !is.null(blockStarts))
   if (length(unique(blocks.check)) > 1) {
-    return(warning("If you want to define blocks, you need to provide all the 3 vectors for 'blockCount', 'blockSizes', 'blockStarts'."))
+    stop("If you want to define blocks, you need to provide all the 3 vectors for 'blockCount', 'blockSizes', 'blockStarts'.")
   }
 
   # Check track label length
   if (!is.null(track.name)) {
-    if (nchar(track.name) > 15 | length(track.name) > 1) {return(warning("The label of the track.name must be a string with a number of characters <=15."))}
+    if (nchar(track.name) > 15 | length(track.name) > 1) {stop("The label of the track.name must be a string with a number of characters <=15.")}
   }
 
 

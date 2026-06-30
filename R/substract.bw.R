@@ -7,6 +7,8 @@
 #' @param return.substracted.bw Logic value to define whether return the resulting bigWig as GRanges object. By default \code{TRUE}.
 #' @param substracted.bw.file String for the path of the resulting bigwig file to be exported. \cr By default \code{NULL}, any file will be exported.
 #'
+#' @import rtracklayer
+#'
 #' @return If required a subtraction bigWig is returned as GRanges object. The resulting bigWig can be also directly exported.
 #'
 #' @export substract.bw
@@ -19,27 +21,13 @@ substract.bw = function(bw1,
                         return.substracted.bw = T,
                         substracted.bw.file = NULL) {
 
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-
-  # Loading libraries
-  #require(sf) # due to a bug load this before
-  pkg = "rtracklayer"
-  if (!require(pkg, character.only = TRUE)) {
-    BiocManager::install(pkg)
-    if(!require(pkg, character.only = TRUE)) stop(paste(pkg,"package not found."))}
-
-  require("rtracklayer")
-
   # Import/read the BigWigs
   bws = list(bw1, bw2)
 
   for (i in 1:length(bws)) {
     if (class(bws[[i]]) != "GRanges" & class(bws[[i]]) == "character") {
       bws[[i]] = import(bws[[i]])} else if (class(bws[[i]]) != "GRanges" & class(bws[[i]]) != "character") {
-        return(warning("Invalid input format. Either GRanges bigWig or a string with the path for the file"))
+        stop("Invalid input format. Either GRanges bigWig or a string with the path for the file")
       }
   }
 

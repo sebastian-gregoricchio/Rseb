@@ -10,6 +10,8 @@
 #'
 #' @return Returns a plot list (or a single plot when only one input plot is provided) equivalent to the input list provided by the user in which the X-axis of all the plots will be uniformed.
 #'
+#' @import ggplot2
+#'
 #' @export uniform.x.axis
 
 uniform.x.axis = function(
@@ -21,24 +23,13 @@ uniform.x.axis = function(
   
 { # BEGIN function -----------------------------------------------------------------------
   
-  #-----------------------------#
-  # Check if Rseb is up-to-date #
-  Rseb::actualize(update = F, verbose = F)   #
-  #-----------------------------#
-  
   # Check list length
   if (!("list" %in% class(plot.list))) {
     if ("ggplot" %in% class(plot.list) | "gg" %in% class(plot.list)) {
       plot.list = list(plot.list)
     }  else {
-      return(warning("The 'plot.list' parameter must be a ggplot object or a list of ggplot objects."))}
+      stop("The 'plot.list' parameter must be a ggplot object or a list of ggplot objects.")}
   }
-  
-  
-  
-  # Load required libraries
-  require(ggplot2)
-  
   
   
   # Get current X ranges

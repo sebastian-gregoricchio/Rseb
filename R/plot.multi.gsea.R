@@ -25,6 +25,9 @@
 #'
 #' @return Either a ggplot-object with the final combined plot, or a list with the three panels separated and the combined plot: \code{list(enrichment.panel, geneset.panel.list - list with one element per geneset -, rank.panel, stat.table, combined.plot)}.
 #'
+#' @import ggplot2
+#' @import gridExtra
+#' @importFrom patchwork wrap_plots
 #'
 #' @examples
 #' data(geneList, package = "DOSE")
@@ -72,16 +75,6 @@ plot.multi.gsea =
            return.all.objects = FALSE) {
 
 
-    #----------------------------------------#
-    # Check if Rseb is up-to-date            #
-    Rseb::actualize(update = F, verbose = F) #
-    #----------------------------------------#
-
-
-    # Libraries
-    require(ggplot2)
-
-
     # collect results
     results = data.frame(gsea.results@result)
 
@@ -102,15 +95,14 @@ plot.multi.gsea =
     gene.set.list = sapply(geneset.id.list, function(x){check.id(x)}, USE.NAMES = F)
 
     if ("absent" %in% gene.set.list) {
-      warning("The genset.id must be a string or a numeric value among the ones above.")
       print(data.frame(gene.set.ID = results$ID))
-      return(invisible())
+      stop("The genset.id must be a string or a numeric value among the ones above.")
     }
 
 
     # Check graphic parameters
     if (!(tolower(enrichment.geom) %in% c("line", "lines", "dot", "dots", "point", "points"))) {
-      return(warning("The 'enrichment.geom' must be one among: 'line', 'lines', 'dot', 'dots', 'point', 'points'."))
+      stop("The 'enrichment.geom' must be one among: 'line', 'lines', 'dot', 'dots', 'point', 'points'.")
     }
 
 
