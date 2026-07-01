@@ -7,6 +7,11 @@ title: "changeLog"
 [![forks](https://img.shields.io/github/forks/sebastian-gregoricchio/Rseb?style=social)](https://github.com/sebastian-gregoricchio/Rseb/fork)
 
 
+#### [v1.0.1](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/1.0.1) - July 1<sup>st</sup> 2026
+* Updated error messages and function import
+
+<br>
+
 #### [v1.0.0](https://github.com/sebastian-gregoricchio/Rseb/releases/tag/1.0.0) - June 30<sup>th</sup> 2026
 * Bug fixing in the `incucyte` function when color column is provided in the metadata.
 * Updating dependencies to avoid to use deprecated `pryr` and `diffloop` packages.

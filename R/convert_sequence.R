@@ -50,18 +50,7 @@ convert_sequence = function(sequence = NULL,
            "Possible choices: DNA, dna | RNA, rna"))
   }
 
-  ######################################################
-
-  ###### Check library ######
-
-  if (!("Biostrings" %in% installed.packages())) {
-    if (!requireNamespace("BiocManager", quietly = TRUE))
-      install.packages("BiocManager")
-    BiocManager::install("Biostrings")
-  }
-
-  require("Biostrings")
-
+  
   ######################################################
 
 

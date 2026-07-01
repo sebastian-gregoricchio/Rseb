@@ -21,13 +21,11 @@
 #' @return Exports a .txt file ready-to-use on IGV.
 #' 
 #' @import dplyr
+#' @import biomaRt
 #'
 #' @details To run the script on IGV: Tools > Run Batch Script... > choose the .txt output file from this function. \cr For more info on how batch tasks work on IGV see: \cr \url{https://software.broadinstitute.org/software/igv/PortCommands}.
 #'
 #' @export IGVsnap
-#'
-# @import biomaRt
-# @import dplyr
 
 ######################
 ## IGVsnap function ##
@@ -75,13 +73,6 @@ IGVsnap = function(loci_vector,
   if (input_type == "genes") {
     loci_vector = sort(unique(loci_vector))
 
-    # Install packages from bioconductor
-    pkg = "biomaRt"
-    if (!require(pkg, character.only = TRUE)) {
-      BiocManager::install(pkg)
-      if(!require(pkg, character.only = TRUE)) stop(paste(pkg,"package not found."))}
-
-    require(biomaRt)
     # to list all the datasets availables
     # listDatasets(useMart("ensembl"))
 

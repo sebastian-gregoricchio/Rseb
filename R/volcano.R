@@ -202,7 +202,6 @@ volcano = function(log2FC_data,
 
   # Show names of up/left genes
   if (left_names == T) {
-    require(ggrepel)
     if (padding == T) {
     p = p +
       geom_label_repel(data = subset(table, table$DE_status == left_label),
@@ -223,7 +222,6 @@ volcano = function(log2FC_data,
 
   # Show names of down/right genes
   if (right_names == T) {
-    require(ggrepel)
     if (padding == T) {
     p = p +
       geom_label_repel(data = subset(table, table$DE_status == right_label),

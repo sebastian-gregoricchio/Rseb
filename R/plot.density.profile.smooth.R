@@ -207,7 +207,6 @@ plot.density.profile.smooth = function(
     line_type = scaling(line_type, n_samples)
     colors = scaling(colors, n_samples)
 
-    require(ggplot2)
 
     # building the plot
     plot =

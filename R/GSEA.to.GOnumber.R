@@ -24,19 +24,6 @@ GSEA.to.GOnumber = function(input_terms,
                             export_table = F,
                             output_file_name = paste(getwd(), "GO_numbers_table.tsv", sep ="/")) {
 
-  # Let's check if you have the required libraries
-  if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-    pkg = "GO.db"
-    if (!require(pkg, character.only = TRUE)) {
-      BiocManager::install(pkg)
-      if(!require(pkg, character.only = TRUE)) stop(paste(pkg,"package not found."))}
-
-  if (!require("dplyr",character.only = TRUE)) {
-    install.packages("dplyr", dependencies = TRUE)
-    if(!require("dplyr",character.only = TRUE)) stop("Package not found")}
-
   #Retrieve the DB
   go_DB = as.data.frame(Term(GOTERM))
   go_DB = data.frame(GO_number = rownames(go_DB), GO_annotation = go_DB$`Term(GOTERM)`)
